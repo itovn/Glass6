@@ -13,3 +13,5 @@
 # Báo cáo quét bảo mật — có chi tiết lỗ hổng, không đưa lên repo công khai
 vbsec-reports/
 .vbsec-tmp/
+# Nhật ký tiến độ — chỉ để ở máy phát triển, không đưa lên GitHub
+/docs/PROGRESS.md

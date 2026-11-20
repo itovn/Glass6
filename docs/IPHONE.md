@@ -217,7 +217,7 @@ trong app).
 Tóm tắt: (1) em toàn quyền gỡ; (2) em tự thiết kế, giống iOS 26 của iPhone nhất có thể — nên các mục P5 do em tự xếp; (3) khay
 đa nhiệm làm **dạng thẻ** kiểu iOS 26 ngay; (4) nhận kiểu chung + làm riêng Điện thoại, Máy tính, La bàn, Ghi âm; (5) máy thử
 không có gì quan trọng, mở và respring thoải mái. Tiến độ (20/11/2026): P0, P1 (D38), P2 (D39 – D43), P3 (D44) xong; P4 xong
-phần chính (D45) — việc còn lại ghi ở PROGRESS.md mục 20/11/2026.
+phần chính (D45) — việc còn lại ghi trong nhật ký tiến độ riêng của người làm.
 
 Các câu hỏi lúc lập kế hoạch:
 

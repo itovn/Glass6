@@ -98,7 +98,6 @@ khoá riêng và sinh lại tệp đó bằng `tools/gen_ota_cert.py`.
 | [docs/IPHONE.md](docs/IPHONE.md) | Bản cho iPhone 5: khảo sát và kế hoạch |
 | [docs/DECISIONS.md](docs/DECISIONS.md) | Các quyết định kỹ thuật và kết quả kiểm chứng |
 | [docs/FFI.md](docs/FFI.md) | Hợp đồng giữa vỏ ObjC và lõi Rust, khoá cấu hình |
-| [docs/PROGRESS.md](docs/PROGRESS.md) | Nhật ký tiến độ |
 
 ## Giấy phép
 
