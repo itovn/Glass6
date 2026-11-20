@@ -1,11 +1,11 @@
 # Glass 6
 
-**Liquid Glass (iOS 26 / iPadOS 26) cho iOS 6.** Tweak cho **iPhone 5** và **iPad mini 1** chạy iOS 6 đã jailbreak: đổi giao
+**Liquid Glass (iOS 26 / iPadOS 26) cho iOS 6.** Tweak cho **iPhone 5**, **iPad mini 1** và **iPad 4** chạy iOS 6 đã jailbreak: đổi giao
 diện hệ thống sang kính trong — màn hình chính, màn khoá, thông báo, Control Center, khay đa nhiệm, thanh và bảng trong app —
 có chế độ sáng / tối, kèm tinh chỉnh dịch vụ nền của iOS 6 và bảng điều khiển trong Cài đặt. Lõi viết bằng **Rust**, vỏ
 **Objective-C** thuần (móc hàm lúc chạy, không Logos) nạp bằng MobileSubstrate, dựng bằng Theos.
 
-*English: Glass 6 brings the Liquid Glass look of iOS 26 to jailbroken iPhone 5 and iPad mini 1 on iOS 6 — Home screen, lock
+*English: Glass 6 brings the Liquid Glass look of iOS 26 to jailbroken iPhone 5, iPad mini 1 and iPad 4 on iOS 6 — Home screen, lock
 screen, notifications, a Control Center, a card app switcher, restyled bars and tables inside Apple's apps, light / dark mode.
 Rust core, plain Objective-C shell. The interface is available in English and Vietnamese; the source comments and docs are in
 Vietnamese.*
@@ -32,8 +32,8 @@ Vietnamese.*
 
 ## Máy chạy được
 
-**iPhone 5** (iPhone5,1 / 5,2) và **iPad mini 1** (iPad2,5 / 2,6 / 2,7), iOS 6.0 – 6.1.x đã jailbreak, có MobileSubstrate và
-PreferenceLoader. Đã làm và thử trên iPhone 5 (iOS 6.1.4) và iPad mini 1 (iOS 6.1.3). Trên mẫu máy khác Glass 6 không nạp
+**iPhone 5** (iPhone5,1 / 5,2), **iPad mini 1** (iPad2,5 / 2,6 / 2,7) và **iPad 4** (iPad3,4 / 3,5 / 3,6), iOS 6.0 – 6.1.x đã jailbreak, có MobileSubstrate và
+PreferenceLoader. Đã làm và thử trên iPhone 5 (iOS 6.1.4), iPad mini 1 và iPad 4 (iOS 6.1.3). Trên mẫu máy khác Glass 6 không nạp
 thành phần nào (bảng Cài đặt nói rõ lý do) — mỗi mẫu máy phải được làm và thử riêng.
 
 ## Cài

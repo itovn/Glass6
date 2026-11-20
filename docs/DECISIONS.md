@@ -1576,6 +1576,24 @@ khác iPad ở mấy chỗ (đo trên iPhone 5 iOS 6.1.4):
 nhắn Mới) đều đúng màu thanh; thanh dưới của chế độ Sửa; hàng «Đến:». **Chưa thử**: hàng «Đến:» khi đã có người nhận (viên tên
 người nhận là dữ liệu riêng), bảng gợi ý liên hệ lúc gõ, nút «Tải tin nhắn cũ hơn» (hội thoại thử không đủ dài).
 
+## D49. Thêm mẫu máy iPad 4 (20/11/2026)
+
+Anh thêm một iPad 4 thử (iPad3,4 Wi-Fi, iOS 6.1.3) và dặn mở rộng Glass 6 cho máy này. Máy đã có sẵn gói 1.0.1 nhưng hàng rào
+mẫu máy (D37) giữ Glass 6 đứng yên («mẫu máy iPad3,4 chưa được hỗ trợ»).
+
+- iPad 4 cùng khung 1024 × 768 điểm với iPad mini 1, chỉ khác tỉ lệ màn hình (2). → mẫu mới `G6DevicePad4` (tên `ipad-4`) nằm
+  trong nhóm iPad: `g6_device_is_pad()` đúng cho cả hai, mọi bố cục iPad dùng chung; lõi coi tên máy lạ như iPad mini 1 (cấu hình
+  mặc định giống nhau). Bảng mẫu máy thêm iPad3,4 / 3,5 / 3,6 (ba bản chỉ khác modem).
+- Không phải sửa chỗ vẽ nào: mọi hình Glass 6 tự vẽ đều theo tỉ lệ màn hình thật (soát mã: chỗ duy nhất ép tỉ lệ 1 là nền app
+  Máy tính, chỉ có trên iPhone).
+- **Đã thử trên iPad 4** (máy nằm ngang, sáng + tối): màn hình chính, dock, Control Center, Trung tâm thông báo, hộp thoại,
+  khay đa nhiệm, băng thông báo, Cài đặt › Glass 6, màn khoá — đúng như iPad mini 1; soi 1:1 dock / thanh trạng thái / biểu
+  tượng: nét theo Retina (biểu tượng @2x 144 × 144). Làm mờ hình nền 55–79 ms, kính dock 44 ms (lần đầu 198 ms); để yên ở màn
+  hình chính: SpringBoard 3,2 % CPU, backboardd 8,7 %.
+- Công cụ thử: chụp màn iPad 4 bằng `cbscreen <tệp> 2048 1536` khi máy nằm ngang (khung dọc 1536 × 2048 cho ảnh hụt / lệch).
+- **Chưa thử** trên iPad 4: máy dựng đứng, thư mục (trang đầu không có thư mục), các app vẽ lại riêng (Đồng hồ, Ghi chú, Lời
+  nhắc, Lịch, Danh bạ, Ảnh, Tin nhắn).
+
 ## D8. Bộ dựng Theos (19/11/2026)
 
 - Dự án con không thừa hưởng `TARGET` / `ARCHS` của Makefile cha → Theos dựng thêm arm64 và hỏng lúc liên kết. Mọi Makefile

@@ -15,6 +15,9 @@ static const struct {
     {"iPad2,7", G6DevicePadMini1},   // iPad mini 1 toàn cầu — máy thử
     {"iPhone5,1", G6DevicePhone5},   // iPhone 5 GSM
     {"iPhone5,2", G6DevicePhone5},   // iPhone 5 toàn cầu — máy thử
+    {"iPad3,4", G6DevicePad4},       // iPad 4 Wi-Fi — máy thử (20/11/2026)
+    {"iPad3,5", G6DevicePad4},       // iPad 4 GSM
+    {"iPad3,6", G6DevicePad4},       // iPad 4 toàn cầu
 };
 
 // Số đầu của mã bản dựng iOS: 10 = iOS 6 (10A… = 6.0, 10B… = 6.1); 9 = iOS 5; 11 = iOS 7
@@ -83,6 +86,8 @@ const char *g6_device_name(G6DeviceKind kind) {
             return "ipad-mini-1";
         case G6DevicePhone5:
             return "iphone-5";
+        case G6DevicePad4:
+            return "ipad-4";
         default:
             return "unsupported";
     }

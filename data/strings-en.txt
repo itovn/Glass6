@@ -488,8 +488,8 @@ f5c723b0 = Cannot Check for Update
 # Máy chưa được hỗ trợ
 64e4b142 = Device Not Supported
 
-# Glass 6 chưa có giao diện cho máy này (%@). Bản này chỉ chạy trên iPad mini 1 và iPhone 5 dùng iOS 6; trên máy khác Glass 6 không thay đổi gì. Các mẫu máy khác sẽ được bổ sung ở bản sau.
-55df75de = Glass 6 has no interface for this device yet (%@). This version only runs on iPad mini 1 and iPhone 5 with iOS 6; on other devices Glass 6 changes nothing. More models will be added in later versions.
+# Glass 6 chưa có giao diện cho máy này (%@). Bản này chỉ chạy trên iPad mini 1, iPad 4 và iPhone 5 dùng iOS 6; trên máy khác Glass 6 không thay đổi gì. Các mẫu máy khác sẽ được bổ sung ở bản sau.
+cb5eb615 = Glass 6 has no interface for this device yet (%@). This version only runs on iPad mini 1, iPad 4 and iPhone 5 with iOS 6; on other devices Glass 6 changes nothing. More models will be added in later versions.
 
 # Tắt bằng tệp «off»
 00c8c08c = Off (“off” file)
@@ -539,6 +539,12 @@ d92dce5e = Not running
 # Máy đang nạp lại cấu hình nhà mạng — sóng di động tạm mất chừng một phút.
 fbd7539a = Reloading the carrier configuration — cellular service will be unavailable for about a minute.
 
+# Không bật được 4G
+20126c6c = Could Not Enable 4G
+
+# Không tắt được 4G
+106ed92b = Could Not Disable 4G
+
 # Đã bật 4G
 8e5264c6 = 4G Enabled
 
@@ -550,12 +556,6 @@ c4e747f3 = 4G Disabled
 
 # Máy đã về cấu hình 3G gốc của iOS 6.
 45bb5c83 = The phone is back on the original iOS 6 3G configuration.
-
-# Không bật được 4G
-20126c6c = Could Not Enable 4G
-
-# Không tắt được 4G
-106ed92b = Could Not Disable 4G
 
 # Nguyên bản
 7d15acd1 = Stock

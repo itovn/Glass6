@@ -3,7 +3,7 @@ resolver = "2"
 members = ["crates/g6-core", "crates/g6-ffi", "crates/g6-ctl"]
 
 [workspace.package]
-version = "1.0.1"
+version = "1.0.2"
 edition = "2021"
 license = "GPL-3.0-only"
 

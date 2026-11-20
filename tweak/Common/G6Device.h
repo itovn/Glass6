@@ -10,6 +10,8 @@ typedef enum {
     G6DeviceUnsupported = 0,
     G6DevicePadMini1,  // iPad mini 1 (iPad2,5 / 2,6 / 2,7), iOS 6 — giao diện kiểu iPadOS 26
     G6DevicePhone5,    // iPhone 5 (iPhone5,1 / 5,2), iOS 6 — giao diện kiểu iOS 26 của iPhone
+    G6DevicePad4,      // iPad 4 (iPad3,4 / 3,5 / 3,6), iOS 6 — cùng giao diện iPad (khung 1024×768 điểm như iPad mini 1), màn
+                       // Retina (tỉ lệ 2): mọi hình Glass 6 tự vẽ đều theo tỉ lệ màn hình
 } G6DeviceKind;
 
 // Mẫu máy đang chạy (tra một lần rồi nhớ). Unsupported nếu mã máy không có trong bảng HOẶC bản iOS không phải iOS 6.
@@ -22,8 +24,10 @@ const char *g6_device_name(G6DeviceKind kind);
 static inline int g6_device_supported(void) {
     return g6_device_kind() != G6DeviceUnsupported;
 }
+// Mọi mẫu iPad dùng chung bố cục kiểu iPadOS 26 (khung điểm giống nhau, chỉ khác tỉ lệ màn hình)
 static inline int g6_device_is_pad(void) {
-    return g6_device_kind() == G6DevicePadMini1;
+    G6DeviceKind kind = g6_device_kind();
+    return kind == G6DevicePadMini1 || kind == G6DevicePad4;
 }
 static inline int g6_device_is_phone(void) {
     return g6_device_kind() == G6DevicePhone5;

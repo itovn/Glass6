@@ -238,6 +238,8 @@ static NSString *G6DeviceTitle(void) {
     switch (g6_device_kind()) {
         case G6DevicePadMini1:
             return [NSString stringWithFormat:@"iPad mini 1 (%@)", machine];
+        case G6DevicePad4:
+            return [NSString stringWithFormat:@"iPad 4 (%@)", machine];
         case G6DevicePhone5:
             return [NSString stringWithFormat:@"iPhone 5 (%@)", machine];
         default:
@@ -253,8 +255,8 @@ static NSString *G6DeviceTitle(void) {
     if (!_specifiers && !g6_device_supported()) {
         // Mẫu máy chưa được làm và thử: không hiện công tắc nào, chỉ nói rõ lý do
         PSSpecifier *group = [PSSpecifier groupSpecifierWithName:G6L(@"Máy chưa được hỗ trợ")];
-        NSString *why = [NSString stringWithFormat:G6L(@"Glass 6 chưa có giao diện cho máy này (%@). Bản này chỉ chạy trên iPad mini 1 và "
-                                                         @"iPhone 5 dùng iOS 6; trên máy khác Glass 6 không thay đổi gì. Các mẫu máy khác "
+        NSString *why = [NSString stringWithFormat:G6L(@"Glass 6 chưa có giao diện cho máy này (%@). Bản này chỉ chạy trên iPad mini 1, "
+                                                         @"iPad 4 và iPhone 5 dùng iOS 6; trên máy khác Glass 6 không thay đổi gì. Các mẫu máy khác "
                                                          @"sẽ được bổ sung ở bản sau."),
                                                    G6DeviceTitle()];
         [group setProperty:why forKey:@"footerText"];
