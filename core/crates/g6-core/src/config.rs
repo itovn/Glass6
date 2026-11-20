@@ -113,6 +113,8 @@ pub struct Features {
     pub assist: bool,
     /// Dải hiệu suất hệ thống (CPU, RAM, đĩa, mạng) trên màn hình chính. Mặc định tắt.
     pub perf: bool,
+    /// App Lịch: âm lịch Việt Nam (ngày âm dưới ngày dương, ngày hoàng đạo, thẻ chi tiết ngày). Đi cùng «app_skins».
+    pub lunar: bool,
 }
 
 impl Default for Config {
@@ -175,6 +177,7 @@ impl Default for Features {
             search: true,
             assist: false,
             perf: false,
+            lunar: true,
         }
     }
 }
@@ -285,6 +288,7 @@ impl Config {
                 search: get_bool(v, "featSearch", f.search),
                 assist: get_bool(v, "featAssist", f.assist),
                 perf: get_bool(v, "featPerf", f.perf),
+                lunar: get_bool(v, "featLunar", f.lunar),
             },
         }
     }

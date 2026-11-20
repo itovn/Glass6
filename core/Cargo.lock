@@ -67,7 +67,7 @@ dependencies = [
 
 [[package]]
 name = "g6-core"
-version = "1.0.2"
+version = "1.0.3"
 dependencies = [
  "png",
  "serde",
@@ -76,7 +76,7 @@ dependencies = [
 
 [[package]]
 name = "g6-ctl"
-version = "1.0.2"
+version = "1.0.3"
 dependencies = [
  "ring",
  "rustls",
@@ -86,7 +86,7 @@ dependencies = [
 
 [[package]]
 name = "g6-ffi"
-version = "1.0.2"
+version = "1.0.3"
 dependencies = [
  "g6-core",
 ]

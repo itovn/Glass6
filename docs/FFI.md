@@ -70,6 +70,8 @@ Vào: `{"cmd": "<tên>", …}`. Ra luôn có `ok`; hỏng thì `{"ok": false, "e
 | `perf.reading` | `prev`, `cur`: hai mẫu số đếm thô liên tiếp `{t (ms), cpuBusy, cpuTotal (tích tắc), memFree, memTotal, diskFree, diskTotal (byte), netIn, netOut (byte cộng dồn)}`; thiếu `prev` = mẫu đầu tiên | `reading`: `{cpu, ram, disk (0–1, cho thanh mức), down, up (byte / giây), text: {cpu, ram, disk, down, up}}` — chuỗi đã dựng sẵn; RAM và đĩa là phần còn trống (D26) |
 | `app.policy` | `bundle`: mã gói của app | `bars`, `tables`, `controls` (app này được đổi phần nào), `skeuomorphic` (app tự vẽ giao diện — D23) |
 | `services.catalog` | — | `services`: `[{id, group ("A" / "B" / "C"), files, labels, title, note}]` (từ `data/services.tsv`), `profiles`: `{stock: [], balanced: [mã phải tắt…]}`. Lõi chỉ mô tả; tắt / bật thật là việc của `g6svc` (D22) |
+| `lunar.month` | `month` (1–12), `year` (1800–2199) | `days`: `[{d, ld, lm, ly, leap, good, fest}]` — mọi ngày của tháng dương: ngày / tháng / năm âm, tháng nhuận, hoàng đạo, có lễ âm lịch (D50); ngoài khoảng năm = mảng rỗng |
+| `lunar.day` | `day`, `month`, `year` | `day`: `{ld, lm, ly, leap, month_days, can_chi_day, can_chi_month, can_chi_year, than, good, tiet_khi, hours, festival}` — `than`: thần trực ngày, `hours`: giờ hoàng đạo («Tý (23–1)» …), `festival`: tên lễ hoặc null; ngày sai = lỗi `date` (D50) |
 
 ## Khoá cấu hình (`vn.glass6.plist`)
 
@@ -98,6 +100,7 @@ Khoá thiếu, sai kiểu hay ngoài tầm đều về mặc định / bị kẹ
 | `featBars`, `featTables`, `featControls` | bool | bật | Trong app: thanh và nút trên thanh / bảng kiểu nhóm / công tắc, thanh trượt, nút chọn đoạn |
 | `featSettingsIcons` | bool | bật | App Cài đặt: biểu tượng các mục kiểu ô màu bo góc |
 | `featAppSkins` | bool | bật | Phần vẽ lại riêng cho từng app của Apple: thanh thẻ của Đồng hồ (D28); Ghi chú, Lời nhắc, Lịch, Danh bạ (D32); Ảnh, Tin nhắn (D35) |
+| `featLunar` | bool | bật | App Lịch: âm lịch Việt Nam — ngày âm dưới ngày dương, ngày hoàng đạo, lễ âm lịch, thẻ chi tiết ngày đang chọn (đi cùng `featAppSkins`, D50) |
 | `featKeyboard` | bool | bật | Bàn phím tối ở chế độ tối (SpringBoard + app trong phạm vi Glass6UI, D30) |
 | `featSearch` | bool | bật | Ô tìm kiếm của trang Tìm kiếm (Spotlight) trên màn hình chính thành viên kính (D33) |
 | `featAssist` | bool | **tắt** | Nút AssistiveTouch của Glass 6 (thay nút của iOS) |

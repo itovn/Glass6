@@ -1594,6 +1594,37 @@ mẫu máy (D37) giữ Glass 6 đứng yên («mẫu máy iPad3,4 chưa được
 - **Chưa thử** trên iPad 4: máy dựng đứng, thư mục (trang đầu không có thư mục), các app vẽ lại riêng (Đồng hồ, Ghi chú, Lời
   nhắc, Lịch, Danh bạ, Ảnh, Tin nhắn).
 
+## D50. App Lịch kiểu iOS 26 + âm lịch Việt Nam (21/11/2026)
+
+Anh dặn: «update lại app Lịch của iOS 6 theo phong cách của iOS 26, bổ sung âm lịch Việt Nam, ngày hoàng đạo».
+
+- **Lõi** (`core/crates/g6-core/src/lunar.rs`): thuật toán Hồ Ngọc Đức (tính sóc và trung khí theo thiên văn, múi giờ +7, năm
+  1800–2199) → ngày / tháng / năm âm, tháng nhuận; can chi ngày, tháng, năm; 12 thần trực ngày (Thanh Long khởi theo tháng âm:
+  tháng 1, 7 ở Tý; 2, 8 ở Dần …) — hoàng đạo là Thanh Long, Minh Đường, Kim Quỹ, Kim Đường, Ngọc Đường, Tư Mệnh; giờ hoàng
+  đạo theo chi ngày; 24 tiết khí; 8 lễ âm lịch (Tết, Rằm tháng Giêng, Giỗ Tổ, Phật đản, Đoan ngọ, Vu lan, Trung thu, ông Công
+  ông Táo). Lệnh `lunar.month` (mọi ngày của một tháng dương — vỏ giữ bộ đệm theo tháng) và `lunar.day` (chi tiết một ngày).
+  Đối chiếu tay với lịch Việt Nam: 20/11/2026, 15/6/2026, 1/9/2025, 3/4/2026, Tết và năm có tháng nhuận (thử đơn vị).
+- **Công tắc riêng** `featLunar` («Âm lịch trong app Lịch», mặc định bật), chỉ có tác dụng khi «Vẽ lại app của Apple» bật. Tắt
+  thì lịch vẫn kiểu iOS 26, không còn ngày âm / thẻ âm lịch.
+- **iPhone** (`tweak/UI/G6UIAppCalendarPhone.m`): ô ngày của lịch tháng (CalendarMonthDayTile — tự vẽ trong drawRect:, trạng
+  thái đo bằng cú chạm giả: 1 thường, 2 hôm nay, 3 hôm nay đang chọn, 4 đang chọn, 5 tháng khác) được vẽ lại hoàn toàn: nền
+  trắng, vạch mảnh giữa các tuần, hôm nay chữ đỏ / đĩa đỏ, ngày chọn đĩa đen, cuối tuần chữ xám, chấm sự kiện; ngày âm nhỏ bên
+  dưới. Ô không biết tháng của mình: hỏi `-[CalendarMonthControl _dateForTile:]`; lịch giữ hai bộ ô để trượt tháng và dùng lại
+  ô theo số ngày, nên sau mỗi lần đổi tháng Glass 6 gắn ngày cho bộ ô ĐANG dùng (biến `_tiles[2]`, `_disabledTiles[2]`,
+  `_currentSet`) rồi bắt vẽ lại. Đầu lịch phẳng, tên tháng đậm, mũi tên đỏ. Thẻ âm lịch của ngày đang chọn là tableHeaderView
+  của bảng sự kiện (nhãn «Không có Sự kiện» của app được dời xuống dưới thẻ). Màn Ngày: tên ngày (EKDayBannerNameView) vẽ lại
+  «Thứ Bảy, 21 tháng 11, 2026» + dòng âm lịch.
+- **iPad** (`tweak/UI/G6UIAppCalendarPad.m`): mỗi ô lịch tháng là một CalendarMonthViewDay (NSObject) tự vẽ vào ngữ cảnh của
+  lưới → cho app vẽ ô như cũ với số / tên thứ / dải «H.nay» tạm bỏ (đặt lại ngay sau lượt vẽ), rồi Glass 6 vẽ số (hôm nay đĩa
+  đỏ) và ngày âm ở góc trái ô; tên tháng đậm. Màn Ngày: khối âm lịch ba dòng trên trang trái, giữa cụm ngày và khung sự kiện
+  (khung hạ xuống vừa đủ chỗ, nhớ khung đã hạ để lượt xếp sau không hạ thêm).
+- Màu: hoàng đạo vàng cam, mùng 1 / rằm / lễ đỏ, ngày thường xám. Vẽ theo bảng màu sáng; tối do bộ lọc đảo của cửa sổ (D32)
+  — chữ trong đĩa tròn vẽ đen khi cửa sổ đang bị đảo để ra trắng.
+- **Đã thử:** iPhone 5 đen (iOS 6.1.4) sáng + tối: lịch tháng, lật tháng, thẻ âm lịch, màn Ngày, công tắc tắt / bật; iPad 4
+  (iOS 6.1.3, máy ngang) sáng + tối: lịch tháng, màn Ngày.
+- **Chưa làm / chưa thử:** màn Danh sách (máy thử không có sự kiện — em không tạo dữ liệu trên máy); Tuần, Năm và lịch nhỏ của
+  màn Ngày trên iPad (hôm nay vẫn chữ xanh); máy dựng đứng; iPad mini 1. iPad 1 (iOS 5) ngoài phạm vi của Glass 6.
+
 ## D8. Bộ dựng Theos (19/11/2026)
 
 - Dự án con không thừa hưởng `TARGET` / `ARCHS` của Makefile cha → Theos dựng thêm arm64 và hỏng lúc liên kết. Mọi Makefile

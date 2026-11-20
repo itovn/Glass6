@@ -666,7 +666,7 @@
 			<key>label</key>
 			<string>Trong app</string>
 			<key>footerText</key>
-			<string>Áp cho app của Apple: thanh, bảng, nút điều khiển chuẩn; riêng Đồng hồ, Ghi chú, Lời nhắc, Lịch, Danh bạ, Ảnh, Tin nhắn được vẽ lại thêm («Vẽ lại app của Apple»). Game Center, Nhạc và app bên thứ ba giữ nguyên. Tắt «Giao diện trong app» thì app mở sau đó không bị đổi gì.</string>
+			<string>Áp cho app của Apple: thanh, bảng, nút điều khiển chuẩn; riêng Đồng hồ, Ghi chú, Lời nhắc, Lịch, Danh bạ, Ảnh, Tin nhắn được vẽ lại thêm («Vẽ lại app của Apple»). App Lịch có thêm âm lịch Việt Nam: ngày âm dưới ngày dương, ngày hoàng đạo, giờ tốt, lễ âm lịch. Game Center, Nhạc và app bên thứ ba giữ nguyên. Tắt «Giao diện trong app» thì app mở sau đó không bị đổi gì.</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -747,6 +747,20 @@
 			<string>vn.glass6</string>
 			<key>key</key>
 			<string>featAppSkins</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Âm lịch trong app Lịch</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featLunar</string>
 			<key>default</key>
 			<true/>
 			<key>PostNotification</key>

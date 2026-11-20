@@ -8,6 +8,7 @@
 //! - [`services`]: danh mục dịch vụ hệ thống được phép tắt / bật, hồ sơ dựng sẵn.
 //! - [`assist`]: nút AssistiveTouch của Glass 6 — danh mục chức năng gán được và cấu hình.
 //! - [`apps`]: chính sách theo từng app cho phần nạp vào app (app nào được đổi thanh / bảng / nút).
+//! - [`lunar`]: âm lịch Việt Nam cho app Lịch — đổi ngày, can chi, tiết khí, ngày / giờ hoàng đạo, lễ âm lịch.
 //! - [`perf`]: hiệu suất hệ thống (CPU, RAM, đĩa, mạng) — tính từ số đếm thô và dựng chuỗi hiển thị.
 //! - [`api`]: cửa JSON cho vỏ ObjC (`g6_call`).
 //!
@@ -23,6 +24,7 @@ pub mod config;
 pub mod glass;
 pub mod guard;
 pub mod icon;
+pub mod lunar;
 pub mod perf;
 pub mod services;
 pub mod shape;

@@ -1,6 +1,6 @@
 Package: vn.glass6.tweak
 Name: Glass 6
-Version: 1.0.2
+Version: 1.0.3
 Architecture: iphoneos-arm
 Description: Giao dien Liquid Glass (kieu iPadOS 26 / iOS 26) cho iOS 6: kinh trong, che do sang / toi, tinh chinh dich vu he thong. Chi chay tren iPad mini 1, iPad 4 va iPhone 5 (iOS 6); may khac khong bi thay doi gi. Can khoi dong lai SpringBoard sau khi cai.
 Maintainer: Glass 6

@@ -6,7 +6,8 @@ có chế độ sáng / tối, kèm tinh chỉnh dịch vụ nền của iOS 6 v
 **Objective-C** thuần (móc hàm lúc chạy, không Logos) nạp bằng MobileSubstrate, dựng bằng Theos.
 
 *English: Glass 6 brings the Liquid Glass look of iOS 26 to jailbroken iPhone 5, iPad mini 1 and iPad 4 on iOS 6 — Home screen, lock
-screen, notifications, a Control Center, a card app switcher, restyled bars and tables inside Apple's apps, light / dark mode.
+screen, notifications, a Control Center, a card app switcher, restyled bars and tables inside Apple's apps, light / dark mode,
+and the Vietnamese lunar calendar in Calendar.
 Rust core, plain Objective-C shell. The interface is available in English and Vietnamese; the source comments and docs are in
 Vietnamese.*
 
@@ -23,6 +24,8 @@ Vietnamese.*
 - **Khay đa nhiệm**: dạng thẻ trên iPhone, dải kính trên iPad.
 - **Trong app**: thanh điều hướng, thanh thẻ, bảng, công tắc, thanh trượt, bàn phím; vẽ lại riêng Cài đặt, Đồng hồ, Ghi chú,
   Lời nhắc, Lịch, Danh bạ, Ảnh, Tin nhắn và (iPhone) Điện thoại, Máy tính, La bàn, Ghi âm. App không phải của Apple giữ nguyên.
+- **Âm lịch Việt Nam** trong app Lịch: ngày âm nhỏ dưới mỗi ngày dương, ngày hoàng đạo, mùng 1 / rằm / lễ âm lịch; ngày đang
+  chọn có can chi, thần trực ngày, giờ hoàng đạo, tiết khí. Lịch tháng và màn Ngày vẽ lại kiểu iOS 26 (iPhone và iPad).
 - **Sáng / tối / tự động theo giờ**; nút AssistiveTouch riêng; dải hiệu suất (CPU, RAM, mạng) trên thanh trạng thái.
 - **Dịch vụ hệ thống**: tắt các dịch vụ nền của iOS 6 đã ngừng từ lâu, chặn cập nhật iOS — từng mục một, bật lại được.
 - **Bật 4G** (iPhone 5): LTE cho SIM MobiFone, Viettel, VinaPhone bằng phần LTE có sẵn trong iOS 6; APN / MMS giữ như trước;
@@ -57,7 +60,7 @@ Releases rồi `dpkg -i` qua SSH và khởi động lại SpringBoard. Tuỳ ch�
 
 | Thư mục | Nội dung |
 | --- | --- |
-| `core/` | Lõi Rust: `g6-core` (vật liệu kính, bảng màu, cấu hình, danh mục dịch vụ, bộ gác), `g6-ffi` (mặt C → `libglass6core.dylib`), `g6-ctl` (`glass6ctl`: kiểm / tải bản mới qua HTTPS bằng rustls) |
+| `core/` | Lõi Rust: `g6-core` (vật liệu kính, bảng màu, cấu hình, danh mục dịch vụ, âm lịch, bộ gác), `g6-ffi` (mặt C → `libglass6core.dylib`), `g6-ctl` (`glass6ctl`: kiểm / tải bản mới qua HTTPS bằng rustls) |
 | `tweak/SB/` | `Glass6SB.dylib` — nạp vào SpringBoard |
 | `tweak/UI/` | `Glass6UI.dylib` — nạp vào các app của Apple trong phạm vi |
 | `tweak/Common/` | Mã dùng chung (móc hàm, kính, cấu hình, hộp thoại, ngôn ngữ…) |

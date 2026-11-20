@@ -522,12 +522,14 @@ The last change is awaiting confirmation: at the next restart, 60 seconds of sta
 	<string>iTunes Match / iCloud Music</string>
 	<key>«Thông báo kính»: băng thông báo ở mép trên và Trung tâm thông báo (kéo từ mép trên xuống) thành tấm kính, chữ phông Inter. Bảng âm lượng và hộp thoại của hệ thống (cảnh báo pin yếu, hỏi xoá app…) cũng thành tấm kính. Nền của kính là ảnh chụp màn hình lúc vừa hiện; có tác dụng từ lần hiện kế tiếp.</key>
 	<string>“Glass Notifications”: banners at the top edge and Notification Center (pull down from the top edge) become glass panels with text in Inter. The volume HUD and system alerts (low battery, delete an app…) become glass panels too. The glass backdrop is a snapshot taken as the panel appears; changes apply from the next time it shows.</string>
-	<key>Áp cho app của Apple: thanh, bảng, nút điều khiển chuẩn; riêng Đồng hồ, Ghi chú, Lời nhắc, Lịch, Danh bạ, Ảnh, Tin nhắn được vẽ lại thêm («Vẽ lại app của Apple»). Game Center, Nhạc và app bên thứ ba giữ nguyên. Tắt «Giao diện trong app» thì app mở sau đó không bị đổi gì.</key>
-	<string>Applies to Apple's apps: standard bars, tables and controls; Clock, Notes, Reminders, Calendar, Contacts, Photos and Messages get extra restyling (“Restyle Apple Apps”). Game Center, Music and third-party apps are left alone. With “App Interface” off, apps opened afterwards are not changed.</string>
+	<key>Áp cho app của Apple: thanh, bảng, nút điều khiển chuẩn; riêng Đồng hồ, Ghi chú, Lời nhắc, Lịch, Danh bạ, Ảnh, Tin nhắn được vẽ lại thêm («Vẽ lại app của Apple»). App Lịch có thêm âm lịch Việt Nam: ngày âm dưới ngày dương, ngày hoàng đạo, giờ tốt, lễ âm lịch. Game Center, Nhạc và app bên thứ ba giữ nguyên. Tắt «Giao diện trong app» thì app mở sau đó không bị đổi gì.</key>
+	<string>Applies to Apple's apps: standard bars, tables and controls; Clock, Notes, Reminders, Calendar, Contacts, Photos and Messages get extra restyling (“Restyle Apple Apps”). Calendar also shows the Vietnamese lunar calendar: lunar dates under solar dates, auspicious days and hours, lunar holidays. Game Center, Music and third-party apps are left alone. With “App Interface” off, apps opened afterwards are not changed.</string>
 	<key>Áp cho thanh trạng thái của màn hình chính, màn khoá và các app của Apple; cần bật «Thanh trạng thái trong suốt». Việc ẩn «Không có SIM» có tác dụng trong mọi app; khi máy có SIM thì tên nhà mạng vẫn hiện.</key>
 	<string>Applies to the status bar on the Home screen, on the Lock screen and in Apple's apps; requires “Transparent Status Bar”. Hiding “No SIM” works in every app; with a SIM inserted the carrier name still shows.</string>
 	<key>Áp hồ sơ Cân bằng</key>
 	<string>Apply Balanced Profile</string>
+	<key>Âm lịch trong app Lịch</key>
+	<string>Lunar Calendar in Calendar</string>
 	<key>Ô tìm kiếm kính</key>
 	<string>Glass Search Field</string>
 	<key>Đa nhiệm</key>

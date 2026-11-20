@@ -215,8 +215,8 @@ b599e0e6 = Glass Alerts
 # Trong app
 1d7dbed4 = In Apps
 
-# Áp cho app của Apple: thanh, bảng, nút điều khiển chuẩn; riêng Đồng hồ, Ghi chú, Lời nhắc, Lịch, Danh bạ, Ảnh, Tin nhắn được vẽ lại thêm («Vẽ lại app của Apple»). Game Center, Nhạc và app bên thứ ba giữ nguyên. Tắt «Giao diện trong app» thì app mở sau đó không bị đổi gì.
-fb1bf845 = Applies to Apple's apps: standard bars, tables and controls; Clock, Notes, Reminders, Calendar, Contacts, Photos and Messages get extra restyling (“Restyle Apple Apps”). Game Center, Music and third-party apps are left alone. With “App Interface” off, apps opened afterwards are not changed.
+# Áp cho app của Apple: thanh, bảng, nút điều khiển chuẩn; riêng Đồng hồ, Ghi chú, Lời nhắc, Lịch, Danh bạ, Ảnh, Tin nhắn được vẽ lại thêm («Vẽ lại app của Apple»). App Lịch có thêm âm lịch Việt Nam: ngày âm dưới ngày dương, ngày hoàng đạo, giờ tốt, lễ âm lịch. Game Center, Nhạc và app bên thứ ba giữ nguyên. Tắt «Giao diện trong app» thì app mở sau đó không bị đổi gì.
+a113fb7a = Applies to Apple's apps: standard bars, tables and controls; Clock, Notes, Reminders, Calendar, Contacts, Photos and Messages get extra restyling (“Restyle Apple Apps”). Calendar also shows the Vietnamese lunar calendar: lunar dates under solar dates, auspicious days and hours, lunar holidays. Game Center, Music and third-party apps are left alone. With “App Interface” off, apps opened afterwards are not changed.
 
 # Giao diện trong app
 b0cc1179 = App Interface
@@ -235,6 +235,9 @@ fd13d08f = Icons in Settings
 
 # Vẽ lại app của Apple
 bdd0f9f7 = Restyle Apple Apps
+
+# Âm lịch trong app Lịch
+b45912f3 = Lunar Calendar in Calendar
 
 # Bàn phím tối ở chế độ tối
 2bb52401 = Dark Keyboard in Dark Mode

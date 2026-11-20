@@ -17,6 +17,7 @@ use crate::config::Config;
 use crate::glass::{self, Placement};
 use crate::guard::{self, Dylib};
 use crate::icon;
+use crate::lunar;
 use crate::perf;
 use crate::services;
 use crate::theme::{self, BackdropPlan, Surface};
@@ -151,6 +152,21 @@ pub fn call(input: &str) -> String {
             },
         })
         .to_string(),
+        // Âm lịch cho app Lịch: mọi ngày của một tháng dương lịch / chi tiết một ngày (năm 1800–2199)
+        "lunar.month" => {
+            let m = v.get("month").and_then(Value::as_i64).unwrap_or(0);
+            let y = v.get("year").and_then(Value::as_i64).unwrap_or(0);
+            json!({ "ok": true, "days": lunar::month_cells(m, y) }).to_string()
+        }
+        "lunar.day" => {
+            let d = v.get("day").and_then(Value::as_i64).unwrap_or(0);
+            let m = v.get("month").and_then(Value::as_i64).unwrap_or(0);
+            let y = v.get("year").and_then(Value::as_i64).unwrap_or(0);
+            match lunar::day_detail(d, m, y) {
+                Some(x) => json!({ "ok": true, "day": x }).to_string(),
+                None => err("date"),
+            }
+        }
         _ => err("cmd"),
     }
 }

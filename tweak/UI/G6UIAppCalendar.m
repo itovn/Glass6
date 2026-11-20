@@ -19,6 +19,10 @@
 
 #import "G6Hook.h"
 #import "G6Log.h"
+#import "G6Prefs.h"
+
+void G6UIAppCalendarPhoneApply(BOOL active, BOOL lunar);
+void G6UIAppCalendarPadApply(BOOL active, BOOL lunar);
 
 static BOOL gActive;
 static char kTitleKey, kLabelKey, kDroppedTitleKey;
@@ -204,6 +208,11 @@ static void G6CalendarRefresh(UIView *view, Class nav, Class toolbar, int depth)
 }
 
 void G6UIAppCalendarApply(BOOL active) {
+    // Lịch tháng dạng lưới + màn Ngày (iPhone) + âm lịch — G6UIAppCalendarPhone.m
+    BOOL lunar = active && G6Feature(@"lunar");
+    G6UIAppCalendarPhoneApply(active, lunar);
+    // Lịch tháng của iPad (ô vẽ bằng CalendarMonthViewDay) + âm lịch — G6UIAppCalendarPad.m
+    G6UIAppCalendarPadApply(active, lunar);
     Class nav = objc_getClass("CalendarNavigationArea"), toolbar = objc_getClass("CalendarToolbar");
     if (!nav && !toolbar) return;
     if (!orig_navLayout && !orig_toolbarLayout) {
