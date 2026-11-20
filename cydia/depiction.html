@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Glass 6</title>
+<!-- Trang mô tả gói trong Cydia (UIWebView iOS 6): không biến CSS, flex, grid, backdrop-filter; dải màu có tiền tố -webkit- -->
+<style>
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; padding: 12px 10px 26px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; color: #fff;
+  background: #3b3f9c;
+  background-image: -webkit-linear-gradient(top, #1f6fd0 0%, #4a52c4 34%, #8a4fc0 68%, #c2569a 100%);
+  background-image: linear-gradient(to bottom, #1f6fd0 0%, #4a52c4 34%, #8a4fc0 68%, #c2569a 100%); }
+a { color: #fff; }
+.head { position: relative; padding: 4px 0 8px 78px; min-height: 64px; }
+.head img { position: absolute; left: 0; top: 0; width: 64px; height: 64px; border-radius: 15px;
+  -webkit-box-shadow: 0 4px 12px rgba(10, 16, 60, 0.35); box-shadow: 0 4px 12px rgba(10, 16, 60, 0.35); }
+.head b { display: block; font-size: 21px; margin-top: 6px; text-shadow: 0 1px 2px rgba(10, 16, 60, 0.3); }
+.head span { font-size: 14px; color: rgba(255, 255, 255, 0.9); }
+h2 { margin: 20px 10px 7px; font-size: 16px; text-shadow: 0 1px 2px rgba(10, 16, 60, 0.3); }
+.glass { border-radius: 18px; overflow: hidden;
+  background: rgba(255, 255, 255, 0.15);
+  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.11));
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.11));
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 6px 16px rgba(10, 16, 60, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 6px 16px rgba(10, 16, 60, 0.22); }
+.row { padding: 10px 13px; border-top: 1px solid rgba(255, 255, 255, 0.2); font-size: 14px; line-height: 20px; color: rgba(255, 255, 255, 0.92); }
+.row:first-child { border-top: 0; }
+.row b { color: #fff; }
+.shots { text-align: center; font-size: 0; }
+.shots img { display: inline-block; width: 30%; max-width: 130px; margin: 4px 1%; border-radius: 9px; border: 1px solid rgba(255, 255, 255, 0.4); }
+.foot { margin-top: 18px; text-align: center; font-size: 12px; line-height: 18px; color: rgba(255, 255, 255, 0.86); }
+</style>
+</head>
+<body>
+<div class="head">
+  <img src="CydiaIcon.png" alt="">
+  <b>Glass 6 1.0.0</b>
+  <span>Liquid Glass (iOS 26) cho iOS 6 · for iOS 6</span>
+</div>
+
+<div class="shots">
+  <img src="../img/phone-home.jpg" alt=""><img src="../img/phone-lock.jpg" alt=""><img src="../img/phone-cc.jpg" alt="">
+</div>
+
+<h2>Bản 1.0.0</h2>
+<div class="glass">
+  <div class="row">Bản đầu tiên: giao diện <b>Liquid Glass</b> kiểu iOS 26 cho <b>iPhone 5</b> và <b>iPad mini 1</b> (iOS 6)</div>
+  <div class="row"><b>Màn hình chính, màn khoá</b>: dock, thư mục, ô tìm kiếm bằng kính; bốn kiểu biểu tượng; đồng hồ lớn, thông báo dạng thẻ</div>
+  <div class="row"><b>Control Center</b> (iOS 6 chưa có), Trung tâm thông báo, băng thông báo, hộp thoại, bảng chọn, bảng âm lượng bằng kính</div>
+  <div class="row"><b>Khay đa nhiệm dạng thẻ</b> trên iPhone; nút AssistiveTouch riêng; dải hiệu suất CPU / RAM / mạng</div>
+  <div class="row"><b>Trong app</b>: thanh, bảng, công tắc, bàn phím kiểu mới; vẽ lại Cài đặt, Đồng hồ, Ghi chú, Lời nhắc, Lịch, Danh bạ, Ảnh, Tin nhắn, Điện thoại, Máy tính, La bàn, Ghi âm</div>
+  <div class="row"><b>Chế độ sáng / tối</b>, tự đổi theo giờ; tắt bớt dịch vụ nền của iOS 6; chặn cập nhật iOS</div>
+  <div class="row"><b>Tự cập nhật</b> trong Cài đặt › Glass 6 — chỉ cài gói có chữ ký số đúng</div>
+</div>
+
+<h2>English</h2>
+<div class="glass">
+  <div class="row">The <b>Liquid Glass</b> look of iOS 26 for <b>iPhone 5</b> and <b>iPad mini 1</b> on iOS 6: glass dock, folders, lock screen, notifications, alerts, a real <b>Control Center</b>, a card app switcher on iPhone, restyled bars / tables / keyboard inside Apple's apps, light / dark mode.</div>
+  <div class="row">Every part has its own switch in Settings › Glass 6 (English and Vietnamese). Updates over the air, installed only when the package's digital signature is valid.</div>
+</div>
+
+<h2>Lưu ý · Notes</h2>
+<div class="glass">
+  <div class="row">Cài xong bấm <b>Restart SpringBoard</b>. Tuỳ chỉnh ở <b>Cài đặt › Glass 6</b>.</div>
+  <div class="row">Chỉ chạy trên <b>iPhone 5</b> và <b>iPad mini 1</b>, iOS 6.0 – 6.1.x; máy khác không bị thay đổi gì. · Runs only on iPhone 5 and iPad mini 1 (iOS 6.0 – 6.1.x); other models are left unchanged.</div>
+  <div class="row">Không sửa tệp hệ thống — gỡ gói là sạch. Màn hình chính khởi động 3 lần liền mà chưa ổn thì Glass 6 tự tắt.</div>
+  <div class="row">Mã nguồn mở GPL-3.0: <a href="https://github.com/itovn/Glass6">github.com/itovn/Glass6</a></div>
+</div>
+
+<div class="foot">
+  <a href="https://itovn.github.io/Glass6/">itovn.github.io/Glass6</a><br>
+  Dự án độc lập, không liên quan tới Apple.
+</div>
+</body>
+</html>

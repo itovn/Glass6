@@ -1,0 +1,34 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Origin: Glass 6
+Label: Glass 6
+Suite: stable
+Version: 1.0
+Codename: ios6
+Architectures: iphoneos-arm
+Components: main
+Description: Glass 6 - Liquid Glass (iOS 26) cho iOS 6 da jailbreak - https://itovn.github.io/Glass6/
+MD5Sum:
+ 9337c5bae4154d6f0a1d4ca163dbe875 889 Packages
+ 2f578dcec3cba7b1f53d04ffd14b12dd 576 Packages.gz
+ ef3bf806dd0ab97b597003610e05ac0c 639 Packages.bz2
+SHA256:
+ fdba74eb15aafa9586f305dee6b69cf4109a7064bfdaa3f9a4d893244a0c4f4e 889 Packages
+ 045ae431c7f2438d9c0569326c06d7fbe4012e5718eeb56da9648b4a93d86e58 576 Packages.gz
+ 7cf6af78db5ba149298444c9d5039cc008cf9b5ecc39f433b838a9da862e8dca 639 Packages.bz2
+
+-----BEGIN PGP SIGNATURE-----
+
+iQGzBAEBCAAdFiEEW9PxF+4w01/HbjM6bdzKOAqwrzAFAmr/tZ8ACgkQbdzKOAqw
+rzBJHAv9GJN27xhoULrfmfScOxJBk6Q9hkPxnGjBVNS5Ga0K1FfhPxCuOBc3WUYW
+ijeBDqDAg3MrcBFyJ2Tju5kdsdFH7ec6Xwp67a6/kqyOgsMWXGLA5dFKN9kgp7Wr
+FvgzVaKqemxdnNsAw8pagBaQhtfTjSQpal3dPorIuO+MKPShEK4NT8J8mHisgD6P
+rDvzdXqPPilJ4K4GMSYNfOyRnIKGLWrho/gpL9qOCmQDZdLO1GJSvOqHDNt8uFT9
+H6GjCzhW3oiVvcXxTjwo53WNCF/M8Su3KbI2t6ycSINxk/s5NPPVHwZR0cD6E0wo
+bSX499oP24egPqWKX6ShGf9jZOdy0Ppt579h4Qpma7tVRwPtJcwMXPbHigIFPFpD
+ESNGsA61Z7WFRfihj8d/IM0N2zVaFhLtlk4Lkoz2Jj9FUAkE488PuV9w2QLZ5hD4
+iHMvVhW8B3HuRolhtIC6kwqdKW+S6STpCi+3ndkmZ4R4iSBpxOccFT4aPEzhpHeX
+MOQTI0DB
+=2k4b
+-----END PGP SIGNATURE-----

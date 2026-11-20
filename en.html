@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Glass 6 — Liquid Glass for iOS 6</title>
+<meta name="description" content="Glass 6: a tweak that brings the Liquid Glass look of iOS 26 / iPadOS 26 to jailbroken iPhone 5 and iPad mini 1 on iOS 6. Glass surfaces, light / dark mode, Control Center, signed over-the-air updates.">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon.png">
+<!-- Viết cho Safari iOS 6: không biến CSS, flex, grid, gap, calc, backdrop-filter; dải màu có tiền tố -webkit- -->
+<style>
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; padding: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #fff;
+  background: #3b3f9c;
+  background-image: -webkit-linear-gradient(top, #1f6fd0 0%, #4a52c4 34%, #8a4fc0 68%, #c2569a 100%);
+  background-image: linear-gradient(to bottom, #1f6fd0 0%, #4a52c4 34%, #8a4fc0 68%, #c2569a 100%);
+}
+a { color: #fff; }
+.wrap { max-width: 640px; margin: 0 auto; padding: 0 12px 34px; }
+.lang { text-align: right; padding: 12px 4px 0; font-size: 14px; }
+.lang a { display: inline-block; padding: 4px 12px; border-radius: 14px; text-decoration: none;
+  background: rgba(255, 255, 255, 0.16); border: 1px solid rgba(255, 255, 255, 0.3); }
+/* Phần đầu */
+.hero { text-align: center; padding: 14px 0 6px; }
+.hero img { width: 120px; height: 120px; border-radius: 27px;
+  -webkit-box-shadow: 0 10px 26px rgba(10, 16, 60, 0.4); box-shadow: 0 10px 26px rgba(10, 16, 60, 0.4); }
+.hero h1 { margin: 14px 0 2px; font-size: 36px; font-weight: bold; letter-spacing: -0.5px; text-shadow: 0 1px 3px rgba(10, 16, 60, 0.35); }
+.hero p { margin: 6px 14px; font-size: 17px; line-height: 24px; color: rgba(255, 255, 255, 0.92); text-shadow: 0 1px 2px rgba(10, 16, 60, 0.3); }
+.hero .ver { display: inline-block; margin-top: 8px; padding: 3px 12px; border-radius: 13px; font-size: 13px; font-weight: bold;
+  background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); }
+/* Tấm kính */
+.glass { margin: 0 2px; border-radius: 22px; overflow: hidden;
+  background: rgba(255, 255, 255, 0.15);
+  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.11));
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.11));
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 8px 22px rgba(10, 16, 60, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 8px 22px rgba(10, 16, 60, 0.25); }
+/* Nút viên */
+.btn { display: block; margin: 12px 6px 0; height: 48px; line-height: 48px; border-radius: 24px; text-align: center;
+  font-size: 17px; font-weight: bold; text-decoration: none; color: #fff;
+  background: rgba(255, 255, 255, 0.18); border: 1px solid rgba(255, 255, 255, 0.42);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 4px 12px rgba(10, 16, 60, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 4px 12px rgba(10, 16, 60, 0.2); }
+.btn.main { color: #2b3aa0; background: #fff; border-color: #fff; }
+h2 { margin: 30px 14px 9px; font-size: 20px; text-shadow: 0 1px 2px rgba(10, 16, 60, 0.3); }
+.row { position: relative; padding: 12px 14px 12px 56px; border-top: 1px solid rgba(255, 255, 255, 0.2); font-size: 15px; line-height: 21px; }
+.row:first-child { border-top: 0; }
+.row > b { display: block; font-size: 16px; }
+.row span { color: rgba(255, 255, 255, 0.86); }
+.row .ic { position: absolute; left: 13px; top: 13px; width: 30px; height: 30px; border-radius: 9px; overflow: hidden;
+  background: rgba(255, 255, 255, 0.22); border: 1px solid rgba(255, 255, 255, 0.36); }
+.row .ic svg { display: block; }
+.row.plain { padding-left: 14px; }
+.row code, .mono { font-family: Menlo, Courier, monospace; font-size: 14px; background: rgba(10, 16, 60, 0.28); padding: 1px 5px; border-radius: 5px; word-wrap: break-word; }
+/* Ảnh màn hình: khối nội dòng (không flex) */
+.shots { text-align: center; font-size: 0; margin: 0 -4px; }
+.shot { display: inline-block; width: 30%; max-width: 180px; margin: 6px 1.5%; vertical-align: top; font-size: 12px; line-height: 16px;
+  color: rgba(255, 255, 255, 0.9); }
+.shot img { display: block; width: 100%; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.4);
+  -webkit-box-shadow: 0 6px 16px rgba(10, 16, 60, 0.35); box-shadow: 0 6px 16px rgba(10, 16, 60, 0.35); margin-bottom: 5px; }
+.note { margin: 9px 16px 0; font-size: 13px; line-height: 19px; color: rgba(255, 255, 255, 0.86); }
+.foot { margin: 32px 10px 0; text-align: center; font-size: 13px; line-height: 20px; color: rgba(255, 255, 255, 0.86); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="lang"><a href="index.html">Tiếng Việt</a></div>
+
+  <div class="hero">
+    <img src="img/icon.png" alt="Glass 6 icon">
+    <h1>Glass 6</h1>
+    <p>The <b>Liquid Glass</b> look of iOS 26 for jailbroken <b>iPhone 5</b> and <b>iPad mini 1</b> on iOS 6.</p>
+    <span class="ver">Version 1.0.0</span>
+  </div>
+
+  <a class="btn main" href="cydia://url/https://cydia.saurik.com/api/share#?source=https://itovn.github.io/Glass6/cydia/">Add Source to Cydia</a>
+  <a class="btn" href="https://github.com/itovn/Glass6/releases/latest">Download the .deb</a>
+  <p class="note">Cydia source: <span class="mono">https://itovn.github.io/Glass6/cydia/</span></p>
+
+  <a id="iphone"></a>
+  <h2>On iPhone 5</h2>
+  <div class="shots">
+    <div class="shot"><img src="img/phone-home.jpg" alt="Home screen">Home screen</div>
+    <div class="shot"><img src="img/phone-lock.jpg" alt="Lock screen">Lock screen</div>
+    <div class="shot"><img src="img/phone-cc.jpg" alt="Control Center">Control Center</div>
+    <div class="shot"><img src="img/phone-folder.jpg" alt="Folder">Glass folders</div>
+    <div class="shot"><img src="img/phone-assist.jpg" alt="AssistiveTouch button">AssistiveTouch menu</div>
+    <div class="shot"><img src="img/phone-alert.jpg" alt="Alert">Glass alerts</div>
+    <div class="shot"><img src="img/phone-settings.jpg" alt="Settings">Settings, dark mode</div>
+    <div class="shot"><img src="img/phone-keypad.jpg" alt="Phone">Phone</div>
+    <div class="shot"><img src="img/phone-calc.jpg" alt="Calculator">Calculator</div>
+  </div>
+
+  <a id="features"></a>
+  <h2>What You Get</h2>
+  <div class="glass">
+    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><rect x="6" y="6" width="7.5" height="7.5" rx="2.2" fill="#fff"/><rect x="16.5" y="6" width="7.5" height="7.5" rx="2.2" fill="#fff"/><rect x="6" y="16.5" width="7.5" height="7.5" rx="2.2" fill="#fff"/><rect x="16.5" y="16.5" width="7.5" height="7.5" rx="2.2" fill="#fff"/></svg></div><b>Home screen</b><span>Glass dock, glass folders, a pill-shaped search field; four icon styles (default, dark, clear, tinted); a live Clock icon.</span></div>
+    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M10.5 14v-2.5a4.5 4.5 0 0 1 9 0V14" fill="none" stroke="#fff" stroke-width="2.2"/><rect x="8" y="13.5" width="14" height="10" rx="2.5" fill="#fff"/></svg></div><b>Lock screen</b><span>Large clock, glass slide-to-unlock track, notification cards, a “Charged N%” line instead of the big battery picture.</span></div>
+    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><rect x="6" y="9" width="18" height="5" rx="2.5" fill="#fff"/><circle cx="19.5" cy="11.5" r="2" fill="#7a6fd0"/><rect x="6" y="17" width="18" height="5" rx="2.5" fill="#fff"/><circle cx="10.5" cy="19.5" r="2" fill="#7a6fd0"/></svg></div><b>Control Center</b><span>iOS 6 never had one — Glass 6 adds it: Airplane Mode, cellular data, Wi-Fi, Bluetooth, Do Not Disturb, rotation lock, light / dark, flashlight, brightness, volume, now playing. Pull down from the right side of the top edge.</span></div>
+    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><rect x="5" y="8" width="20" height="9" rx="4" fill="#fff"/><rect x="8" y="20" width="14" height="3" rx="1.5" fill="#fff"/></svg></div><b>Notifications, alerts, action sheets</b><span>Floating banner cards, Notification Center, alerts, action sheets and the volume HUD are all glass.</span></div>
+    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><rect x="6" y="7" width="9" height="16" rx="2.5" fill="#fff"/><rect x="17" y="9" width="7" height="12" rx="2" fill="#fff" opacity="0.7"/></svg></div><b>App switcher</b><span>iPhone: app snapshot cards, swipe up to quit. iPad: the icon strip on glass.</span></div>
+    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><rect x="5" y="7" width="20" height="5" rx="2.5" fill="#fff"/><rect x="5" y="14.5" width="20" height="9" rx="3" fill="#fff" opacity="0.7"/></svg></div><b>Inside apps</b><span>Navigation bars, floating tab bars, tables, switches, sliders, keyboard — restyled, following light / dark. Redrawn individually: Settings, Clock, Notes, Reminders, Calendar, Contacts, Photos, Messages; on iPhone also Phone, Calculator, Compass, Voice Memos. Third-party apps are left untouched.</span></div>
+    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M19 7a8.5 8.5 0 1 0 4.5 13.5A7 7 0 0 1 19 7z" fill="#fff"/></svg></div><b>Light / dark</b><span>Light, dark, or automatic by time of day — on the Home screen and inside apps.</span></div>
+    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><rect x="5" y="11" width="18" height="8" rx="2.5" fill="none" stroke="#fff" stroke-width="2"/><rect x="7.5" y="13.5" width="10" height="3" rx="1" fill="#fff"/><rect x="24" y="13.5" width="2" height="3" rx="1" fill="#fff"/></svg></div><b>Status bar</b><span>Redrawn battery (green bolt while charging), time on the left, hidden carrier name; a small performance strip: CPU, RAM, network.</span></div>
+    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="8.5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="15" cy="15" r="4.5" fill="#fff"/></svg></div><b>Its own AssistiveTouch button</b><span>A floating button with a nine-slot glass menu; pick the action for each slot: Home, app switcher, Control Center, lock, screenshot, volume, respring…</span></div>
+    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M15 6l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V9z" fill="#fff"/></svg></div><b>System services</b><span>Turn off iOS 6 background services that stopped working long ago, block iOS updates — each has its own switch and can be turned back on.</span></div>
+    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M22 12a7.5 7.5 0 1 0 .6 5.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M23.5 6.5v6.5h-6.5z" fill="#fff"/></svg></div><b>Over-the-air updates</b><span>Tells you about new versions, downloads and installs them in Settings › Glass 6. A package is installed only if its digital signature is valid.</span></div>
+  </div>
+  <p class="note">Every part has its own switch in Settings › Glass 6. English and Vietnamese interface.</p>
+
+  <a id="styles"></a>
+  <h2>Light / Dark, Icon Styles</h2>
+  <div class="shots">
+    <div class="shot"><img src="img/phone-settings-light.jpg" alt="Settings, light mode">Light mode</div>
+    <div class="shot"><img src="img/phone-keypad-light.jpg" alt="Phone, light mode">Phone, light</div>
+    <div class="shot"><img src="img/phone-voice.jpg" alt="Voice Memos">Voice Memos</div>
+    <div class="shot"><img src="img/phone-icons-clear.jpg" alt="Clear icons">Clear icons</div>
+    <div class="shot"><img src="img/phone-icons-dark.jpg" alt="Dark icons">Dark icons</div>
+    <div class="shot"><img src="img/phone-icons-tint.jpg" alt="Tinted icons">Tinted icons</div>
+  </div>
+  <p class="note">Screenshots from an iPhone 5 (iOS 6.1.4). iPad mini 1 has the same parts, laid out the iPadOS 26 way.</p>
+
+  <a id="install"></a>
+  <h2>Install</h2>
+  <div class="glass">
+    <div class="row plain"><b>1. Add the Cydia source</b><span>Open Cydia → Sources → Edit → Add and enter <code>https://itovn.github.io/Glass6/cydia/</code> (or tap “Add Source to Cydia” above).</span></div>
+    <div class="row plain"><b>2. Install Glass 6</b><span>Search for “Glass 6” → Install → Confirm, then tap “Restart SpringBoard”.</span></div>
+    <div class="row plain"><b>3. Make it yours</b><span>Open Settings › Glass 6: choose light / dark, the icon style, and switch each part on or off.</span></div>
+  </div>
+  <p class="note">Later versions update over the air: Settings › Glass 6 › Check for Update.</p>
+
+  <a id="devices"></a>
+  <h2>Supported Devices</h2>
+  <div class="glass">
+    <div class="row plain"><span><b>iPhone 5</b> and <b>iPad mini 1</b>, jailbroken iOS 6.0 – 6.1.x (requires MobileSubstrate and PreferenceLoader). Tested on iPhone 5 (iOS 6.1.4) and iPad mini 1 (iOS 6.1.3). On any other model Glass 6 changes nothing; more models will be added over time.</span></div>
+  </div>
+
+  <a id="safety"></a>
+  <h2>Safety</h2>
+  <div class="glass">
+    <div class="row plain"><span>Glass 6 modifies no system file — removing the package leaves nothing behind. If the Home screen restarts 3 times in a row before Glass 6 runs stably, Glass 6 turns itself off. To turn it off by hand over SSH: <code>touch /var/mobile/Library/Glass6/off</code>, then restart SpringBoard.</span></div>
+  </div>
+
+  <a id="source"></a>
+  <h2>Source Code</h2>
+  <div class="glass">
+    <div class="row plain"><b>Open source — GPL-3.0</b><span><a href="https://github.com/itovn/Glass6">github.com/itovn/Glass6</a> · a Rust core (renders the glass material) with an Objective-C shell loaded by MobileSubstrate.</span></div>
+  </div>
+
+  <div class="foot">
+    Glass 6 is an independent project and is not affiliated with Apple. “Liquid Glass”, iOS and iPadOS are trademarks of Apple Inc.<br>
+    Bug reports and feedback: <a href="https://github.com/itovn/Glass6/issues">github.com/itovn/Glass6/issues</a>
+  </div>
+</div>
+</body>
+</html>
