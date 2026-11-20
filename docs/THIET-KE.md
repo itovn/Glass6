@@ -101,6 +101,7 @@ Glass6UI.dylib        app được chọn — ObjC mỏng, chỉ đọc ảnh d�
 Glass6Prefs.bundle    Cài đặt › Glass 6 (PreferenceLoader)             ─┤
 glass6ctl             công cụ dòng lệnh quyền mobile: kiểm bản mới, tải ─┘
 g6update, g6svc       hai công cụ setuid root, nhỏ: cài bản cập nhật / bật tắt dịch vụ
+g6lte                 setuid root (chỉ iPhone 5): bật / tắt 4G cho SIM MobiFone, Viettel, VinaPhone (D47)
 ```
 
 | Tệp cài | Vai trò |
@@ -112,6 +113,7 @@ g6update, g6svc       hai công cụ setuid root, nhỏ: cài bản cập nhật
 | `/usr/bin/glass6ctl` | Kiểm / tải bản mới qua HTTPS (rustls — iOS 6 không tự vào được GitHub). Quét xung đột và dựng ảnh kính nằm ở lõi, không ở đây |
 | `/usr/libexec/glass6/g6update` | setuid root: kiểm chữ ký số của gói rồi `dpkg -i`, khởi động lại SpringBoard |
 | `/usr/libexec/glass6/g6svc` | setuid root: bật / tắt dịch vụ có trong danh mục của lõi, không nhận đường dẫn tuỳ ý |
+| `/usr/libexec/glass6/g6lte` | setuid root, chỉ iPhone 5 iOS 6: «Bật 4G» — dựng gói LTE cho 3 nhà mạng trong `/System/Library/Carrier Bundles/iPhone`, đổi 3 liên kết mã nhà mạng, nạp lại CommCenter; `off` / gỡ gói trả lại nguyên (D47) |
 | `/etc/apt/trusted.gpg.d/vn.glass6.gpg` | Khoá công khai của nguồn Cydia |
 
 Không có tiến trình thường trú riêng: mọi công cụ chạy theo lệnh rồi thoát.

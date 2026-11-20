@@ -25,6 +25,8 @@ Vietnamese.*
   Lời nhắc, Lịch, Danh bạ, Ảnh, Tin nhắn và (iPhone) Điện thoại, Máy tính, La bàn, Ghi âm. App không phải của Apple giữ nguyên.
 - **Sáng / tối / tự động theo giờ**; nút AssistiveTouch riêng; dải hiệu suất (CPU, RAM, mạng) trên thanh trạng thái.
 - **Dịch vụ hệ thống**: tắt các dịch vụ nền của iOS 6 đã ngừng từ lâu, chặn cập nhật iOS — từng mục một, bật lại được.
+- **Bật 4G** (iPhone 5): LTE cho SIM MobiFone, Viettel, VinaPhone bằng phần LTE có sẵn trong iOS 6; APN / MMS giữ như trước;
+  tắt là về đúng 3G gốc. Gọi điện vẫn qua 3G (iOS 6 không có VoLTE).
 - **Tự cập nhật (OTA)** trong Cài đặt › Glass 6: chỉ cài gói có chữ ký số đúng.
 - Mọi thành phần có công tắc riêng. Giao diện tiếng Việt và tiếng Anh.
 
@@ -45,7 +47,9 @@ Releases rồi `dpkg -i` qua SSH và khởi động lại SpringBoard. Tuỳ ch�
 - Tắt hẳn Glass 6 qua SSH: `touch /var/mobile/Library/Glass6/off` rồi khởi động lại SpringBoard. Bật lại: xoá tệp đó.
 - SpringBoard khởi động 3 lần liền mà Glass 6 chưa lần nào chạy ổn thì Glass 6 tự tắt; bật lại trong Cài đặt › Glass 6 ›
   «Đặt lại bộ gác». Mỗi app cũng có bộ đếm riêng: app sập liên tiếp lúc mở thì Glass 6 bỏ qua app đó.
-- Glass 6 không sửa tệp nào của hệ thống — gỡ gói là sạch.
+- Glass 6 không sửa tệp nào của hệ thống — gỡ gói là sạch. Ngoại lệ duy nhất là «Bật 4G» (iPhone 5, phải tự bật): thêm gói
+  nhà mạng `Glass6LTE_*.bundle` và đổi ba liên kết mã nhà mạng (452-01 / 02 / 04) trong `/System/Library/Carrier Bundles/iPhone`;
+  tắt công tắc hoặc gỡ gói thì trả đúng ba liên kết gốc và xoá các gói đó.
 - Cập nhật OTA: gói tải từ GitHub Releases của repo này; công cụ cài (`g6update`, quyền root) kiểm chữ ký RSA-3072 của gói
   bằng khoá công khai gắn sẵn rồi mới cài. Nguồn Cydia ký GPG, khoá công khai đi kèm gói.
 
@@ -60,6 +64,7 @@ Releases rồi `dpkg -i` qua SSH và khởi động lại SpringBoard. Tuỳ ch�
 | `tweak/Debug/` | Công cụ thử — chỉ có trong bản thử, bản phát hành không dịch |
 | `prefs/` | Bảng Cài đặt › Glass 6 |
 | `svc/`, `helper/`, `ctl/` | `g6svc` (bật / tắt dịch vụ, setuid root), `g6update` (cài bản cập nhật đã kiểm chữ ký, setuid root), điểm vào của `glass6ctl` |
+| `lte/` | `g6lte` (iPhone 5: bật / tắt 4G cho ba nhà mạng Việt Nam, setuid root) |
 | `data/` | Danh mục dịch vụ, bảng dịch tiếng Anh |
 | `tools/` | Dựng, sinh mã, phát hành |
 

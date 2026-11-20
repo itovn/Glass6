@@ -14,6 +14,7 @@
 #import "G6Guard.h"
 #import "G6Lang.h"
 #import "G6Log.h"
+#import "G6LTE.h"
 #import "G6OTA.h"
 
 extern char **environ;
@@ -359,6 +360,83 @@ static void G6RemovePrefixed(const char *dirPath, const char *const *prefixes) {
                                delegate:nil
                       cancelButtonTitle:@"OK"
                       otherButtonTitles:nil] show];
+}
+
+// ---- Bật 4G (iPhone 5; lte/g6lte.c, D47) ----
+
+static BOOL gLTEBusy;
+
+- (id)lteEnabled:(PSSpecifier *)specifier {
+    return @(G6LTEIsOn());
+}
+
+// Mở bảng: 4G đang bật mà trang APN còn mang giá trị của gói nguồn (vd vừa đổi sang SIM nhà mạng khác — iOS bỏ giá trị đã sửa
+// mỗi khi đổi gói) → trả về giá trị gốc của nhà mạng
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (!g6_device_is_phone() || gLTEBusy) return;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        G6APNRepairIfForeign();
+    });
+}
+
+- (id)cellularText:(PSSpecifier *)specifier {
+    return G6CellularSummary();
+}
+
+- (void)setLteEnabled:(id)value specifier:(PSSpecifier *)specifier {
+    BOOL on = [value boolValue];
+    if (gLTEBusy) return;
+    if (!G6LTEAvailable()) {
+        G6ShowAlert(G6L(@"Không đổi được"), G6LTEErrorText(-1), @"OK", nil, nil);
+        [self reloadSpecifiers];
+        return;
+    }
+    gLTEBusy = YES;
+    // APN / MMS người dùng đang thấy (gói gốc của nhà mạng, hoặc giá trị họ đã tự sửa) — bật xong ghi lại y như vậy. Chỉ chụp khi
+    // SIM chưa dùng gói 4G (đang bật rồi thì trang APN mang giá trị của gói nguồn, không chụp)
+    NSString *sim = G6SIMCode();
+    NSDictionary *apnBefore = (on && !G6LTEIsOn()) ? G6APNSnapshot() : nil;
+    UIAlertView *wait = G6ShowAlert(on ? G6L(@"Đang bật 4G…") : G6L(@"Đang tắt 4G…"),
+                                    G6L(@"Máy đang nạp lại cấu hình nhà mạng — sóng di động tạm mất chừng một phút."), nil, nil, nil);
+    __weak G6RootListController *weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        int code = G6LTERun(on ? @"on" : @"off", NULL);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            void (^finish)(void) = ^{
+                gLTEBusy = NO;
+                G6DismissAlert(wait);
+                [weakSelf reloadSpecifiers];
+                [weakSelf g6ShowLTEResult:code on:on];
+            };
+            if (code == 0 && on) {
+                // Bật xong: trả APN / MMS (cùng SIM thì đúng ảnh chụp; SIM khác hoặc không chụp được thì giá trị gốc của nhà mạng).
+                // Hộp «Đang bật 4G…» còn hiện tới khi ghi xong — giữ app Cài đặt ở trên (ra màn hình chính thì app bị tạm dừng)
+                NSString *simNow = G6SIMCode();
+                BOOL same = sim && [sim isEqualToString:simNow];
+                G6APNRestoreSettled(same ? apnBefore : nil, simNow, ^(int changed) {
+                    finish();
+                });
+                return;
+            }
+            if (code == 0) G6APNClearInjected(sim);
+            finish();
+        });
+    });
+}
+
+// Hộp báo kết quả bật / tắt 4G
+- (void)g6ShowLTEResult:(int)code on:(BOOL)on {
+    if (code != 0) {
+        G6ShowAlert(on ? G6L(@"Không bật được 4G") : G6L(@"Không tắt được 4G"), G6LTEErrorText(code), @"OK", nil, nil);
+    } else if (on) {
+        G6ShowAlert(G6L(@"Đã bật 4G"),
+                    G6L(@"Ở nơi có sóng 4G, máy tự dùng LTE (có thể mất thêm một lúc để máy dò sóng). Muốn tạm dùng 3G mà "
+                        @"không tắt hẳn: Cài đặt › Cài đặt chung › Di động › Bật LTE."),
+                    @"OK", nil, nil);
+    } else {
+        G6ShowAlert(G6L(@"Đã tắt 4G"), G6L(@"Máy đã về cấu hình 3G gốc của iOS 6."), @"OK", nil, nil);
+    }
 }
 
 - (void)respring:(PSSpecifier *)specifier {

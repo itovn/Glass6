@@ -10,7 +10,7 @@ G6_VERSION := $(shell sed -n 's/^Version: *//p' ../control)
 BUNDLE_NAME = Glass6Prefs
 # Màn «Dịch vụ hệ thống» dùng lõi (danh mục) và cầu nối g6svc của tweak/Common
 Glass6Prefs_FILES = G6RootListController.m G6ServicesController.m G6AssistController.m ../tweak/Common/G6Core.m ../tweak/Common/G6Log.m \
-	../tweak/Common/G6Services.m ../tweak/Common/G6Lang.m ../tweak/Common/G6Device.c ../tweak/Common/G6OTA.m
+	../tweak/Common/G6Services.m ../tweak/Common/G6Lang.m ../tweak/Common/G6Device.c ../tweak/Common/G6OTA.m G6LTE.m
 Glass6Prefs_INSTALL_PATH = /Library/PreferenceBundles
 Glass6Prefs_FRAMEWORKS = UIKit Foundation
 Glass6Prefs_PRIVATE_FRAMEWORKS = Preferences

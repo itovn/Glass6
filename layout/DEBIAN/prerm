@@ -1,7 +1,13 @@
 #!/bin/sh
-# Trước khi gỡ Glass 6: bật lại mọi dịch vụ hệ thống mà Glass 6 đã tắt — gỡ xong thì không còn công cụ nào bật lại được.
+# Trước khi gỡ Glass 6: bật lại mọi dịch vụ hệ thống mà Glass 6 đã tắt, tắt «Bật 4G» — gỡ xong thì không còn công cụ nào
+# trả lại được.
 # Cập nhật lên bản mới («upgrade») thì giữ nguyên.
 if [ "$1" = remove ] || [ "$1" = purge ]; then
     [ -x /usr/libexec/glass6/g6svc ] && /usr/libexec/glass6/g6svc revert
+    # «Bật 4G» (iPhone 5) đang bật → trả cài đặt nhà mạng về đúng iOS 6 gốc trước khi gỡ (chỉ khi đang bật: lệnh khởi động lại
+    # CommCenter, sóng di động mất chừng một phút)
+    if [ -x /usr/libexec/glass6/g6lte ] && /usr/libexec/glass6/g6lte status | grep -q 'on$'; then
+        /usr/libexec/glass6/g6lte off
+    fi
 fi
 exit 0

@@ -9,11 +9,11 @@ export CORE_LIB_DIR ?= $(abspath $(CURDIR)/../target-ios/armv7-apple-ios6/releas
 
 include $(THEOS)/makefiles/common.mk
 
-SUBPROJECTS += corelib tweak prefs svc helper ctl
+SUBPROJECTS += corelib tweak prefs svc helper ctl lte
 include $(THEOS_MAKE_PATH)/aggregate.mk
 
 # Script của gói cần quyền chạy (tệp chép từ Windows không giữ bit x). launchd bỏ qua tệp việc mà nhóm / người khác ghi được.
-# Chủ root + bit setuid của g6svc / g6update do postinst đặt.
+# Chủ root + bit setuid của g6svc / g6update / g6lte do postinst đặt.
 before-package::
 	chmod -R go-w $(THEOS_STAGING_DIR)
 	chmod 0755 $(THEOS_STAGING_DIR)/DEBIAN/postinst $(THEOS_STAGING_DIR)/DEBIAN/prerm $(THEOS_STAGING_DIR)/DEBIAN/postrm

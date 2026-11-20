@@ -932,6 +932,41 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
+			<string>Mạng di động</string>
+			<key>footerText</key>
+			<string>Cho iPhone 5 dùng 4G (LTE) với SIM MobiFone, Viettel, VinaPhone — dùng phần LTE có sẵn trong iOS 6; APN và MMS giữ như trước khi bật (SIM MobiFone được điền cấu hình MMS của MobiFone). Gọi điện vẫn đi qua 3G (iOS 6 không có VoLTE). Tắt là máy về đúng cấu hình 3G gốc của iOS 6. Mỗi lần bật / tắt, sóng di động mất chừng một phút.</string>
+			<key>g6Device</key>
+			<string>iphone</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Bật 4G</string>
+			<key>get</key>
+			<string>lteEnabled:</string>
+			<key>set</key>
+			<string>setLteEnabled:specifier:</string>
+			<key>id</key>
+			<string>lte</string>
+			<key>g6Device</key>
+			<string>iphone</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSTitleValueCell</string>
+			<key>label</key>
+			<string>Mạng đang dùng</string>
+			<key>get</key>
+			<string>cellularText:</string>
+			<key>g6Device</key>
+			<string>iphone</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
 			<string>Hệ thống</string>
 			<key>footerText</key>
 			<string>Tắt các dịch vụ của iOS 6 đã ngừng từ lâu hoặc không cần tới. Cài Glass 6 không tự tắt dịch vụ nào — chọn trong mục này.</string>

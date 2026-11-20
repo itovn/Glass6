@@ -1487,6 +1487,94 @@ Làm theo THIET-KE mục 10, mẫu là GramMini (đã qua một lượt kiểm b
   -i` → tự khởi động lại, máy lên 0.1.1; `update.json` được dọn. `g6update --verify`: gói đúng → đạt; gói bị sửa một byte →
   72; gọi từ SSH (không phải Cài đặt) → 69; tệp ngoài thư mục tải → 65. `glass6ctl` nói chuyện được với GitHub thật qua TLS
   trên iOS 6 (API + tệp đính kèm qua một lần chuyển tiếp). 126 ký hiệu của hai công cụ đều có trên máy.
+- **Thử thêm qua giao diện** (máy chủ thử, bốn kịch bản): gói ký sai → «Chữ ký số của gói không đúng — không cài» (72); gói
+  không mới hơn → 73; sai SHA-256 → «Tệp tải về bị sai»; bấm «Huỷ» giữa chừng → `glass6ctl` dừng trong 1,5 giây, thư mục
+  tải sạch. **Bài học**: tiến trình con sinh từ luồng nền của GCD thừa hưởng mặt nạ chặn tín hiệu → phải đặt
+  `POSIX_SPAWN_SETSIGMASK | POSIX_SPAWN_SETSIGDEF`, không thì `kill(SIGTERM)` không tới (bấm «Huỷ» mà vẫn tải nốt).
+- **Gia cố trước khi phát hành**: `g6update` lấp fd 0–2 nếu bên gọi đóng sẵn và tự đặt lại mặt nạ / cách xử lý tín hiệu;
+  `postinst` (chạy quyền root trên thư mục của mobile) bỏ liên kết tượng trưng nếu thư mục dữ liệu / thư mục tải đã bị thế
+  bằng liên kết, `chown -h`, và chỉ ghi vào số tệp của Cydia khi đúng là số.
+- **Sau khi phát hành 1.0.0** (20/11/2026): từ iPhone, kiểm + tải bản thật trên GitHub và `g6update --verify` báo chữ ký đúng;
+  nguồn Cydia mới qua `apt-get update` không lỗi chữ ký. Chưa có lượt OTA thật nào (cần bản 1.0.1).
+
+## D47. iPhone 5: «Bật 4G» cho SIM MobiFone, Viettel, VinaPhone (20/11/2026)
+
+Anh yêu cầu: tuỳ chọn «Bật 4G» trong Cài đặt › Glass 6, áp cho ba nhà mạng, tắt là máy về đúng 3G gốc của iOS 6. iOS 6 có sẵn
+LTE cho iPhone 5 nhưng chỉ bật theo gói nhà mạng (`overrides_N41_N42.plist` + tệp PRI có chữ ký Apple), và không có gói LTE nào
+cho nhà mạng Việt Nam. VoLTE thì không làm được (iOS 6 không có bộ IMS thoại) — gọi điện vẫn đi qua 3G.
+
+**Cơ chế của iOS 6 (đo trên iPhone 5 iOS 6.1.4, SIM MobiFone):**
+
+- CommCenter **kiểm chữ ký** gói: `carrier.plist` và `overrides_N41_N42.plist` phải là một cặp nguyên vẹn của cùng một gói
+  Apple (mỗi tệp có khoá `signature`). Tự viết overrides, hay trộn carrier.plist của gói này với overrides của gói khác
+  (ma trận thử 4 trường hợp) → CommCenter gỡ liên kết `Carrier Bundle.bundle`, không ghi `CarrierBundleName`, chạy 3G.
+  Info.plist / version.plist thì không bị kiểm. Bản ghép `Overlay/device+carrier+…` cũng bị đối chiếu: sửa tay (bỏ thông tin
+  của nhà mạng nước ngoài, thay APN) là bị loại. `CTSettingSetVerifyCarrierBundles(false)` có trên iOS 6 nhưng chỉ sống trong
+  bộ nhớ của CommCenter (mất mỗi lần chạy lại) — không dùng.
+- Gói qua được bước kiểm thì CommCenter tự lập `Carrier Bundle.bundle`, `Operator Bundle.bundle`, hai liên kết
+  `com.apple.carrier.plist` / `com.apple.operator.plist` và đẩy PRI mới xuống baseband → máy tự bám LTE, không cần gạt «Bật
+  LTE». Phải nạp lại CommCenter bằng `launchctl unload/load` (tắt êm, modem tắt theo); `kill -9` thì baseband không nạp lại.
+- Khi gói 4G đang dùng, `CTSIMSupportCopyMobileSubscriberCountryCode/NetworkCode` trả mã của gói nguồn (454 / 01) → mọi chỗ
+  nhận SIM dùng 5 chữ số đầu của IMSI (không in / ghi phần còn lại).
+
+**Cách làm:**
+
+- `lte/g6lte.c` (setuid root, `status` / `on` / `off`): gói `Glass6LTE_<nhà mạng>.bundle` = Info.plist + version.plist của gói
+  gốc (MobiFone → Unknown.bundle, Viettel_vn, VinaPhone_vn) + cặp `carrier.plist` / overrides / PRI **nguyên** của
+  `Hutchison_hk.bundle` (PRI LTE dùng chung bản 00.01.071, APN lúc bám LTE trống, không có số hộp thư thoại). Chọn trong 24
+  gói iOS 6.1 mang PRI đó: chỉ 3 gói có APN bám LTE trống, hai gói còn lại (CSL, SmarTone) có số hộp thư thoại Hồng Kông —
+  bấm «Thư thoại» sẽ gọi số đó. Trỏ 3 mã nhà mạng sang gói đã dựng, bỏ bộ đệm danh sách mã + bản ghép + `CarrierBundleName`,
+  nạp lại CommCenter, đợi tới khi CommCenter lập liên kết tới đúng gói và ghi nhớ lựa chọn (= qua bước kiểm). SIM đang lắp
+  không được nhận → tự trả nhà mạng đó về gốc (mã 6). `off`: trả đúng 3 liên kết gốc, xoá các gói đã dựng, nạp lại.
+- APN / MMS: gói nguồn mang APN, MMS của 3 Hồng Kông. Bảng Cài đặt (`prefs/G6LTE.m`) chụp các ô của trang «Mạng dữ liệu di
+  động» trước khi bật và ghi lại sau khi bật, **qua chính `EdgeSettingsController` của iOS** (getter / setter của từng dòng
+  trong «EDGE Settings.plist» — y như người dùng tự sửa; iOS bỏ các giá trị sửa tay khi đổi gói). Ghi sau khi máy đăng ký
+  mạng, kiểm lại ở +5 / +20 / +40 giây (CommCenter có lúc đổi lại một ô). Mỗi lần đọc phải `CFPreferencesAppSynchronize` các
+  miền `com.apple.carrier` / `operator` / `mms_override` — không thì tiến trình Cài đặt đọc bộ đệm của gói cũ và bỏ sót ô.
+  MobiFone: gói gốc không có MMS mà iOS không cho đè MMSC bằng chữ trống → điền cấu hình MMS công bố của MobiFone (m-wap,
+  MMSC 203.162.21.114) và đặt dấu `lte-mms-injected`; `g6lte off` (cả khi gỡ gói) thấy dấu thì gỡ đúng hai giá trị đó khỏi
+  `com.apple.mms_override`. Mở bảng Glass 6 lúc 4G đang bật mà trang APN còn giá trị Hồng Kông (vd vừa đổi SIM) → tự trả về
+  giá trị gốc của nhà mạng.
+- `tweak/SB/G6CTGuard.m` (chỉ iPhone): SpringBoard từng văng «this call must be made on the main thread» trong
+  `_TelephonyCapabilitiesChanged` (SBTelephonyManager) khi thông báo CoreTelephony đến trên luồng NSURLConnectionLoader →
+  safe mode (gặp 17/11 và 20/11, không do mã Glass 6). Đổi gói nhà mạng sinh đúng loại thông báo đó → Glass 6 móc
+  `CTTelephonyCenterAddObserver` (MSHookFunction, tra bằng dlsym) và bọc 44 callback của SpringBoard: ngoài luồng chính thì
+  chuyển sang luồng chính, bất đồng bộ. Lệnh thử `ctfire` bắn thông báo từ luồng phụ: SpringBoard không văng.
+- Bảng Cài đặt: nhóm «Mạng di động» (công tắc «Bật 4G», dòng «Mạng đang dùng»: «MobiFone · 4G (LTE)»…), chỉ hiện trên
+  iPhone. `prerm`: 4G đang bật thì `g6lte off` trước khi gỡ.
+
+**Đã thử (iPhone 5, SIM MobiFone 452-01), mọi bước bấm từ công tắc trong Cài đặt › Glass 6:** bật (~1 phút): CommCenter nhận
+gói, LTE, tải 1 MB qua LTE 500–800 KB/s (3G ~310 KB/s), trang APN giữ như trước (Internet trống, MMS của MobiFone); tắt
+(~30 giây): 3 liên kết gốc, không còn gói Glass 6, `Unknown.bundle` được nhận lại, trang APN / MMS trống như iOS 6 ban đầu;
+khởi động lại máy lúc đang bật: vẫn LTE, liên kết và APN giữ nguyên; lệnh của `prerm` chạy quyền root: về gốc, MMS gỡ sạch
+(tệp `com.apple.mms_override.plist` trở lại 51 byte như ban đầu). Không có lần SpringBoard văng nào sau khi có G6CTGuard.
+
+**Chưa thử:** SIM Viettel / VinaPhone thật (máy thử chỉ có SIM MobiFone — gói của hai mạng này dựng cùng cách, danh sách
+`MandatoryVerify` của Unknown.bundle có 45202 / 45204 nhưng gói 4G không dùng carrier.plist của Unknown); đổi SIM lúc đang bật
+(trang APN sửa khi mở bảng Glass 6); APN chia sẻ mạng (Personal Hotspot) — nhóm này bị ẩn với gói nguồn, Glass 6 vẫn ghi
+APN gốc vào đó nhưng chưa kiểm được.
+
+## D48. iPhone: màu app Tin nhắn — dải ngày giờ, hàng nút đầu trò chuyện, chế độ Sửa, Tin nhắn Mới (20/11/2026)
+
+Anh gửi ảnh chụp (chế độ tối) khoanh vùng dưới thanh của màn trò chuyện. Soát lại cả app ở hai chế độ theo cách giữ riêng tư của
+D35 (cây view chỉ lớp + khung; chỉ cắt dải chrome đã kiểm trong cây view của CÙNG lượt chụp — dải từ thanh tới ô tin nhắn đầu
+tiên, hai bên tiêu đề của thanh, thanh dưới, hàng «Đến:» khi trống; bong bóng, danh sách, thanh nhập chỉ thống kê màu). iPhone
+khác iPad ở mấy chỗ (đo trên iPhone 5 iOS 6.1.4):
+
+- `CKTimestampCell`: nhãn ngày giờ rộng hết bảng, `CKServiceCell` («Tin nhắn Văn bản» + `CKDashedLineView`): nhãn mang nền đặc
+  màu nền trò chuyện gốc (219, 226, 237) → dải / khung sáng trên nền đen. → nhãn nền trong, chữ xám (0,58 tối / 0,50 sáng), bỏ
+  bóng chữ, ẩn vạch chấm. `CKServiceCell` tự xếp lại sau lời gọi lên lớp cha → móc riêng `layoutSubviews` của nó.
+- `CKTranscriptHeaderView` › `_UIShortPlacardButton` («Gọi», «FaceTime», «Thêm vào Danh bạ», «Tải tin nhắn cũ hơn»): viên sáng
+  bóng → viên phẳng bo tròn (trắng 14 % trên nền tối / đen 6 % trên nền sáng), chữ màu nhấn Inter SemiBold.
+- Chế độ Sửa: `MailToolbarButton` («Xóa» / «Chuyển tiếp», MessageUI) — viên bóng đỏ / xanh xám → viên phẳng như trên, chữ + hình
+  đỏ cho nút có cờ `_isRed`, màu nhấn cho nút còn lại.
+- Tin nhắn Mới: `CKComposeRecipientView` (hàng «Đến:») nền trắng ở cả hai chế độ → theo nền trò chuyện, vạch ngăn mảnh, chữ đang
+  gõ trắng ở chế độ tối; `MFAddContactButton` (viên xanh bóng) → vòng tròn viền màu nhấn có dấu cộng.
+- Mọi thứ có ghi nhớ để trả lại khi tắt «Giao diện trong app»; đổi sáng ↔ tối là đổi ngay.
+
+Đã thử (ảnh cắt + thống kê màu): dải ngày giờ / nút đầu trò chuyện ở tối và sáng; thanh trên (danh sách, trò chuyện, chế độ Sửa, Tin
+nhắn Mới) đều đúng màu thanh; thanh dưới của chế độ Sửa; hàng «Đến:». **Chưa thử**: hàng «Đến:» khi đã có người nhận (viên tên
+người nhận là dữ liệu riêng), bảng gợi ý liên hệ lúc gõ, nút «Tải tin nhắn cũ hơn» (hội thoại thử không đủ dài).
 
 ## D8. Bộ dựng Theos (19/11/2026)
 

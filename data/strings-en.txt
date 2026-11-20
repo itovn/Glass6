@@ -287,6 +287,18 @@ cd9d04e2 = Drops the refraction at glass edges and the highlight streak — ligh
 # Giảm hiệu ứng
 950ead60 = Reduce Effects
 
+# Mạng di động
+28125b22 = Cellular
+
+# Cho iPhone 5 dùng 4G (LTE) với SIM MobiFone, Viettel, VinaPhone — dùng phần LTE có sẵn trong iOS 6; APN và MMS giữ như trước khi bật (SIM MobiFone được điền cấu hình MMS của MobiFone). Gọi điện vẫn đi qua 3G (iOS 6 không có VoLTE). Tắt là máy về đúng cấu hình 3G gốc của iOS 6. Mỗi lần bật / tắt, sóng di động mất chừng một phút.
+795916a4 = Lets iPhone 5 use 4G (LTE) with MobiFone, Viettel and VinaPhone SIMs — using the LTE support already in iOS 6; APN and MMS settings stay as they were before (MobiFone SIMs get MobiFone's MMS settings). Calls still go over 3G (iOS 6 has no VoLTE). Turning it off returns the phone to the original iOS 6 3G configuration. Each change takes cellular service away for about a minute.
+
+# Bật 4G
+5c6a6ae4 = Enable 4G
+
+# Mạng đang dùng
+d8c3096e = Network
+
 # Hệ thống
 d90f70ae = System
 
@@ -404,6 +416,33 @@ c35ad31e = Double Tap
 # Sau vài giây không đụng tới, nút mờ bớt cho đỡ vướng mắt.
 d528c445 = After a few seconds untouched, the button fades so it is less in the way.
 
+# Chỉ dùng được trên iPhone 5 chạy iOS 6.
+6cd3fc39 = Only available on iPhone 5 running iOS 6.
+
+# Không tìm thấy cấu hình LTE gốc của iOS 6 trên máy (thư mục gói nhà mạng đã bị thay đổi).
+a226812e = The original iOS 6 LTE configuration was not found on this device (the carrier bundle folder has been changed).
+
+# Cài đặt nhà mạng trên máy đã bị một công cụ khác sửa — Glass 6 để nguyên phần đó.
+91211dcc = The carrier settings on this device were changed by another tool — Glass 6 left that part alone.
+
+# Nhà mạng của SIM này không nhận cấu hình 4G. Máy đã tự trở về 3G như cũ.
+d24f4c1b = This SIM's carrier did not accept the 4G configuration. The phone went back to 3G as before.
+
+# Thiếu công cụ bật 4G (g6lte) hoặc công cụ thiếu quyền root. Cài lại Glass 6 bằng Cydia.
+c694ad35 = The 4G tool (g6lte) is missing or lacks root permission. Reinstall Glass 6 with Cydia.
+
+# Không đổi được cấu hình mạng di động (mã %d).
+174d6192 = Could not change the cellular configuration (code %d).
+
+# Không có SIM
+a99b9549 = No SIM
+
+# Đang tìm mạng…
+91ff6247 = Searching…
+
+# Không có sóng
+2fa0c170 = No Service
+
 # Không tự cập nhật được
 68ce7849 = Cannot Update Automatically
 
@@ -487,6 +526,36 @@ d92dce5e = Not running
 
 # Khởi động lại SpringBoard để Glass 6 chạy lại.
 32b5bf4e = Restart SpringBoard to run Glass 6 again.
+
+# Không đổi được
+1ccf9f35 = Could Not Change
+
+# Đang bật 4G…
+86e01571 = Enabling 4G…
+
+# Đang tắt 4G…
+8a5f39f8 = Disabling 4G…
+
+# Máy đang nạp lại cấu hình nhà mạng — sóng di động tạm mất chừng một phút.
+fbd7539a = Reloading the carrier configuration — cellular service will be unavailable for about a minute.
+
+# Đã bật 4G
+8e5264c6 = 4G Enabled
+
+# Ở nơi có sóng 4G, máy tự dùng LTE (có thể mất thêm một lúc để máy dò sóng). Muốn tạm dùng 3G mà không tắt hẳn: Cài đặt › Cài đặt chung › Di động › Bật LTE.
+c710d490 = Where 4G is available the phone uses LTE automatically (finding the signal can take a little while). To use 3G for a while without turning this off: Settings › General › Cellular › Enable LTE.
+
+# Đã tắt 4G
+c4e747f3 = 4G Disabled
+
+# Máy đã về cấu hình 3G gốc của iOS 6.
+45bb5c83 = The phone is back on the original iOS 6 3G configuration.
+
+# Không bật được 4G
+20126c6c = Could Not Enable 4G
+
+# Không tắt được 4G
+106ed92b = Could Not Disable 4G
 
 # Nguyên bản
 7d15acd1 = Stock

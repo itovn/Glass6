@@ -52,6 +52,8 @@ The last change is awaiting confirmation: at the next restart, 60 seconds of sta
 	<string>Glass Volume HUD</string>
 	<key>Bật / tắt tiếng</key>
 	<string>Mute / Unmute</string>
+	<key>Bật 4G</key>
+	<string>Enable 4G</string>
 	<key>Bật Glass 6</key>
 	<string>Enable Glass 6</string>
 	<key>Bật tiếng</key>
@@ -64,6 +66,8 @@ The last change is awaiting confirmation: at the next restart, 60 seconds of sta
 	<string>Drops the refraction at glass edges and the highlight streak — lighter on the device.</string>
 	<key>Cam</key>
 	<string>Orange</string>
+	<key>Cho iPhone 5 dùng 4G (LTE) với SIM MobiFone, Viettel, VinaPhone — dùng phần LTE có sẵn trong iOS 6; APN và MMS giữ như trước khi bật (SIM MobiFone được điền cấu hình MMS của MobiFone). Gọi điện vẫn đi qua 3G (iOS 6 không có VoLTE). Tắt là máy về đúng cấu hình 3G gốc của iOS 6. Mỗi lần bật / tắt, sóng di động mất chừng một phút.</key>
+	<string>Lets iPhone 5 use 4G (LTE) with MobiFone, Viettel and VinaPhone SIMs — using the LTE support already in iOS 6; APN and MMS settings stay as they were before (MobiFone SIMs get MobiFone's MMS settings). Calls still go over 3G (iOS 6 has no VoLTE). Turning it off returns the phone to the original iOS 6 3G configuration. Each change takes cellular service away for about a minute.</string>
 	<key>Chuyển sáng</key>
 	<string>Go Light</string>
 	<key>Chuyển tối</key>
@@ -88,6 +92,8 @@ The last change is awaiting confirmation: at the next restart, 60 seconds of sta
 	<string>Wireless Diagnostics</string>
 	<key>Chặn cập nhật iOS</key>
 	<string>Block iOS Updates</string>
+	<key>Chỉ dùng được trên iPhone 5 chạy iOS 6.</key>
+	<string>Only available on iPhone 5 running iOS 6.</string>
 	<key>Chụp màn hình</key>
 	<string>Screenshot</string>
 	<key>Chữ ký số của gói không đúng — không cài.</key>
@@ -96,6 +102,8 @@ The last change is awaiting confirmation: at the next restart, 60 seconds of sta
 	<string>Control Center</string>
 	<key>Cài xong, màn hình chính tự khởi động lại.</key>
 	<string>The Home screen restarts when the installation finishes.</string>
+	<key>Cài đặt nhà mạng trên máy đã bị một công cụ khác sửa — Glass 6 để nguyên phần đó.</key>
+	<string>The carrier settings on this device were changed by another tool — Glass 6 left that part alone.</string>
 	<key>Cân bằng</key>
 	<string>Balanced</string>
 	<key>Cân bằng: tắt các dịch vụ đã ngừng phía máy chủ và việc gom chẩn đoán gửi về Apple. Nguyên bản: bật lại tất cả. Thay đổi có tác dụng ngay và được giữ qua các lần khởi động lại máy.</key>
@@ -204,8 +212,14 @@ The last change is awaiting confirmation: at the next restart, 60 seconds of sta
 	<string>Rotation Lock</string>
 	<key>Không</key>
 	<string>None</string>
+	<key>Không bật được 4G</key>
+	<string>Could Not Enable 4G</string>
 	<key>Không cài được bản cập nhật (mã %d).</key>
 	<string>Could not install the update (code %d).</string>
+	<key>Không có SIM</key>
+	<string>No SIM</string>
+	<key>Không có sóng</key>
+	<string>No Service</string>
 	<key>Không ghi được tệp tải về. Kiểm tra dung lượng trống của máy.</key>
 	<string>Could not save the download. Check the device's free space.</string>
 	<key>Không kiểm được bản mới</key>
@@ -220,8 +234,12 @@ The last change is awaiting confirmation: at the next restart, 60 seconds of sta
 	<string>Not part of the “Balanced” profile — only turn off what you do not use.</string>
 	<key>Không phát</key>
 	<string>Not Playing</string>
+	<key>Không tìm thấy cấu hình LTE gốc của iOS 6 trên máy (thư mục gói nhà mạng đã bị thay đổi).</key>
+	<string>The original iOS 6 LTE configuration was not found on this device (the carrier bundle folder has been changed).</string>
 	<key>Không tải được chữ ký số của bản cập nhật. Thử lại sau.</key>
 	<string>Could not download the update's digital signature. Try again later.</string>
+	<key>Không tắt được 4G</key>
+	<string>Could Not Disable 4G</string>
 	<key>Không tự cập nhật được</key>
 	<string>Cannot Update Automatically</string>
 	<key>Không tự ẩn</key>
@@ -232,6 +250,10 @@ The last change is awaiting confirmation: at the next restart, 60 seconds of sta
 	<string>Could not read the release information. Try again later.</string>
 	<key>Không đọc được trạng thái dịch vụ (thiếu lõi hoặc công cụ g6svc). Cài lại Glass 6 rồi thử lại.</key>
 	<string>Could not read the service status (core or the g6svc tool is missing). Reinstall Glass 6 and try again.</string>
+	<key>Không đổi được</key>
+	<string>Could Not Change</string>
+	<key>Không đổi được cấu hình mạng di động (mã %d).</key>
+	<string>Could not change the cellular configuration (code %d).</string>
 	<key>Không đổi được dịch vụ</key>
 	<string>Could Not Change Service</string>
 	<key>Khởi động lại</key>
@@ -276,6 +298,14 @@ The last change is awaiting confirmation: at the next restart, 60 seconds of sta
 	<string>This device no longer has the launch files of the iOS update service (they were removed earlier), so it cannot check for or download new iOS versions — the iOS you are on stays. Glass 6 changes nothing here; it only clears the leftover “update available” badge from the Settings icon.</string>
 	<key>Máy thôi kiểm tra và tải bản iOS mới; màn «Cập nhật phần mềm» trong Cài đặt đứng mãi ở «Kiểm tra cập nhật…». Nên tắt trên máy đã jailbreak: lỡ cập nhật là mất jailbreak.</key>
 	<string>The device stops checking for and downloading new iOS versions; the “Software Update” screen in Settings stays at “Checking for Update…”. Recommended off on a jailbroken device: an accidental update loses the jailbreak.</string>
+	<key>Máy đang nạp lại cấu hình nhà mạng — sóng di động tạm mất chừng một phút.</key>
+	<string>Reloading the carrier configuration — cellular service will be unavailable for about a minute.</string>
+	<key>Máy đã về cấu hình 3G gốc của iOS 6.</key>
+	<string>The phone is back on the original iOS 6 3G configuration.</string>
+	<key>Mạng di động</key>
+	<string>Cellular</string>
+	<key>Mạng đang dùng</key>
+	<string>Network</string>
 	<key>Mẫu máy</key>
 	<string>Device</string>
 	<key>Mặc định</key>
@@ -306,6 +336,8 @@ The last change is awaiting confirmation: at the next restart, 60 seconds of sta
 	<string>Language</string>
 	<key>Nhuộm</key>
 	<string>Tinted</string>
+	<key>Nhà mạng của SIM này không nhận cấu hình 4G. Máy đã tự trở về 3G như cũ.</key>
+	<string>This SIM's carrier did not accept the 4G configuration. The phone went back to 3G as before.</string>
 	<key>Nhấn giữ</key>
 	<string>Long Press</string>
 	<key>Nhận lệnh chẩn đoán từ xa</key>
@@ -382,6 +414,8 @@ The last change is awaiting confirmation: at the next restart, 60 seconds of sta
 	<string>Bars and Bar Buttons</string>
 	<key>Thao tác trên nút</key>
 	<string>Gestures on the Button</string>
+	<key>Thiếu công cụ bật 4G (g6lte) hoặc công cụ thiếu quyền root. Cài lại Glass 6 bằng Cydia.</key>
+	<string>The 4G tool (g6lte) is missing or lacks root permission. Reinstall Glass 6 with Cydia.</string>
 	<key>Thiếu công cụ cài (g6update). Cài lại Glass 6 bằng Cydia.</key>
 	<string>The installer (g6update) is missing. Reinstall Glass 6 with Cydia.</string>
 	<key>Thiếu công cụ cập nhật (glass6ctl). Cài lại Glass 6 bằng Cydia.</key>
@@ -498,6 +532,8 @@ The last change is awaiting confirmation: at the next restart, 60 seconds of sta
 	<string>Glass Search Field</string>
 	<key>Đa nhiệm</key>
 	<string>App Switcher</string>
+	<key>Đang bật 4G…</key>
+	<string>Enabling 4G…</string>
 	<key>Đang chạy</key>
 	<string>Running</string>
 	<key>Đang cài bản %@…</key>
@@ -512,16 +548,24 @@ The last change is awaiting confirmation: at the next restart, 60 seconds of sta
 	<string>Glass 6 is up to date.</string>
 	<key>Đang kiểm bản mới…</key>
 	<string>Checking for Update…</string>
+	<key>Đang tìm mạng…</key>
+	<string>Searching…</string>
 	<key>Đang tải bản %@…</key>
 	<string>Downloading %@…</string>
 	<key>Đang tắt</key>
 	<string>Off</string>
+	<key>Đang tắt 4G…</key>
+	<string>Disabling 4G…</string>
 	<key>Điểm truy cập cá nhân</key>
 	<string>Personal Hotspot</string>
+	<key>Đã bật 4G</key>
+	<string>4G Enabled</string>
 	<key>Đã chặn sẵn</key>
 	<string>Already blocked</string>
 	<key>Đã sạc %d%%</key>
 	<string>%d%% Charged</string>
+	<key>Đã tắt 4G</key>
+	<string>4G Disabled</string>
 	<key>Đã tự tắt</key>
 	<string>Turned itself off</string>
 	<key>Đã đặt lại bộ gác</key>
@@ -562,5 +606,7 @@ The last change is awaiting confirmation: at the next restart, 60 seconds of sta
 	<string>Hide “No SIM Card Installed”</string>
 	<key>Ẩn tên nhà mạng</key>
 	<string>Hide Carrier Name</string>
+	<key>Ở nơi có sóng 4G, máy tự dùng LTE (có thể mất thêm một lúc để máy dò sóng). Muốn tạm dùng 3G mà không tắt hẳn: Cài đặt › Cài đặt chung › Di động › Bật LTE.</key>
+	<string>Where 4G is available the phone uses LTE automatically (finding the signal can take a little while). To use 3G for a while without turning this off: Settings › General › Cellular › Enable LTE.</string>
 </dict>
 </plist>

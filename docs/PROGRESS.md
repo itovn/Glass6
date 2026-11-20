@@ -376,6 +376,35 @@ Chi tiết kỹ thuật: [DECISIONS.md](DECISIONS.md) D46.
   gồm app gốc của Apple** (không dùng hình nền / cách sắp xếp riêng của máy; đã sao lưu và trả lại nguyên trạng sau khi
   chụp). Không có ảnh iPad (máy đang dùng thật).
 
+## 20/11/2026 — Đã phát hành Glass 6 1.0.0
+
+- **Nơi phát hành**: repo công khai <https://github.com/itovn/Glass6> (mã sạch, một commit, thẻ `v1.0.0`), Release `v1.0.0` kèm
+  `vn.glass6.tweak_1.0.0_iphoneos-arm.deb` (1,9 MB) + `.deb.sig`, trang <https://itovn.github.io/Glass6/> (tiếng Việt,
+  `en.html` tiếng Anh) và nguồn Cydia `https://itovn.github.io/Glass6/cydia/` (đã ký GPG) trên nhánh `gh-pages`.
+- **Soát bản phát hành trước khi đưa lên** (gói dựng bằng `tools-local/release.sh`, 458 ký hiệu — đủ trên cả hai máy):
+  iPhone 5: cài đè bản thử, SpringBoard lên đủ thành phần, Cài đặt › Glass 6, Máy tính, Đồng hồ, không có báo cáo sập mới;
+  **bấm Home hai lần bằng sự kiện nút thật mở khay đa nhiệm dạng thẻ (12 thẻ, 61 ms), bấm lần nữa thì đóng** — mục «chưa
+  thử» từ D42 nay đã thử. iPad mini: cài đè, một lần respring (đã báo anh và phiên dùng chung máy), cấu hình của anh không
+  đổi, bảng Cài đặt › Glass 6 + màn hình chính đúng, không có báo cáo sập mới.
+- **Soát sau khi đưa lên**: trên iPhone `glass6ctl update check` đọc được bản 1.0.0 từ GitHub thật («đang dùng bản mới
+  nhất»); giả làm bản cũ thì tải được gói qua HTTPS (khớp kích thước + SHA-256) và `g6update --verify` báo chữ ký đúng;
+  `apt-get update` với riêng nguồn mới: tải `Release.gpg` / `Release` / `Packages`, không báo lỗi chữ ký. Trang giới thiệu
+  và trang mô tả hiển thị đúng trên Safari iOS 6 (thử qua máy chủ nội bộ trước khi đưa lên).
+- **Cài mới từ nguồn công khai** (iPhone 5, sau phát hành): `dpkg --purge` gỡ sạch mọi tệp của Glass 6 → `apt-get update` với
+  riêng nguồn mới báo `NO_PUBKEY` (đúng dự kiến: máy chưa có khoá của nguồn — đã ghi chú trên trang) → `apt-get install` tải
+  gói từ github.io và cài, quyền tệp + thư mục dữ liệu đúng → không có tệp cấu hình: giao diện sáng mặc định, đủ thành phần
+  (nút AssistiveTouch và dải hiệu suất tắt như thiết kế), Cài đặt › Glass 6, Điện thoại, Đồng hồ hiển thị đúng. Xong đã trả
+  lại cấu hình thử cũ của máy. Chỉ chưa bấm «Cài đặt» ngay trong app Cydia.
+- Anh bấm Home hai lần bằng tay trên iPhone (4 lượt, thấy trong nhật ký): khay thẻ mở đủ cả 4.
+- **Cử chỉ kéo từ mép trên** (iPhone, lệnh thử `pull` — đi qua đúng hàm định tuyến của Glass 6, không phải ngón tay thật): bắt
+  đầu ở x = 280 → Control Center; ở x = 80 → Trung tâm thông báo (kính 320×568, 97 ms).
+- Ảnh Control Center trên trang đã chụp lại với nền trung tính + trang chủ tạm (ảnh đầu có dock thật của máy thử). Việc thay
+  nền / sắp xếp biểu tượng / trả lại nay chạy bằng một kịch bản ngay trên máy (máy rớt Wi-Fi giữa chừng vẫn trả được nguyên
+  trạng, có đối chiếu `cmp`).
+- **Chưa ai thử bằng tay** (không giả lập được): vuốt / cuộn thẻ ở khay đa nhiệm, kéo mở Control Center bằng ngón tay thật,
+  một cuộc gọi thật, La bàn khi hết nhiễu (20/11 máy vẫn báo nhiễu); iPad: Lịch, Danh bạ, Ảnh, Tin nhắn, Control Center với
+  bản 1.0.0.
+
 ### Công cụ thử (bản thử, `tweak/Debug/G6Debug.m`)
 
 ```sh
@@ -419,14 +448,33 @@ bash tools-local/g6.sh shot <tệp.png>    # chụp màn hình iPad
 bash tools-local/g6.sh get dump.txt
 ```
 
+## 20/11/2026 — iPhone 5: «Bật 4G» (MobiFone, Viettel, VinaPhone)
+
+Chi tiết: [DECISIONS.md](DECISIONS.md) D47.
+
+- `lte/g6lte.c` (setuid root): gói 4G = danh tính gói gốc của nhà mạng + cặp carrier.plist / overrides / PRI có chữ ký nguyên
+  vẹn của gói 3 Hồng Kông có sẵn trong iOS 6 (CommCenter kiểm chữ ký — tự viết hay trộn tệp đều bị loại); nạp lại CommCenter
+  bằng launchctl, đợi tới khi CommCenter nhận gói; `off` / gỡ gói trả đúng ba liên kết gốc.
+- Bảng Cài đặt: nhóm «Mạng di động» (công tắc «Bật 4G», «Mạng đang dùng»); APN / MMS chụp trước khi bật và ghi lại qua trang
+  APN của iOS (MobiFone: điền MMS của MobiFone, gỡ khi tắt); tự sửa APN khi mở bảng nếu còn giá trị của gói nguồn.
+- `tweak/SB/G6CTGuard.m`: giữ callback CoreTelephony của SpringBoard ở luồng chính — chặn kiểu văng đã đưa iPhone vào safe mode
+  (17/11, 20/11). Lệnh thử mới: `ctfire`, `apnprobe`, `apnget`, `apnui`, `apnset`.
+- **Đã thử trên iPhone 5 + SIM MobiFone:** bật / tắt nhiều vòng từ công tắc, khởi động lại máy lúc đang bật, lệnh gỡ gói —
+  LTE 500–800 KB/s, tắt về 3G gốc, trang APN đúng như trước ở cả hai chiều. Chưa thử với SIM Viettel / VinaPhone thật.
+
+## 20/11/2026 — iPhone: sửa màu app Tin nhắn (anh báo bằng ảnh)
+
+Chi tiết: [DECISIONS.md](DECISIONS.md) D48. Dải ngày giờ và nhãn «Tin nhắn Văn bản» không còn nền sáng; hàng nút «Gọi / Thêm vào
+Danh bạ», nút «Xóa / Chuyển tiếp» ở chế độ Sửa, hàng «Đến:» và nút «+» của Tin nhắn Mới theo kiểu mới ở cả sáng lẫn tối.
+
 ### Việc tiếp theo
 
 **Trước khi phát hành: bản cho iPhone 5 (iOS 6.1.4), giao diện theo iOS 26 của iPhone** — khảo sát máy và kế hoạch các đợt
 P0–P5 ở [IPHONE.md](IPHONE.md) (19/11/2026, chờ anh duyệt danh sách tweak cần gỡ và phạm vi).
 
-1. **Đợt 0b — phát hành:** công cụ OTA, khoá ký, script nguồn Cydia, trang giới thiệu đã xong và thử ở máy mình (mục
-   «Chuẩn bị phát hành 1.0.0» ở trên). Còn: cài bản phát hành 1.0.0 lên hai máy thử soát lần cuối, thử trang trên Safari
-   iOS 6, rồi đưa lên `itovn/Glass6` (mã + Release + `gh-pages`).
+1. **Đợt 0b — phát hành:** xong — bản 1.0.0 đã lên `itovn/Glass6` ngày 20/11/2026 (mục «Đã phát hành Glass 6 1.0.0» ở
+   trên). Bản sau: `tools/set-version.sh` → `tools-local/release.sh` → thử trên máy → commit vào repo công khai + Release +
+   `gh-pages`; máy đang chạy 1.0.0 sẽ tự thấy bản mới (thử OTA thật lần đầu ở bản 1.0.1).
 2. **Đợt 0c — dịch vụ:** đã có, thêm «Chặn cập nhật iOS» (D34: nhóm riêng trong Dịch vụ hệ thống, hồ sơ không đụng tới, dọn
    huy hiệu nhắc cập nhật trên biểu tượng Cài đặt). Hai máy thử iOS 6 đã bị gỡ sẵn hai tệp việc → ở đó hiện «Đã chặn sẵn»,
    CHƯA gạt thử được công tắc. Còn: thử tay các mục «chưa thử» ở D22; thử công tắc chặn trên máy iOS 6 còn nguyên.

@@ -28,6 +28,11 @@ if [ -f /usr/libexec/glass6/g6update ]; then
     chown root:wheel /usr/libexec/glass6/g6update
     chmod 4755 /usr/libexec/glass6/g6update
 fi
+# Công cụ bật / tắt 4G cho iPhone 5 (lte/g6lte.c — chỉ ba lệnh cố định): chủ root + setuid
+if [ -f /usr/libexec/glass6/g6lte ]; then
+    chown root:wheel /usr/libexec/glass6/g6lte
+    chmod 4755 /usr/libexec/glass6/g6lte
+fi
 if [ -f /etc/apt/trusted.gpg.d/vn.glass6.gpg ]; then
     chown root:wheel /etc/apt/trusted.gpg.d/vn.glass6.gpg
     chmod 0644 /etc/apt/trusted.gpg.d/vn.glass6.gpg

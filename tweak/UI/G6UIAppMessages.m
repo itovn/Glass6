@@ -19,6 +19,10 @@
 //     lam / lục) suy từ màu trung bình của chính ảnh gốc, bên có đuôi suy từ lề nội dung của ChatKit — không dựa vào giá trị
 //     số của `outgoingColor` / `orientation`. Chữ: trắng trên bóng màu; trên bóng xám thì đen (sáng) / trắng (tối); bỏ bóng chữ;
 //   - nền trò chuyện: trắng (sáng) / đen (tối); bỏ hai dải bóng đổ ở mép trên và mép trái;
+//   - ô thời gian / ô dịch vụ («Tin nhắn Văn bản»): nhãn nền trong chữ xám, ẩn vạch chấm; hàng nút đầu trò chuyện (iPhone: «Gọi»,
+//     «Thêm vào Danh bạ»…): viên phẳng, chữ màu nhấn;
+//   - chế độ Sửa: «Xóa» / «Chuyển tiếp» ở thanh dưới thành viên phẳng chữ đỏ / màu nhấn; Tin nhắn Mới: hàng «Đến:» theo nền trò
+//     chuyện, nút «+» là vòng tròn màu nhấn;
 //   - cột trái: ở chế độ tối ô, nền bảng, chữ đổi sang bảng màu tối (chế độ sáng trả về màu gốc);
 //   - thanh nhập: mặt thanh của Glass 6, khung ô nhập phẳng, nút máy ảnh một màu, nút «Gửi» là viên màu. Ô nhập ở chế độ tối
 //     vẫn là viên SÁNG chữ đen: chữ đang gõ là nội dung của người dùng — không đổi màu của nó;
@@ -36,7 +40,9 @@
 #import "G6Prefs.h"
 
 static BOOL gActive;
-static char kKindKey, kOursKey, kSavedKey, kModeKey;
+static char kKindKey, kOursKey, kSavedKey, kModeKey, kImagesKey;
+
+static UIImage *G6SMSPill(CGSize size, UIColor *fill, UIEdgeInsets caps);
 
 typedef enum { G6BalloonGray = 0, G6BalloonBlue, G6BalloonGreen } G6BalloonKind;
 
@@ -319,11 +325,22 @@ static void repl_transcriptLayout(UITableView *self, SEL _cmd) {
     }
 }
 
-// Nhãn thời gian / trạng thái: bỏ bóng trắng «khắc chìm» (thành viền sáng quanh chữ trên nền tối, nhoè trên nền trắng)
+// Ô thời gian, ô trạng thái, ô dịch vụ («Tin nhắn Văn bản» + vạch chấm, CKServiceCell). iPhone (đo 20/11/2026, máy anh báo lỗi):
+// nhãn của ô thời gian rộng hết bảng và nhãn ô dịch vụ mang NỀN ĐẶC màu nền trò chuyện gốc (219, 226, 237) → thành một dải / một
+// khung sáng trên nền đen của Glass 6 (và lệch màu trên nền trắng). Kiểu mới: nhãn nền trong, chữ xám phụ, bỏ bóng trắng «khắc
+// chìm» (thành viền sáng quanh chữ trên nền tối, nhoè trên nền trắng); ẩn vạch chấm (CKDashedLineView — kiểu iOS 6). Có ghi nhớ.
+static void G6SMSCollect(UIView *view, Class cls, NSMutableArray *out, int depth) {
+    for (UIView *sub in view.subviews) {
+        if ([sub isKindOfClass:cls]) [out addObject:sub];
+        if (depth > 0) G6SMSCollect(sub, cls, out, depth - 1);
+    }
+}
+
 static void G6SMSStyleStampCell(UIView *cell) {
-    for (NSString *name in @[@"_label", @"_timestampLabel"]) {
-        UILabel *label = G6SMSIvar(cell, name.UTF8String);
-        if (![label isKindOfClass:[UILabel class]]) continue;
+    NSMutableArray *labels = [NSMutableArray array];
+    G6SMSCollect(cell, [UILabel class], labels, 2);
+    UIColor *text = gActive ? [UIColor colorWithWhite:G6SMSDark() ? 0.58 : 0.50 alpha:1] : nil;
+    for (UILabel *label in labels) {
         if (gActive && label.shadowColor) {
             objc_setAssociatedObject(label, &kModeKey, label.shadowColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             label.shadowColor = nil;
@@ -331,6 +348,318 @@ static void G6SMSStyleStampCell(UIView *cell) {
             UIColor *shadow = objc_getAssociatedObject(label, &kModeKey);
             if (shadow) label.shadowColor = shadow;
         }
+        G6SMSSetLabel(label, text, YES);
+    }
+    Class dashed = objc_getClass("CKDashedLineView");
+    if (!dashed) return;
+    NSMutableArray *lines = [NSMutableArray array];
+    G6SMSCollect(cell, dashed, lines, 2);
+    for (UIView *line in lines) {
+        if (gActive && !line.hidden) {
+            objc_setAssociatedObject(line, &kModeKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            line.hidden = YES;
+        } else if (!gActive && objc_getAssociatedObject(line, &kModeKey)) {
+            line.hidden = NO;
+            objc_setAssociatedObject(line, &kModeKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        }
+    }
+}
+
+// ---- Hàng nút đầu cuộc trò chuyện: «Gọi», «FaceTime», «Thêm vào Danh bạ», «Tải tin nhắn cũ hơn» (CKTranscriptHeaderView ›
+// _UIShortPlacardButton) ----
+// Bản gốc: viên sáng bóng kiểu iOS 6, chữ xanh xám có bóng trắng — sáng chói trên nền đen (máy anh báo lỗi 20/11/2026). Kiểu mới:
+// viên phẳng bo tròn (xám đậm ở chế độ tối, xám nhạt ở chế độ sáng), chữ màu nhấn Inter SemiBold, không bóng chữ. Có ghi nhớ.
+static UIColor *G6SMSAccent(BOOL dark) {
+    return dark ? [UIColor colorWithRed:0.04 green:0.52 blue:1 alpha:1] : [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1];
+}
+
+static void G6SMSStyleHeaderButton(UIButton *button) {
+    BOOL dark = G6SMSDark();
+    NSDictionary *saved = objc_getAssociatedObject(button, &kSavedKey);
+    if (!gActive) {
+        if (!saved) return;
+        UIControlState states[] = {UIControlStateNormal, UIControlStateHighlighted};
+        for (int i = 0; i < 2; i++) {
+            NSString *k = i ? @"h" : @"n";
+            id image = saved[[@"image" stringByAppendingString:k]], title = saved[[@"title" stringByAppendingString:k]];
+            id shadow = saved[[@"shadow" stringByAppendingString:k]];
+            [button setBackgroundImage:image == [NSNull null] ? nil : image forState:states[i]];
+            [button setTitleColor:title == [NSNull null] ? nil : title forState:states[i]];
+            [button setTitleShadowColor:shadow == [NSNull null] ? nil : shadow forState:states[i]];
+        }
+        if (saved[@"font"]) button.titleLabel.font = saved[@"font"];
+        button.titleLabel.shadowOffset = [saved[@"offset"] CGSizeValue];
+        objc_setAssociatedObject(button, &kSavedKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(button, &kModeKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        return;
+    }
+    CGFloat h = button.bounds.size.height;
+    if (h < 16) return;
+    // Đã đổi đúng chế độ và đúng chiều cao này rồi thì thôi
+    NSString *mode = [NSString stringWithFormat:@"%d-%.0f", dark, h];
+    if ([objc_getAssociatedObject(button, &kModeKey) isEqual:mode]) return;
+    if (!saved) {
+        NSMutableDictionary *s = [NSMutableDictionary dictionary];
+        UIControlState states[] = {UIControlStateNormal, UIControlStateHighlighted};
+        for (int i = 0; i < 2; i++) {
+            NSString *k = i ? @"h" : @"n";
+            s[[@"image" stringByAppendingString:k]] = [button backgroundImageForState:states[i]] ?: (id)[NSNull null];
+            s[[@"title" stringByAppendingString:k]] = [button titleColorForState:states[i]] ?: (id)[NSNull null];
+            s[[@"shadow" stringByAppendingString:k]] = [button titleShadowColorForState:states[i]] ?: (id)[NSNull null];
+        }
+        if (button.titleLabel.font) s[@"font"] = button.titleLabel.font;
+        s[@"offset"] = [NSValue valueWithCGSize:button.titleLabel.shadowOffset];
+        objc_setAssociatedObject(button, &kSavedKey, s, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        saved = s;
+    }
+    UIEdgeInsets caps = UIEdgeInsetsMake(0, ceil(h / 2), 0, ceil(h / 2));
+    CGSize size = CGSizeMake(ceil(h) + 2, h);
+    UIImage *normal = G6SMSPill(size, [UIColor colorWithWhite:dark ? 1 : 0 alpha:dark ? 0.14 : 0.06], caps);
+    UIImage *pressed = G6SMSPill(size, [UIColor colorWithWhite:dark ? 1 : 0 alpha:dark ? 0.26 : 0.13], caps);
+    if (!normal || !pressed) return;
+    [button setBackgroundImage:normal forState:UIControlStateNormal];
+    [button setBackgroundImage:pressed forState:UIControlStateHighlighted];
+    UIColor *accent = G6SMSAccent(dark);
+    [button setTitleColor:accent forState:UIControlStateNormal];
+    [button setTitleColor:[accent colorWithAlphaComponent:0.6] forState:UIControlStateHighlighted];
+    [button setTitleShadowColor:[UIColor clearColor] forState:UIControlStateNormal];
+    [button setTitleShadowColor:[UIColor clearColor] forState:UIControlStateHighlighted];
+    button.titleLabel.shadowOffset = CGSizeZero;
+    UIFont *font = saved[@"font"];
+    if (font) button.titleLabel.font = G6Font(G6FontSemiBold, font.pointSize);
+    objc_setAssociatedObject(button, &kModeKey, mode, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+static void G6SMSStyleHeader(UIView *header) {
+    for (UIView *sub in header.subviews) {
+        if ([sub isKindOfClass:[UIButton class]]) G6SMSStyleHeaderButton((UIButton *)sub);
+    }
+}
+
+static void (*orig_headerLayout)(UIView *, SEL);
+static void repl_headerLayout(UIView *self, SEL _cmd) {
+    orig_headerLayout(self, _cmd);
+    @try {
+        G6SMSStyleHeader(self);
+    } @catch (NSException *e) {
+    }
+}
+
+// ---- Chế độ Sửa của trò chuyện: «Xóa» / «Chuyển tiếp» ở thanh dưới (MailToolbarButton của MessageUI) ----
+// Bản gốc: viên bóng đỏ / xanh xám kiểu iOS 6 (đo trên iPhone 20/11/2026). Kiểu mới: viên phẳng xám như hàng nút đầu trò chuyện,
+// chữ + hình màu đỏ cho nút xoá (cờ `_isRed` của chính nút), màu nhấn cho nút còn lại. Lúc chưa chọn tin nào, nút tự mờ đi (độ
+// đục 0,5 của nhãn / hình) như bản gốc. Có ghi nhớ.
+static BOOL G6SMSCharIvar(id obj, const char *name) {
+    Ivar iv = obj ? class_getInstanceVariable([obj class], name) : NULL;
+    const char *type = iv ? ivar_getTypeEncoding(iv) : NULL;
+    if (!type || (type[0] != 'c' && type[0] != 'B')) return NO;
+    return *((char *)(__bridge void *)obj + ivar_getOffset(iv)) != 0;
+}
+
+static void G6SMSStyleToolbarButton(UIButton *button) {
+    UILabel *label = G6SMSIvar(button, "_titleLabel");
+    UIImageView *icon = G6SMSIvar(button, "_iconView");
+    NSDictionary *saved = objc_getAssociatedObject(button, &kSavedKey);
+    UIControlState states[] = {UIControlStateNormal, UIControlStateHighlighted, UIControlStateDisabled};
+    if (!gActive) {
+        if (!saved) return;
+        for (int i = 0; i < 3; i++) {
+            id image = saved[[NSString stringWithFormat:@"bg%d", i]];
+            [button setBackgroundImage:image == [NSNull null] ? nil : image forState:states[i]];
+        }
+        if ([label isKindOfClass:[UILabel class]]) {
+            label.textColor = saved[@"text"];
+            label.shadowColor = saved[@"shadow"] == [NSNull null] ? nil : saved[@"shadow"];
+        }
+        if ([icon isKindOfClass:[UIImageView class]] && saved[@"icon"] != [NSNull null]) icon.image = saved[@"icon"];
+        objc_setAssociatedObject(button, &kSavedKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(button, &kModeKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        return;
+    }
+    CGFloat h = button.bounds.size.height;
+    if (h < 16) return;
+    BOOL dark = G6SMSDark();
+    if (!saved) {
+        NSMutableDictionary *s = [NSMutableDictionary dictionary];
+        for (int i = 0; i < 3; i++) s[[NSString stringWithFormat:@"bg%d", i]] = [button backgroundImageForState:states[i]] ?: (id)[NSNull null];
+        s[@"text"] = label.textColor ?: [UIColor whiteColor];
+        s[@"shadow"] = label.shadowColor ?: (id)[NSNull null];
+        s[@"icon"] = icon.image ?: (id)[NSNull null];
+        objc_setAssociatedObject(button, &kSavedKey, s, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        saved = s;
+    }
+    BOOL red = G6SMSCharIvar(button, "_isRed");
+    UIColor *tint = red ? (dark ? [UIColor colorWithRed:1 green:0.27 blue:0.23 alpha:1] : [UIColor colorWithRed:1 green:0.23 blue:0.19 alpha:1])
+                        : G6SMSAccent(dark);
+    NSString *mode = [NSString stringWithFormat:@"%d-%.0f", dark, h];
+    UIImage *current = [button backgroundImageForState:UIControlStateNormal];
+    if (![objc_getAssociatedObject(button, &kModeKey) isEqual:mode] || !objc_getAssociatedObject(current, &kOursKey)) {
+        UIEdgeInsets caps = UIEdgeInsetsMake(0, ceil(h / 2), 0, ceil(h / 2));
+        CGSize size = CGSizeMake(ceil(h) + 2, h);
+        UIImage *normal = G6SMSPill(size, [UIColor colorWithWhite:dark ? 1 : 0 alpha:dark ? 0.14 : 0.06], caps);
+        UIImage *pressed = G6SMSPill(size, [UIColor colorWithWhite:dark ? 1 : 0 alpha:dark ? 0.26 : 0.13], caps);
+        if (!normal || !pressed) return;
+        [button setBackgroundImage:normal forState:UIControlStateNormal];
+        [button setBackgroundImage:pressed forState:UIControlStateHighlighted];
+        [button setBackgroundImage:normal forState:UIControlStateDisabled];
+        objc_setAssociatedObject(button, &kModeKey, mode, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    if ([label isKindOfClass:[UILabel class]]) {
+        if (![label.textColor isEqual:tint]) label.textColor = tint;
+        label.shadowColor = nil;
+    }
+    // Hình (thùng rác / mũi tên): ảnh trắng của app → tô theo màu nút; app đặt ảnh mới thì tô lại từ ảnh đó
+    if ([icon isKindOfClass:[UIImageView class]] && icon.image) {
+        UIImage *source = objc_getAssociatedObject(icon.image, &kOursKey) ? objc_getAssociatedObject(icon, &kSavedKey) : icon.image;
+        NSNumber *iconMode = objc_getAssociatedObject(icon, &kModeKey);
+        if (source && (!objc_getAssociatedObject(icon.image, &kOursKey) || iconMode.intValue != (red ? 2 : 0) + dark)) {
+            UIImage *tinted = G6UITintedImage(source, tint);
+            if (tinted) {
+                objc_setAssociatedObject(tinted, &kOursKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                objc_setAssociatedObject(icon, &kSavedKey, source, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                objc_setAssociatedObject(icon, &kModeKey, @((red ? 2 : 0) + dark), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                icon.image = tinted;
+            }
+        }
+    }
+}
+
+static void (*orig_toolbarButtonLayout)(UIButton *, SEL);
+static void repl_toolbarButtonLayout(UIButton *self, SEL _cmd) {
+    orig_toolbarButtonLayout(self, _cmd);
+    @try {
+        G6SMSStyleToolbarButton(self);
+    } @catch (NSException *e) {
+    }
+}
+
+// ---- Tin nhắn Mới: hàng «Đến:» (CKComposeRecipientView) ----
+// Bản gốc: nền trắng ở cả hai chế độ, nút «+» là viên xanh bóng kiểu iOS 6 (đo trên iPhone 20/11/2026). Kiểu mới: nền theo nền trò
+// chuyện (đen / trắng), vạch ngăn mảnh, chữ đang gõ trắng ở chế độ tối; nút «+» là hình tròn viền màu nhấn có dấu cộng. Có ghi nhớ.
+static UIImage *G6SMSAddGlyph(CGSize size, UIColor *color) {
+    if (size.width < 12 || size.height < 12) return nil;
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+    CGFloat d = MIN(size.width, size.height) - 7, line = 1.5;
+    CGRect circle = CGRectMake((size.width - d) / 2, (size.height - d) / 2, d, d);
+    [color set];
+    UIBezierPath *ring = [UIBezierPath bezierPathWithOvalInRect:CGRectInset(circle, line / 2, line / 2)];
+    ring.lineWidth = line;
+    [ring stroke];
+    CGFloat arm = d * 0.26;
+    CGPoint c = CGPointMake(CGRectGetMidX(circle), CGRectGetMidY(circle));
+    UIBezierPath *plus = [UIBezierPath bezierPath];
+    [plus moveToPoint:CGPointMake(c.x - arm, c.y)];
+    [plus addLineToPoint:CGPointMake(c.x + arm, c.y)];
+    [plus moveToPoint:CGPointMake(c.x, c.y - arm)];
+    [plus addLineToPoint:CGPointMake(c.x, c.y + arm)];
+    plus.lineWidth = line;
+    plus.lineCapStyle = kCGLineCapRound;
+    [plus stroke];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    if (image) objc_setAssociatedObject(image, &kOursKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    return image;
+}
+
+static void G6SMSStyleRecipients(UIView *view) {
+    BOOL dark = G6SMSDark();
+    UIColor *backdrop = gActive ? (dark ? [UIColor blackColor] : [UIColor whiteColor]) : nil;
+    // Nền: chính hàng «Đến:» và tối đa hai view cha (khung cuộn khi có nhiều người nhận, CKRecipientSelectionView) — dừng ở
+    // CKRecipientSelectionView, không bao giờ lên tới cửa sổ
+    UIView *v = view;
+    for (int i = 0; v && i < 3 && ![v isKindOfClass:[UIWindow class]]; i++, v = v.superview) {
+        G6SMSSetBackground(v, backdrop);
+        if ([NSStringFromClass([v class]) isEqualToString:@"CKRecipientSelectionView"]) break;
+    }
+    for (UIView *sub in view.subviews) {
+        // Nhãn «Đến:» (MFHeaderLabelView) và nút «+» mang nền trắng riêng (đo 20/11/2026) → theo nền hàng; cả nhãn con bên trong
+        NSString *name = NSStringFromClass([sub class]);
+        if ([name rangeOfString:@"HeaderLabel"].location != NSNotFound || [name rangeOfString:@"AddContact"].location != NSNotFound) {
+            if (sub.backgroundColor || objc_getAssociatedObject(sub, &kSavedKey)) G6SMSSetBackground(sub, backdrop);
+            // Nhãn tự vẽ chữ bằng -labelColor (xem repl_headerLabelColor): đổi chế độ thì vẽ lại
+            NSNumber *drawn = objc_getAssociatedObject(sub, &kModeKey);
+            int want = gActive ? 1 + dark : 0;
+            if ([name rangeOfString:@"HeaderLabel"].location != NSNotFound && drawn.intValue != want) {
+                objc_setAssociatedObject(sub, &kModeKey, @(want), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                [sub setNeedsDisplay];
+            }
+            for (UIView *inner in sub.subviews) {
+                if ([inner isKindOfClass:[UILabel class]] && (inner.backgroundColor || objc_getAssociatedObject(inner, &kSavedKey))) {
+                    G6SMSSetBackground(inner, backdrop);
+                }
+            }
+        }
+        // Vạch ngăn mảnh ở đáy hàng
+        if ([sub isMemberOfClass:[UIView class]] && sub.bounds.size.height <= 1.5) {
+            G6SMSSetBackground(sub, gActive ? [UIColor colorWithWhite:dark ? 1 : 0 alpha:dark ? 0.16 : 0.18] : nil);
+        } else if ([sub isKindOfClass:[UITextField class]]) {
+            UITextField *field = (UITextField *)sub;
+            NSDictionary *saved = objc_getAssociatedObject(field, &kSavedKey);
+            if (gActive) {
+                if (!saved) objc_setAssociatedObject(field, &kSavedKey, @{@"text" : field.textColor ?: [UIColor blackColor]}, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                UIColor *text = dark ? [UIColor whiteColor] : [UIColor blackColor];
+                if (![field.textColor isEqual:text]) field.textColor = text;
+            } else if (saved) {
+                field.textColor = saved[@"text"];
+                objc_setAssociatedObject(field, &kSavedKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            }
+        } else if ([sub isKindOfClass:[UIButton class]] && [NSStringFromClass([sub class]) rangeOfString:@"AddContact"].location != NSNotFound) {
+            UIButton *add = (UIButton *)sub;
+            NSDictionary *saved = objc_getAssociatedObject(add, &kImagesKey);
+            if (gActive) {
+                if (!saved) {
+                    saved = @{
+                        @"n" : [add imageForState:UIControlStateNormal] ?: (id)[NSNull null],
+                        @"h" : [add imageForState:UIControlStateHighlighted] ?: (id)[NSNull null],
+                    };
+                    objc_setAssociatedObject(add, &kImagesKey, saved, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                }
+                NSNumber *mode = objc_getAssociatedObject(add, &kModeKey);
+                if (mode && mode.boolValue == dark && objc_getAssociatedObject([add imageForState:UIControlStateNormal], &kOursKey)) continue;
+                CGSize size = add.bounds.size;
+                UIImage *normal = G6SMSAddGlyph(size, G6SMSAccent(dark));
+                UIImage *pressed = G6SMSAddGlyph(size, [G6SMSAccent(dark) colorWithAlphaComponent:0.5]);
+                if (!normal || !pressed) continue;
+                [add setImage:normal forState:UIControlStateNormal];
+                [add setImage:pressed forState:UIControlStateHighlighted];
+                objc_setAssociatedObject(add, &kModeKey, @(dark), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            } else if (saved) {
+                [add setImage:saved[@"n"] == [NSNull null] ? nil : saved[@"n"] forState:UIControlStateNormal];
+                [add setImage:saved[@"h"] == [NSNull null] ? nil : saved[@"h"] forState:UIControlStateHighlighted];
+                objc_setAssociatedObject(add, &kImagesKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                objc_setAssociatedObject(add, &kModeKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            }
+        }
+    }
+}
+
+// Chữ «Đến:» (MFHeaderLabelView tự vẽ trong -drawRect:) lấy màu từ -labelColor: màu tối có độ trong — trên nền trắng thành xám,
+// trên nền đen của chế độ tối thì chìm mất (đo 20/11/2026) → chế độ tối trả xám sáng
+static CGColorRef (*orig_headerLabelColor)(id, SEL);
+static CGColorRef repl_headerLabelColor(id self, SEL _cmd) {
+    if (gActive && G6SMSDark()) {
+        static UIColor *light;
+        if (!light) light = [UIColor colorWithWhite:0.56 alpha:1];
+        return light.CGColor;
+    }
+    return orig_headerLabelColor(self, _cmd);
+}
+
+static void (*orig_recipientsLayout)(UIView *, SEL);
+static void repl_recipientsLayout(UIView *self, SEL _cmd) {
+    orig_recipientsLayout(self, _cmd);
+    @try {
+        G6SMSStyleRecipients(self);
+    } @catch (NSException *e) {
+    }
+}
+
+static void (*orig_serviceLayout)(UIView *, SEL);
+static void repl_serviceLayout(UIView *self, SEL _cmd) {
+    orig_serviceLayout(self, _cmd);
+    @try {
+        G6SMSStyleStampCell(self);
+    } @catch (NSException *e) {
     }
 }
 
@@ -637,13 +966,17 @@ static void repl_toolbarLayout(UIView *self, SEL _cmd) {
 // ---- Làm mới khi đổi cấu hình ----
 
 static void G6SMSRefresh(UIView *view, int depth) {
-    static Class balloon, transcript, stamp, status, listCell, entry, toolbar;
+    static Class balloon, transcript, stamp, status, service, header, listCell, entry, toolbar, mailButton, recipients;
     static dispatch_once_t once;
     dispatch_once(&once, ^{
+        mailButton = objc_getClass("MailToolbarButton");
+        recipients = objc_getClass("CKComposeRecipientView");
         balloon = objc_getClass("CKColoredBalloonView");
         transcript = objc_getClass("CKTranscriptTableView");
         stamp = objc_getClass("CKTimestampCell");
         status = objc_getClass("CKMessageStatusCell");
+        service = objc_getClass("CKServiceCell");
+        header = objc_getClass("CKTranscriptHeaderView");
         listCell = objc_getClass("CKConversationListCell");
         entry = objc_getClass("CKMessageEntryView");
         toolbar = objc_getClass("CKTranscriptToolbarView");
@@ -658,8 +991,15 @@ static void G6SMSRefresh(UIView *view, int depth) {
             }
         } else if (transcript && [view isKindOfClass:transcript]) {
             G6SMSStyleTranscript((UITableView *)view);
-        } else if ((stamp && [view isKindOfClass:stamp]) || (status && [view isKindOfClass:status])) {
+        } else if ((stamp && [view isKindOfClass:stamp]) || (status && [view isKindOfClass:status]) ||
+                   (service && [view isKindOfClass:service])) {
             G6SMSStyleStampCell(view);
+        } else if (header && [view isKindOfClass:header]) {
+            G6SMSStyleHeader(view);
+        } else if (mailButton && [view isKindOfClass:mailButton]) {
+            G6SMSStyleToolbarButton((UIButton *)view);
+        } else if (recipients && [view isKindOfClass:recipients]) {
+            G6SMSStyleRecipients(view);
         } else if (listCell && [view isKindOfClass:listCell]) {
             G6SMSStyleListCell((UITableViewCell *)view);
         } else if (entry && [view isKindOfClass:entry]) {
@@ -686,6 +1026,12 @@ void G6UIAppMessagesApply(BOOL active) {
         G6HookNamed("_CKTextBalloonView", NSSelectorFromString(@"textShadowColor"), (IMP)repl_textShadowColor, (IMP *)&orig_textShadowColor);
         G6HookNamed("CKTranscriptTableView", @selector(layoutSubviews), (IMP)repl_transcriptLayout, (IMP *)&orig_transcriptLayout);
         G6HookNamed("CKTranscriptCell", @selector(layoutSubviews), (IMP)repl_stampLayout, (IMP *)&orig_stampLayout);
+        // Ô dịch vụ tự xếp lại nhãn / vạch chấm sau lời gọi lên lớp cha → móc riêng để chỉnh SAU khi nó xếp xong
+        G6HookNamed("CKServiceCell", @selector(layoutSubviews), (IMP)repl_serviceLayout, (IMP *)&orig_serviceLayout);
+        G6HookNamed("CKTranscriptHeaderView", @selector(layoutSubviews), (IMP)repl_headerLayout, (IMP *)&orig_headerLayout);
+        G6HookNamed("MailToolbarButton", @selector(layoutSubviews), (IMP)repl_toolbarButtonLayout, (IMP *)&orig_toolbarButtonLayout);
+        G6HookNamed("CKComposeRecipientView", @selector(layoutSubviews), (IMP)repl_recipientsLayout, (IMP *)&orig_recipientsLayout);
+        G6HookNamed("MFHeaderLabelView", NSSelectorFromString(@"labelColor"), (IMP)repl_headerLabelColor, (IMP *)&orig_headerLabelColor);
         G6HookNamed("CKConversationListCell", @selector(layoutSubviews), (IMP)repl_listCellLayout, (IMP *)&orig_listCellLayout);
         G6HookNamed("CKMessageEntryView", @selector(layoutSubviews), (IMP)repl_entryLayout, (IMP *)&orig_entryLayout);
         G6HookNamed("CKMessageEntryView", NSSelectorFromString(@"_updateSendButtonColor"), (IMP)repl_updateSendColor, (IMP *)&orig_updateSendColor);

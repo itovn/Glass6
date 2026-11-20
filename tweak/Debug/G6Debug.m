@@ -48,12 +48,21 @@
 //   gallery 1|2|3|4|0    cửa sổ trưng mọi thành phần UIKit chuẩn (thanh, nút có hình, thanh thẻ, nút điều khiển) để soi kiểu;
 //                        2 = các ô nhập có sẵn chữ; 3 = bảng có thêm một ô tự vẽ; 4 = thay bảng bằng ba bánh xe chọn
 //   focus 1|0            đưa con trỏ vào ô nhập đầu tiên đang hiện (bàn phím bật lên) / bỏ ra
+//   fieldset [chữ]       đặt chữ cho ô nhập ĐANG được chọn (chạm vào ô bằng «tap x y» trước) rồi kết thúc nhập như người
+//                        dùng bấm ra ngoài — màn hình tự lưu (vd ô APN của Cài đặt). Không chữ = xoá trắng. Không ghi chữ vào nhật ký
+//   fieldrep <cũ> [mới]  như fieldset nhưng chọn ô theo giá trị: ô nhập đang hiện đầu tiên có ĐÚNG chữ <cũ> (không có khoảng
+//                        trắng). Không có <mới> = xoá trắng. Ô chưa cuộn tới thì «select <nhãn dòng gần đó>» trước
 //   cafilter list | <loại>[,<loại>…] [lớp view] | off   thử bộ lọc màu CAFilter trên lớp vẽ của một view («hue» = xoay màu 180°,
 //                        «blur» = làm mờ bán kính 8); «cafilter bg <loại…>» = thử backgroundFilters (lọc thứ nằm sau một ô)
 //   (tệp cờ /var/tmp/vn.glass6/imglog có sẵn lúc tiến trình khởi động → ghi tên + cỡ mọi hình nạp bằng imageNamed:)
 //   svc <tham số…>       chạy g6svc từ SpringBoard (quyền mobile → thử bit setuid): «svc status», «svc set twitter=1» → glass6.log
 //   uid                  uid / euid của SpringBoard → glass6.log
 //   otacheck             tự kiểm bản mới ngay (bỏ dấu «đã hỏi trong 24 giờ» và «đã báo bản này») → hộp thoại nếu có bản mới
+//   apnprobe             (app Cài đặt, iPhone) APN từng dịch vụ / MMS / APN bám LTE mà trang «Mạng dữ liệu di động» đang dùng
+//                        (đọc qua EdgeSettingsController; mật khẩu ẩn) → glass6.log
+//   apnset <dv> <apn|->  đặt APN của dịch vụ số <dv> (như apnprobe in ra) qua EdgeSettingsController; «-» = để trống
+//   ctfire [phần tên]    (iPhone) không tham số: liệt kê thông báo CoreTelephony đã bọc (G6CTGuard); có: gọi thông báo đầu tiên
+//                        có tên chứa phần đó TỪ LUỒNG PHỤ — giả tình huống từng làm SpringBoard văng → glass6.log
 // Công cụ này cũng nằm trong Glass6UI (bản thử) nên chạy được trong app: dòng lệnh bắt đầu bằng «@<tên tiến trình> » thì chỉ
 // tiến trình đó chạy (vd «@Preferences dump»); không có «@» thì chỉ SpringBoard chạy.
 // Lệnh mới đừng trùng tiền tố với lệnh cũ (so bằng hasPrefix).
@@ -71,6 +80,7 @@
 #import "G6OTACheck.h"
 #endif
 #import "G6CardSwitcher.h"
+#import "G6CTGuard.h"
 #import "G6ControlCenter.h"
 #import "G6Perf.h"
 #import "G6StatusBar.h"
@@ -1658,6 +1668,166 @@ static void G6Focus(NSString *arg) {
     G6Log(@"[thử] focus: %@ %@", arg.intValue ? @"vào" : @"ra khỏi", NSStringFromClass([field class]));
 }
 
+// fieldset [chữ]: ô đang được chọn (isFirstResponder) — không đoán theo thứ tự ô như «focus»
+static void G6FieldSet(NSString *arg) {
+    NSMutableArray *fields = [NSMutableArray array];
+    for (UIWindow *w in G6AllWindows()) G6CollectViews(w, [UITextField class], fields);
+    UITextField *field = nil;
+    for (UITextField *f in fields) {
+        if (f.isFirstResponder) field = f;
+    }
+    if (!field) {
+        G6Log(@"[thử] fieldset: không có ô nhập nào đang được chọn");
+        return;
+    }
+    field.text = arg ?: @"";
+    [field sendActionsForControlEvents:UIControlEventEditingChanged];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UITextFieldTextDidChangeNotification object:field];
+    [field resignFirstResponder];
+    G6Log(@"[thử] fieldset: đã đặt %lu ký tự cho %@ (khung %@)", (unsigned long)field.text.length, NSStringFromClass([field class]),
+          NSStringFromCGRect([field convertRect:field.bounds toView:nil]));
+}
+
+// fieldrep <cũ> [mới]
+static void G6FieldReplace(NSString *arg) {
+    NSRange sp = [arg rangeOfString:@" "];
+    NSString *old = sp.location == NSNotFound ? arg : [arg substringToIndex:sp.location];
+    NSString *new = sp.location == NSNotFound ? @"" : [arg substringFromIndex:sp.location + 1];
+    if (!old.length) {
+        G6Log(@"[thử] fieldrep: cần <chữ cũ> [chữ mới]");
+        return;
+    }
+    NSMutableArray *fields = [NSMutableArray array];
+    for (UIWindow *w in G6AllWindows()) G6CollectViews(w, [UITextField class], fields);
+    UITextField *field = nil;
+    for (UITextField *f in fields) {
+        if ([f.text isEqualToString:old] && f.window && !f.hidden) {
+            if (!field || [f convertPoint:CGPointZero toView:nil].y < [field convertPoint:CGPointZero toView:nil].y) field = f;
+        }
+    }
+    if (!field) {
+        G6Log(@"[thử] fieldrep: không có ô đang hiện nào chứa «%@»", old);
+        return;
+    }
+    [field becomeFirstResponder];
+    field.text = new;
+    [field sendActionsForControlEvents:UIControlEventEditingChanged];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UITextFieldTextDidChangeNotification object:field];
+    [field resignFirstResponder];
+    G6Log(@"[thử] fieldrep: «%@» → %lu ký tự (ô ở %@)", old, (unsigned long)field.text.length,
+          NSStringFromCGRect([field convertRect:field.bounds toView:nil]));
+}
+
+// ---- apnprobe / apnset: soi và ghi APN qua EdgeSettingsController (trang «Mạng dữ liệu di động» của app Cài đặt) ----
+static id G6EdgeController(void) {
+    [[NSBundle bundleWithPath:@"/System/Library/PreferenceBundles/EDGESettings.bundle"] load];
+    Class cls = NSClassFromString(@"EdgeSettingsController");
+    return cls ? [[cls alloc] init] : nil;
+}
+
+static NSString *G6MaskSecrets(id value) {
+    NSString *text = [value description] ?: @"(nil)";
+    NSRegularExpression *re = [NSRegularExpression regularExpressionWithPattern:@"((password|signature)\\s*=\\s*)[^;]*;" options:0 error:NULL];
+    return [[re stringByReplacingMatchesInString:text options:0 range:NSMakeRange(0, text.length) withTemplate:@"$1<…>;"]
+        stringByReplacingOccurrencesOfString:@"\n"
+                                  withString:@" "];
+}
+
+static void G6APNProbe(void) {
+    id c = G6EdgeController();
+    if (!c) {
+        G6Log(@"[thử] apnprobe: không nạp được EdgeSettingsController");
+        return;
+    }
+    for (int s = 1; s <= 64; s <<= 1) {
+        int idx = ((int (*)(id, SEL, int))objc_msgSend)(c, NSSelectorFromString(@"_pdpContextIndexForServiceType:"), s);
+        BOOL show = ((BOOL (*)(id, SEL, int))objc_msgSend)(c, NSSelectorFromString(@"_shouldShowUIForServiceType:"), s);
+        id d = ((id (*)(id, SEL, int))objc_msgSend)(c, NSSelectorFromString(@"_APNDictionaryForService:"), s);
+        G6Log(@"[thử] apnprobe: dịch vụ %d → ngữ cảnh %d, hiện %d: %@", s, idx, show, G6MaskSecrets(d));
+    }
+    for (NSString *key in @[@"MMSC", @"Proxy", @"MaxMessageSize", @"UAProf"]) {
+        id v = ((id (*)(id, SEL, id))objc_msgSend)(c, NSSelectorFromString(@"_getMMSObjectForKey:"), key);
+        G6Log(@"[thử] apnprobe: MMS %@ = %@", key, v);
+    }
+    BOOL attachAllowed = ((BOOL (*)(id, SEL))objc_msgSend)([c class], NSSelectorFromString(@"isAttachAPNEditingAllowed"));
+    id attach = ((id (*)(id, SEL))objc_msgSend)(c, NSSelectorFromString(@"attachAPNSettings"));
+    G6Log(@"[thử] apnprobe: APN bám LTE (sửa được %d): %@", attachAllowed, G6MaskSecrets(attach));
+}
+
+// apnset <dịch vụ> <apn|-> : đặt APN của một dịch vụ (dấu - = để trống), giữ các khoá khác
+static void G6APNSet(NSString *arg) {
+    NSArray *parts = [arg componentsSeparatedByString:@" "];
+    if (parts.count < 2) {
+        G6Log(@"[thử] apnset: cần <dịch vụ> <apn|->");
+        return;
+    }
+    int s = [parts[0] intValue];
+    NSString *apn = [parts[1] isEqualToString:@"-"] ? @"" : parts[1];
+    id c = G6EdgeController();
+    int idx = ((int (*)(id, SEL, int))objc_msgSend)(c, NSSelectorFromString(@"_pdpContextIndexForServiceType:"), s);
+    NSMutableDictionary *d = [((id (*)(id, SEL, int))objc_msgSend)(c, NSSelectorFromString(@"_APNDictionaryForService:"), s) mutableCopy];
+    if (!d) d = [NSMutableDictionary dictionary];
+    d[@"apn"] = apn;
+    ((void (*)(id, SEL, id, int))objc_msgSend)(c, NSSelectorFromString(@"_replaceAPNDictionaryWithDictionary:forPDPContext:"), d, idx);
+    id after = ((id (*)(id, SEL, int))objc_msgSend)(c, NSSelectorFromString(@"_APNDictionaryForService:"), s);
+    G6Log(@"[thử] apnset: dịch vụ %d (ngữ cảnh %d) → %@", s, idx, G6MaskSecrets(after));
+}
+
+// apnget / apnui <mã dòng> <giá trị|->: đọc / ghi theo đúng đường của giao diện (getter / setter của từng dòng trong
+// «EDGE Settings.plist»: internet_apn, mms_mmsc…)
+static id G6EdgeSpecifier(id c, NSString *specID) {
+    for (id s in ((NSArray * (*)(id, SEL)) objc_msgSend)(c, @selector(specifiers))) {
+        if ([[s valueForKey:@"identifier"] isEqualToString:specID]) return s;
+    }
+    return nil;
+}
+
+static void G6APNGet(void) {
+    id c = G6EdgeController();
+    NSArray *specs = c ? ((NSArray * (*)(id, SEL)) objc_msgSend)(c, @selector(specifiers)) : nil;
+    G6Log(@"[thử] apnget: %lu dòng", (unsigned long)specs.count);
+    for (id s in specs) {
+        NSString *sid = [s valueForKey:@"identifier"];
+        if (!sid.length || [sid hasSuffix:@"_header"] || ![sid rangeOfString:@"_"].length) continue;
+        SEL getter = NULL;
+        if ([sid hasPrefix:@"mms_"] && ![sid isEqualToString:@"mms_apn"] && ![sid isEqualToString:@"mms_username"] &&
+            ![sid isEqualToString:@"mms_password"]) {
+            getter = [sid isEqualToString:@"mms_maxmessagesize"] ? NSSelectorFromString(@"getMMSNumericValueForSpecifier:")
+                                                                 : NSSelectorFromString(@"getMMSValueForSpecifier:");
+        } else if ([sid hasPrefix:@"lte_attach_"]) {
+            getter = NSSelectorFromString(@"getAttachAPNDataForSpecifier:");
+        } else if ([sid hasPrefix:@"internet_"] || [sid hasPrefix:@"vvm_"] || [sid hasPrefix:@"mms_"] || [sid hasPrefix:@"tethering_"]) {
+            getter = NSSelectorFromString(@"getAPNDataForSpecifier:");
+        }
+        if (!getter) continue;
+        id v = ((id (*)(id, SEL, id))objc_msgSend)(c, getter, s);
+        G6Log(@"[thử] apnget: %@ = %@", sid, [sid hasSuffix:@"password"] ? ([v length] ? @"<có>" : @"<trống>") : v);
+    }
+}
+
+static void G6APNUI(NSString *arg) {
+    NSRange sp = [arg rangeOfString:@" "];
+    if (sp.location == NSNotFound) {
+        G6Log(@"[thử] apnui: cần <mã dòng> <giá trị|->");
+        return;
+    }
+    NSString *sid = [arg substringToIndex:sp.location];
+    NSString *value = [arg substringFromIndex:sp.location + 1];
+    if ([value isEqualToString:@"-"]) value = @"";
+    id c = G6EdgeController();
+    id s = G6EdgeSpecifier(c, sid);
+    if (!s) {
+        G6Log(@"[thử] apnui: không có dòng «%@»", sid);
+        return;
+    }
+    NSString *setter = [sid isEqualToString:@"mms_maxmessagesize"] ? @"setMMSNumericValue:forSpecifier:"
+                       : ([sid isEqualToString:@"mms_mmsc"] || [sid isEqualToString:@"mms_proxy"] || [sid isEqualToString:@"mms_uaprofurl"])
+                           ? @"setMMSValue:forSpecifier:"
+                           : @"setAPNData:forSpecifier:";
+    ((void (*)(id, SEL, id, id))objc_msgSend)(c, NSSelectorFromString(setter), value, s);
+    G6Log(@"[thử] apnui: %@ ← %lu ký tự (%@)", sid, (unsigned long)value.length, setter);
+}
+
 // ---- popover 1|0, sheet 1|0: mở bảng nổi / bảng chọn thử ở giữa màn hình ----
 static UIPopoverController *gTestPopover;
 static UIActionSheet *gTestSheet;
@@ -1757,6 +1927,7 @@ static void G6RunCommand(void) {
         else if ([cmd isEqualToString:@"assist"]) G6AssistDebug(arg);
         else if ([cmd isEqualToString:@"perf"]) G6Log(@"[thử] %@", G6PerfDebugState());
         else if ([cmd isEqualToString:@"statusbar"]) G6Log(@"[thử] %@", G6StatusBarDebugState());
+        else if ([cmd isEqualToString:@"ctfire"]) G6Log(@"[thử] ctfire: %@", G6CTGuardDebugFire(arg));
 #endif
         else if ([cmd isEqualToString:@"sbitems"]) G6Log(@"[thử] thanh trạng thái (tiến trình này): %@", G6StatusItemsDescribe());
         else if ([cmd isEqualToString:@"pull"]) G6PullFromTop(arg);
@@ -1774,6 +1945,12 @@ static void G6RunCommand(void) {
         else if ([cmd isEqualToString:@"gallery"]) G6Gallery(arg);
         else if ([cmd isEqualToString:@"cafilter"]) G6CAFilter(arg);
         else if ([cmd isEqualToString:@"focus"]) G6Focus(arg);
+        else if ([cmd isEqualToString:@"fieldset"]) G6FieldSet(arg);
+        else if ([cmd isEqualToString:@"fieldrep"]) G6FieldReplace(arg);
+        else if ([cmd isEqualToString:@"apnprobe"]) G6APNProbe();
+        else if ([cmd isEqualToString:@"apnset"]) G6APNSet(arg);
+        else if ([cmd isEqualToString:@"apnget"]) G6APNGet();
+        else if ([cmd isEqualToString:@"apnui"]) G6APNUI(arg);
         else if ([cmd isEqualToString:@"popover"]) G6TestPopover(arg);
         else if ([cmd isEqualToString:@"sheet"]) G6TestSheet(arg);
         else if ([cmd isEqualToString:@"appearance"]) G6SetAppearanceDebug(arg);
