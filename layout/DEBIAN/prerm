@@ -1,0 +1,7 @@
+#!/bin/sh
+# Trước khi gỡ Glass 6: bật lại mọi dịch vụ hệ thống mà Glass 6 đã tắt — gỡ xong thì không còn công cụ nào bật lại được.
+# Cập nhật lên bản mới («upgrade») thì giữ nguyên.
+if [ "$1" = remove ] || [ "$1" = purge ]; then
+    [ -x /usr/libexec/glass6/g6svc ] && /usr/libexec/glass6/g6svc revert
+fi
+exit 0

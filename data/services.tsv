@@ -1,0 +1,30 @@
+# Danh mục dịch vụ hệ thống mà Glass 6 được phép tắt / bật — NGUỒN DUY NHẤT, dùng cho:
+#   - lõi Rust (core/crates/g6-core/src/services.rs, include_str!) → tên và ghi chú hiện trong Cài đặt;
+#   - công cụ quyền root g6svc (svc/Makefile sinh svc/catalog.h từ tệp này) → danh sách trắng cứng.
+# Dịch vụ không có ở đây thì không công cụ nào của Glass 6 đụng tới được.
+# Cột cách nhau bằng TAB: mã | nhóm | việc launchd | tên | tắt thì mất gì
+#   việc launchd: tên tệp trong /System/Library/LaunchDaemons (bỏ đuôi .plist), cách nhau dấu phẩy. Nhãn (khoá Label trong
+#   tệp) khác tên tệp thì ghi «tệp:nhãn».
+# Nhóm: A = máy chủ phía Apple / bên thứ ba đã đóng; B = gom chẩn đoán gửi Apple; C = tuỳ nhu cầu (không nằm trong hồ sơ «Cân bằng»).
+# Quy tắc đưa vào (docs/DECISIONS.md D22):
+#   - đã thử trên máy thật: tắt, mở các app / ô Cài đặt có liên quan, khởi động lại máy;
+#   - không đưa việc «LaunchOnlyOnce» (chạy một lần lúc khởi động rồi launchd tự bỏ): g6svc không đọc được trạng thái của nó;
+#   - không đưa việc chỉ chạy khi có yêu cầu mà tắt đi không lợi gì (vd chép báo cáo sập cho iTunes).
+#   Ngoại lệ của quy tắc «đã thử»: `iosupdate` — cả hai máy iOS 6 dùng để thử đều đã bị gỡ sẵn hai tệp việc này (cách chặn
+#   cập nhật kiểu cũ) nên không tắt / bật thử được; tên tệp + nhãn lấy từ máy iOS 5.1.1. Xem docs/DECISIONS.md D34.
+twitter	A	com.apple.twitterd	Twitter tích hợp của iOS 6	Nút đăng Twitter trong bảng chia sẻ. API cũ của Twitter đã đóng từ lâu.
+weibo	A	com.apple.weibod	Sina Weibo tích hợp	Nút đăng Weibo trong bảng chia sẻ.
+facebook	A	com.apple.sociald	Facebook tích hợp của iOS 6	Nút đăng Facebook trong bảng chia sẻ. Facebook đã ngừng hỗ trợ iOS 6.
+photostream	A	com.apple.mediastream.mstreamd	Kho ảnh của tôi (Photo Stream)	Apple đã ngừng dịch vụ này năm 2023.
+iclouddocs	A	com.apple.ubd,com.apple.librariand	iCloud Tài liệu & Dữ liệu kiểu cũ	Apple đã ngừng năm 2022. Có lúc bị hệ thống bật lại liên tục dù không còn máy chủ.
+usage	B	com.apple.aggregated,com.apple.aggregated.dbservice,com.apple.aggregated.addaily:com.apple.addaily	Thống kê sử dụng	Số liệu «Chẩn đoán & Sử dụng» gửi về Apple. Chạy thường trực.
+awd	B	com.apple.awdd	Chẩn đoán mạng không dây	Nhật ký chẩn đoán Wi-Fi / di động gửi về Apple.
+powerlog	B	com.apple.powerlog	Nhật ký pin	Nhật ký tiêu thụ pin cho kỹ thuật viên Apple.
+otatasking	B	com.apple.OTATaskingAgent,com.apple.OTACrashCopier	Nhận lệnh chẩn đoán từ xa	Apple gửi lệnh gom nhật ký qua mạng. Báo cáo sập vẫn được ghi trên máy.
+gamecenter	C	com.apple.gamed	Game Center	Bảng xếp hạng, thành tích, lời mời chơi trong game.
+airprint	C	com.apple.printd	AirPrint	In qua máy in AirPrint.
+siri	C	com.apple.assistantd,com.apple.assistant_service	Siri và Đọc chính tả	Trợ lý giọng nói và nút micro trên bàn phím.
+itunesmatch	C	com.apple.itunescloudd	iTunes Match / nhạc trên iCloud	Nghe nhạc đã mua lưu trên iCloud.
+hotspot	C	com.apple.MobileInternetSharing	Điểm truy cập cá nhân	Phát mạng di động cho máy khác (cần SIM).
+wapi	C	com.apple.wifi.wapic	WAPI	Chuẩn bảo mật Wi-Fi riêng của Trung Quốc.
+iosupdate	C	com.apple.softwareupdateservicesd,com.apple.mobile.softwareupdated	Cập nhật iOS qua mạng (OTA)	Máy thôi kiểm tra và tải bản iOS mới; màn «Cập nhật phần mềm» trong Cài đặt đứng mãi ở «Kiểm tra cập nhật…». Nên tắt trên máy đã jailbreak: lỡ cập nhật là mất jailbreak.

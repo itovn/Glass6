@@ -1,0 +1,831 @@
+# Bảng dịch Việt → Anh của Glass 6 — nguồn của prefs/Resources/Strings-en.plist (python tools/gen_strings.py).
+# Mỗi mục hai dòng: «# <chuỗi tiếng Việt>» (chỉ để đọc, công cụ tự ghi lại) rồi «<mã> = <bản tiếng Anh>».
+# Xuống dòng trong chuỗi viết là \n. Mục để trống = chưa dịch (hiển thị nguyên tiếng Việt).
+
+# Giao diện kiểu iPadOS 26 cho iOS 6. Tắt là màn hình chính và các app đang mở về kiểu gốc ngay, không cần khởi động lại.
+28d4753e = An iPadOS 26-style look for iOS 6. Turning it off returns the Home screen and open apps to the stock look at once, no restart needed.
+
+# Giao diện kiểu iOS 26 cho iOS 6. Tắt là màn hình chính và các app đang mở về kiểu gốc ngay, không cần khởi động lại.
+7e09f421 = An iOS 26-style look for iOS 6. Turning it off returns the Home screen and open apps to the stock look at once, no restart needed.
+
+# Bật Glass 6
+d67a41f5 = Enable Glass 6
+
+# Giao diện
+705b4237 = Appearance
+
+# Tự động: tối trong khoảng giờ chọn bên dưới, tự đổi đúng giờ.
+f56852fc = Automatic: dark during the hours chosen below, switching on time.
+
+# Sáng
+55942c05 = Light
+
+# Tối
+ca1dd55d = Dark
+
+# Tự động
+31dcad61 = Automatic
+
+# Tự động: tối từ
+93b15ae7 = Automatic: dark from
+
+# Tự động: sáng từ
+31a556de = Automatic: light from
+
+# Màn hình chính
+3b4df4dc = Home Screen
+
+# Dock nổi bằng kính, biểu tượng dồn vào giữa, không nhãn. Biểu tượng bo góc kiểu mới, nhãn phông Inter. Thư mục mở ra là dải kính mờ thay nền vải. Biểu tượng Đồng hồ có kim giờ, phút, giây chạy theo giờ của máy. Thanh trạng thái ở màn hình chính và màn khoá bỏ dải nền đen, chữ phông Inter. Khay đa nhiệm (bấm đúp nút Home) là dải kính mờ thay nền vải. Ô tìm kiếm ở trang Tìm kiếm là viên kính, chữ theo sáng / tối. Tắt là về kiểu gốc ngay.
+56ece825 = A floating glass Dock with centred icons and no labels. New rounded icons with labels in Inter. Open folders show a frosted glass band instead of linen. The Clock icon has hour, minute and second hands that follow the device time. The status bar on the Home and Lock screens drops its black strip and uses the Inter font. The app switcher (double-press Home) is a frosted glass band instead of linen. The search field on the Search page is a glass capsule whose text follows light / dark. Turning a switch off restores the stock look at once.
+
+# Biểu tượng kiểu mới
+4c8c8480 = New Icons
+
+# Thư mục kính
+24d91eb6 = Glass Folders
+
+# Đồng hồ chạy thật
+937dcad5 = Live Clock Icon
+
+# Thanh trạng thái trong suốt
+bb1fd769 = Transparent Status Bar
+
+# Khay đa nhiệm kính
+25d2491b = Glass App Switcher
+
+# Khay đa nhiệm dạng thẻ
+b2366ed7 = Card-Style App Switcher
+
+# Dock kính
+cce53c3a = Glass Dock
+
+# Ô tìm kiếm kính
+0cb4777a = Glass Search Field
+
+# Ẩn Quầy báo
+45a3d947 = Hide Newsstand
+
+# Thanh trạng thái
+63bbf3c1 = Status Bar
+
+# Áp cho thanh trạng thái của màn hình chính, màn khoá và các app của Apple; cần bật «Thanh trạng thái trong suốt». Việc ẩn «Không có SIM» có tác dụng trong mọi app; khi máy có SIM thì tên nhà mạng vẫn hiện.
+389cd895 = Applies to the status bar on the Home screen, on the Lock screen and in Apple's apps; requires “Transparent Status Bar”. Hiding “No SIM” works in every app; with a SIM inserted the carrier name still shows.
+
+# Giờ nằm bên trái
+305c44bf = Time on the Left
+
+# Pin kiểu mới, tia sét xanh khi sạc
+4113020d = New Battery, Green Bolt While Charging
+
+# Sóng và Wi-Fi nằm bên phải
+a771a6c9 = Signal and Wi-Fi on the Right
+
+# Ẩn tên nhà mạng
+21ce96fb = Hide Carrier Name
+
+# Ẩn chữ «Không có SIM»
+66b0b08f = Hide “No SIM”
+
+# Hiệu suất hệ thống
+959ba0e8 = System Performance
+
+# Một dải kính nhỏ trên màn hình chính: CPU, RAM, đĩa, mạng. RAM và đĩa: thanh là phần đã dùng, số là phần còn trống. Chỉ đo khi màn hình chính đang hiện. «Trên cùng» đặt dải vào giữa thanh trạng thái — cần bật «Giờ nằm bên trái»; chật quá thì dải bỏ bớt ba thanh mức, vẫn chật thì tự xuống dưới thanh trạng thái.
+e23ddbf3 = A small glass strip on the Home screen: CPU, RAM, disk, network. RAM and disk: the bar is the used part, the number is what is free. Measured only while the Home screen is showing. “Top” puts the strip in the middle of the status bar — requires “Time on the Left”; when space is tight the strip drops its three level bars, and if it still does not fit it moves below the status bar.
+
+# Một viên kính nhỏ trên thanh trạng thái của màn hình chính, nằm giữa giờ và cụm sóng – pin: CPU, RAM còn trống, tốc độ mạng nhận ↓ / gửi ↑. Chỉ đo khi màn hình chính đang hiện. Cần bật «Giờ nằm bên trái»; khi thanh trạng thái có thêm biểu tượng làm chật chỗ, dải tự bỏ bớt mục.
+7faee00f = A small glass pill in the Home screen status bar, between the time and the signal–battery group: CPU, free RAM, network speed down ↓ / up ↑. Measures only while the Home screen is showing. Requires “Time on the Left”; when extra status icons leave less room, the strip drops items automatically.
+
+# Dải hiệu suất
+37eaa829 = Performance Strip
+
+# Vị trí
+678e351f = Position
+
+# Trên cùng
+bc89f58d = Top
+
+# Dưới thanh trạng thái
+d4925cd7 = Below the Status Bar
+
+# Kiểu hiển thị
+24b844ed = Style
+
+# Đầy đủ (hai hàng)
+4e8b7912 = Full (Two Rows)
+
+# Gọn (một hàng)
+8306cf2a = Compact (One Row)
+
+# Nhịp đo
+aa5df740 = Refresh Interval
+
+# Mỗi giây
+8fe82dee = Every second
+
+# Mỗi 2 giây
+88a3b0a2 = Every 2 seconds
+
+# Mỗi 3 giây
+7d08acaf = Every 3 seconds
+
+# Mỗi 5 giây
+ff2cc2fc = Every 5 seconds
+
+# Mỗi 10 giây
+d9bc7508 = Every 10 seconds
+
+# Kiểu biểu tượng
+e983346e = Icon Style
+
+# Tối: dịu bớt chỗ sáng của biểu tượng. Trong: biểu tượng thành kính trong một màu, hình nền lọt qua. Nhuộm: mọi biểu tượng cùng một màu trên nền than (chọn màu bên dưới). Cần bật «Biểu tượng kiểu mới».
+44f864c1 = Dark: tones down the bright parts of icons. Clear: icons become single-colour clear glass and the wallpaper shows through. Tinted: every icon uses one colour on a charcoal base (pick the colour below). Requires “New Icons”.
+
+# Mặc định
+d75aa664 = Default
+
+# Trong
+59288e3b = Clear
+
+# Nhuộm
+f17246f9 = Tinted
+
+# Màu nhuộm
+5999f0df = Tint Colour
+
+# Xanh dương
+95beb520 = Blue
+
+# Xanh nhạt
+a7b06021 = Light Blue
+
+# Lục
+51b47fc9 = Green
+
+# Vàng
+27d57aed = Yellow
+
+# Cam
+5e09769d = Orange
+
+# Đỏ
+2eb7503e = Red
+
+# Hồng
+5a43ba9e = Pink
+
+# Tím
+684e5966 = Purple
+
+# Xám
+cdd16a6f = Grey
+
+# Màn khoá
+e2d76a28 = Lock Screen
+
+# Bỏ hai thanh bóng kính, giờ và ngày phông Inter, rãnh trượt mở khoá bằng kính. Vẫn trượt để mở khoá như cũ. «Ẩn nút khung ảnh» bỏ nút hình bông hoa ở góc phải; «Ẩn thông báo Chưa cài đặt Thẻ SIM» bỏ dòng đó khỏi màn khoá (cảnh báo SIM khác vẫn hiện). Hai tuỳ chọn này chỉ có tác dụng khi «Màn khoá kiểu mới» đang bật.
+489fb140 = Removes the two glossy bars, sets the time and date in Inter and turns the unlock slider into glass. You still slide to unlock as before. “Hide Picture Frame Button” removes the flower button in the right corner; “Hide ‘No SIM Card Installed’” removes that line from the Lock screen (other SIM alerts still show). These two options only work while “New Lock Screen” is on.
+
+# Màn khoá kiểu mới
+ca3010f4 = New Lock Screen
+
+# Ẩn nút khung ảnh
+fa5a3115 = Hide Picture Frame Button
+
+# Ẩn thông báo «Chưa cài đặt Thẻ SIM»
+bb221ff0 = Hide “No SIM Card Installed”
+
+# Ẩn hình pin lớn khi đang sạc
+8947ed7e = Hide Large Battery While Charging
+
+# Thông báo và bảng nổi
+f38b2adc = Notifications and Panels
+
+# «Thông báo kính»: băng thông báo ở mép trên và Trung tâm thông báo (kéo từ mép trên xuống) thành tấm kính, chữ phông Inter. Bảng âm lượng và hộp thoại của hệ thống (cảnh báo pin yếu, hỏi xoá app…) cũng thành tấm kính. Nền của kính là ảnh chụp màn hình lúc vừa hiện; có tác dụng từ lần hiện kế tiếp.
+3123bd92 = “Glass Notifications”: banners at the top edge and Notification Center (pull down from the top edge) become glass panels with text in Inter. The volume HUD and system alerts (low battery, delete an app…) become glass panels too. The glass backdrop is a snapshot taken as the panel appears; changes apply from the next time it shows.
+
+# Thông báo kính
+7c762aa7 = Glass Notifications
+
+# Bảng âm lượng kính
+0aabffb5 = Glass Volume HUD
+
+# Hộp thoại kính
+b599e0e6 = Glass Alerts
+
+# Trong app
+1d7dbed4 = In Apps
+
+# Áp cho app của Apple: thanh, bảng, nút điều khiển chuẩn; riêng Đồng hồ, Ghi chú, Lời nhắc, Lịch, Danh bạ, Ảnh, Tin nhắn được vẽ lại thêm («Vẽ lại app của Apple»). Game Center, Nhạc và app bên thứ ba giữ nguyên. Tắt «Giao diện trong app» thì app mở sau đó không bị đổi gì.
+fb1bf845 = Applies to Apple's apps: standard bars, tables and controls; Clock, Notes, Reminders, Calendar, Contacts, Photos and Messages get extra restyling (“Restyle Apple Apps”). Game Center, Music and third-party apps are left alone. With “App Interface” off, apps opened afterwards are not changed.
+
+# Giao diện trong app
+b0cc1179 = App Interface
+
+# Thanh và nút trên thanh
+c0527140 = Bars and Bar Buttons
+
+# Bảng kiểu nhóm
+c263df3d = Grouped Tables
+
+# Công tắc, thanh trượt
+af4c1dda = Switches and Sliders
+
+# Biểu tượng trong Cài đặt
+fd13d08f = Icons in Settings
+
+# Vẽ lại app của Apple
+bdd0f9f7 = Restyle Apple Apps
+
+# Bàn phím tối ở chế độ tối
+2bb52401 = Dark Keyboard in Dark Mode
+
+# AssistiveTouch
+b56cd19c = AssistiveTouch
+
+# Nút nổi của Glass 6 thay cho AssistiveTouch của iOS: tự chọn các nút bên trong và thao tác chạm, chạm hai lần, nhấn giữ.
+999f46cb = Glass 6's floating button replaces the iOS AssistiveTouch: choose the buttons inside it and what a tap, a double tap and a long press do.
+
+# Nút AssistiveTouch
+52a22ff5 = AssistiveTouch Button
+
+# Control Center
+c312449c = Control Center
+
+# Kéo từ mép trên xuống ở một phần ba bên phải màn hình để mở: Máy bay, Wi-Fi, Bluetooth, Không làm phiền, khoá xoay, sáng / tối, độ sáng, âm lượng, nhạc. Kéo ở phần còn lại vẫn mở Trung tâm thông báo. Đóng bằng cách vuốt lên, chạm ra ngoài hoặc bấm nút Home; không đụng tới thì bảng tự ẩn sau thời gian chờ.
+eeb0098a = Pull down from the top edge in the right third of the screen to open it: Airplane Mode, Wi-Fi, Bluetooth, Do Not Disturb, rotation lock, light / dark, brightness, volume, music. Pulling anywhere else still opens Notification Center. Close it by swiping up, tapping outside or pressing Home; left alone, the panel hides after the timeout.
+
+# Tự ẩn Control Center
+38b6673f = Auto-Hide Control Center
+
+# Không tự ẩn
+4710d6dc = Never
+
+# Sau 5 giây
+70f479fc = After 5 seconds
+
+# Sau 8 giây
+b5da48a8 = After 8 seconds
+
+# Sau 15 giây
+22cdf44a = After 15 seconds
+
+# Sau 30 giây
+2c0cc84a = After 30 seconds
+
+# Độ mờ của kính
+9e446b09 = Glass Blur
+
+# Độ trong
+fee3ea2e = Clarity
+
+# Viền sáng
+a5ae86dc = Rim Light
+
+# Bỏ khúc xạ ở mép kính và vệt sáng — nhẹ máy hơn.
+cd9d04e2 = Drops the refraction at glass edges and the highlight streak — lighter on the device.
+
+# Giảm hiệu ứng
+950ead60 = Reduce Effects
+
+# Hệ thống
+d90f70ae = System
+
+# Tắt các dịch vụ của iOS 6 đã ngừng từ lâu hoặc không cần tới. Cài Glass 6 không tự tắt dịch vụ nào — chọn trong mục này.
+2a5c2ba8 = Turn off iOS 6 services that were shut down long ago or that you do not need. Installing Glass 6 never turns a service off by itself — choose here.
+
+# Dịch vụ hệ thống
+cda3d471 = System Services
+
+# Ngôn ngữ
+65074a85 = Language
+
+# Tự động: theo ngôn ngữ của máy — tiếng Việt trên máy đặt tiếng Việt, tiếng Anh trên các máy khác.
+3d41a680 = Automatic: follows the device language — Vietnamese on devices set to Vietnamese, English on all others.
+
+# Tiếng Việt
+4993440c = Tiếng Việt
+
+# English
+649df08a = English
+
+# Trạng thái
+e03c1401 = Status
+
+# Glass 6
+9b073011 = Glass 6
+
+# Phiên bản
+ba3f3848 = Version
+
+# Mẫu máy
+30f0fbfc = Device
+
+# Xung đột
+2c2f103d = Conflicts
+
+# Cập nhật
+8f92d966 = Update
+
+# Bản mới tải từ GitHub (github.com/itovn/Glass6) và chỉ được cài khi chữ ký số của gói đúng. Tự kiểm: hỏi GitHub nhiều nhất một lần mỗi ngày, không gửi thông tin gì về máy.
+894761a7 = New versions are downloaded from GitHub (github.com/itovn/Glass6) and installed only if the package's digital signature is valid. Auto check: asks GitHub at most once a day and sends no information about your device.
+
+# Tự kiểm bản mới
+a30fccc2 = Check Automatically
+
+# Kiểm bản mới
+40745816 = Check for Update
+
+# An toàn
+77c4a7f5 = Safety
+
+# Nếu SpringBoard khởi động 3 lần liền mà Glass 6 chưa lần nào chạy ổn, Glass 6 tự tắt. «Đặt lại bộ gác» rồi khởi động lại SpringBoard để chạy lại.
+ec9d0342 = If SpringBoard starts 3 times in a row without Glass 6 ever running stably, Glass 6 turns itself off. Tap “Reset Safety Guard”, then restart SpringBoard to run it again.
+
+# Đặt lại bộ gác
+e0684b89 = Reset Safety Guard
+
+# Khởi động lại SpringBoard
+4ebd9c83 = Restart SpringBoard
+
+# Nút nổi trên màn hình như AssistiveTouch của iOS, nhưng tự chọn được các nút bên trong. Bật nút này thì Glass 6 tắt AssistiveTouch của hệ thống để khỏi có hai nút; tắt đi thì nút của hệ thống được bật lại.
+137ffb4c = A floating on-screen button like the iOS AssistiveTouch, but you choose the buttons inside it. Turning it on makes Glass 6 switch off the system AssistiveTouch so there are not two buttons; turning it off switches the system one back on.
+
+# Nút AssistiveTouch của Glass 6
+7aee367c = Glass 6 AssistiveTouch Button
+
+# Không đọc được danh mục chức năng (thiếu lõi). Cài lại Glass 6 rồi thử lại.
+f50cb1d1 = Could not read the action list (core missing). Reinstall Glass 6 and try again.
+
+# Để trống
+eb921726 = Empty
+
+# Bảng nút
+e58c4ce3 = Button Panel
+
+# Bảng nút là một ô vuông 3×3; ít hơn 9 nút thì các nút xếp đối xứng quanh tâm (8 nút: chừa ô giữa). Chạm vào nút nổi để mở bảng; không bấm gì thì bảng tự ẩn sau thời gian chờ. Ô «Để trống» không hiện. Tăng / giảm âm lượng và độ sáng bấm được liên tiếp, các chức năng khác bấm xong thì bảng tự đóng. Ô khoá xoay, tắt tiếng, sáng / tối hiện theo trạng thái thật: nhãn là việc lần bấm tới sẽ làm.
+38d3f50b = The panel is a 3×3 grid; with fewer than 9 buttons they are arranged symmetrically around the centre (8 buttons: the middle cell stays empty). Tap the floating button to open the panel; if nothing is pressed it hides after the timeout. “Empty” cells are not shown. Volume and brightness up / down can be pressed repeatedly; other actions close the panel when pressed. The rotation lock, mute and light / dark cells show the real state: the label is what the next press will do.
+
+# %ld nút
+0ceb157b = %ld buttons
+
+# Số nút
+cfa86882 = Number of Buttons
+
+# Tự ẩn bảng nút
+b21c0420 = Auto-Hide Panel
+
+# Sau 3 giây
+9ecb21b6 = After 3 seconds
+
+# Sau 10 giây
+808d2734 = After 10 seconds
+
+# Nút %ld
+21bf1866 = Button %ld
+
+# Thao tác trên nút
+9329b14f = Gestures on the Button
+
+# Kéo nút tới chỗ khác được; thả ra thì nút hít vào mép màn hình gần nhất.
+06142449 = The button can be dragged elsewhere; when released it snaps to the nearest screen edge.
+
+# Chạm một lần
+2554454d = Single Tap
+
+# Chạm hai lần
+c35ad31e = Double Tap
+
+# Nhấn giữ
+73c3dceb = Long Press
+
+# Độ rõ lúc nghỉ
+4a163101 = Idle Opacity
+
+# Sau vài giây không đụng tới, nút mờ bớt cho đỡ vướng mắt.
+d528c445 = After a few seconds untouched, the button fades so it is less in the way.
+
+# Không tự cập nhật được
+68ce7849 = Cannot Update Automatically
+
+# Đang tải bản %@…
+c328dd7b = Downloading %@…
+
+# Huỷ
+33639e92 = Cancel
+
+# Cập nhật không thành công
+93f03cd4 = Update Failed
+
+# Đang cài bản %@…
+1a46e021 = Installing %@…
+
+# Màn hình chính sẽ tự khởi động lại sau ít giây.
+ac6c699b = The Home screen will restart in a few seconds.
+
+# Có bản mới %@
+66315716 = Version %@ Available
+
+# Đang dùng bản %@.
+46b83dda = You have version %@.
+
+# Cài xong, màn hình chính tự khởi động lại.
+e13b1eb9 = The Home screen restarts when the installation finishes.
+
+# Để sau
+fe71eacd = Later
+
+# Cập nhật lên bản %@
+8dc0baeb = Update to %@
+
+# Đang kiểm bản mới…
+8a1b2ffc = Checking for Update…
+
+# Không kiểm được bản mới
+f5c723b0 = Cannot Check for Update
+
+# Đang dùng bản mới nhất
+11e75125 = Glass 6 Is Up to Date
+
+# Máy chưa được hỗ trợ
+64e4b142 = Device Not Supported
+
+# Glass 6 chưa có giao diện cho máy này (%@). Bản này chỉ chạy trên iPad mini 1 và iPhone 5 dùng iOS 6; trên máy khác Glass 6 không thay đổi gì. Các mẫu máy khác sẽ được bổ sung ở bản sau.
+55df75de = Glass 6 has no interface for this device yet (%@). This version only runs on iPad mini 1 and iPhone 5 with iOS 6; on other devices Glass 6 changes nothing. More models will be added in later versions.
+
+# Tắt bằng tệp «off»
+00c8c08c = Off (“off” file)
+
+# Đã tự tắt
+4ec9ffab = Turned itself off
+
+# Đang chạy
+b091a300 = Running
+
+# Đang tắt
+9e1f613d = Off
+
+# Lỗi nạp lõi
+ca5a1805 = Core failed to load
+
+# Chưa chạy
+d92dce5e = Not running
+
+# %@ (lõi %@)
+299ee577 = %@ (core %@)
+
+# %lu xung đột
+96e5d69a = %lu conflicts
+
+# %lu cần lưu ý
+26b1d7c1 = %lu to review
+
+# Không
+3b4a527f = None
+
+# Đã đặt lại bộ gác
+3d08a3b5 = Safety Guard Reset
+
+# Khởi động lại SpringBoard để Glass 6 chạy lại.
+32b5bf4e = Restart SpringBoard to run Glass 6 again.
+
+# Nguyên bản
+7d15acd1 = Stock
+
+# Cân bằng
+9fe59d4b = Balanced
+
+# Tuỳ chỉnh
+0b14e25b = Custom
+
+# Glass 6 đã tự trả các dịch vụ về như trước vì máy khởi động lại hai lần mà chưa lần nào chạy ổn.\n\n
+b982764d = Glass 6 put the services back as they were because the device restarted twice without ever running stably.\n\n
+
+# Cân bằng: tắt các dịch vụ đã ngừng phía máy chủ và việc gom chẩn đoán gửi về Apple. Nguyên bản: bật lại tất cả. Thay đổi có tác dụng ngay và được giữ qua các lần khởi động lại máy.
+3677a136 = Balanced: turns off services whose servers are gone and the diagnostics sent to Apple. Stock: turns everything back on. Changes apply at once and survive restarts.
+
+# \n\nThay đổi vừa rồi đang chờ xác nhận: ở lần khởi động lại máy tới, máy chạy ổn 60 giây thì thay đổi được giữ; máy khởi động không ổn hai lần liền thì Glass 6 tự trả các dịch vụ về như trước.
+3763a2a2 = \n\nThe last change is awaiting confirmation: at the next restart, 60 seconds of stable running keeps it; two unstable starts in a row make Glass 6 put the services back as they were.
+
+# Không đọc được trạng thái dịch vụ (thiếu lõi hoặc công cụ g6svc). Cài lại Glass 6 rồi thử lại.
+d256221f = Could not read the service status (core or the g6svc tool is missing). Reinstall Glass 6 and try again.
+
+# Hồ sơ
+ebe439c1 = Profile
+
+# Đang dùng
+aa53de3f = Current
+
+# Áp hồ sơ Cân bằng
+d5f1f8d3 = Apply Balanced Profile
+
+# Về Nguyên bản
+92305763 = Back to Stock
+
+# Dịch vụ đã ngừng
+4db337ca = Discontinued Services
+
+# Máy chủ của các dịch vụ này đã đóng từ lâu — tắt không mất gì.
+7087de04 = The servers behind these were shut down long ago — nothing is lost by turning them off.
+
+# Chẩn đoán gửi về Apple
+00677827 = Diagnostics Sent to Apple
+
+# Gom số liệu và nhật ký gửi về Apple. Báo cáo sập vẫn được ghi trên máy.
+11496140 = Collects statistics and logs for Apple. Crash reports are still written on the device.
+
+# Tuỳ nhu cầu
+f310513c = Optional
+
+# Không nằm trong hồ sơ «Cân bằng» — chỉ tắt thứ không dùng tới.
+86fab27a = Not part of the “Balanced” profile — only turn off what you do not use.
+
+# Cập nhật iOS
+db700c53 = iOS Updates
+
+# Bật để máy thôi kiểm tra và tải bản iOS mới — nên bật nếu muốn giữ bản iOS đang dùng: lỡ cập nhật là mất jailbreak. Khi đang chặn, màn «Cập nhật phần mềm» của Cài đặt đứng ở «Kiểm tra cập nhật…» và Glass 6 dọn luôn dấu nhắc «có bản cập nhật» trên biểu tượng Cài đặt. Các hồ sơ ở trên không đụng tới mục này.
+362de2a0 = Turn on to stop the device from checking for and downloading new iOS versions — recommended if you want to keep the iOS you are on: an accidental update loses the jailbreak. While blocked, the “Software Update” screen in Settings stays at “Checking for Update…” and Glass 6 also clears the “update available” badge from the Settings icon. The profiles above never touch this item.
+
+# Chặn cập nhật iOS
+310683ba = Block iOS Updates
+
+# Máy này không còn tệp khởi chạy dịch vụ cập nhật của iOS (đã bị gỡ từ trước) nên không kiểm tra hay tải bản iOS mới được — bản iOS đang dùng được giữ nguyên. Glass 6 không thay đổi gì ở đây, chỉ dọn dấu nhắc «có bản cập nhật» còn sót trên biểu tượng Cài đặt.
+79fe2e0d = This device no longer has the launch files of the iOS update service (they were removed earlier), so it cannot check for or download new iOS versions — the iOS you are on stays. Glass 6 changes nothing here; it only clears the leftover “update available” badge from the Settings icon.
+
+# Đã chặn sẵn
+69418b7e = Already blocked
+
+# Không đổi được dịch vụ
+f621443f = Could Not Change Service
+
+# Công cụ g6svc báo lỗi. Cài lại Glass 6 rồi thử lại.
+d9f3e444 = The g6svc tool reported an error. Reinstall Glass 6 and try again.
+
+# Không kết nối được tới GitHub. Kiểm tra mạng rồi thử lại.
+0fa3a216 = Could not connect to GitHub. Check your network connection and try again.
+
+# Không lập được kết nối an toàn tới GitHub. Kiểm tra ngày giờ của máy rồi thử lại.
+a7bf815a = Could not establish a secure connection to GitHub. Check the device's date and time, then try again.
+
+# Chưa có bản phát hành nào.
+da951064 = No release has been published yet.
+
+# GitHub đang giới hạn số lần hỏi từ mạng này. Thử lại sau ít phút.
+f0792018 = GitHub is rate-limiting requests from this network. Try again in a few minutes.
+
+# GitHub trả mã lỗi %d. Thử lại sau.
+385eaade = GitHub returned error %d. Try again later.
+
+# Bản này không kèm gói có chữ ký số. Cập nhật bằng Cydia (nguồn itovn.github.io/Glass6/cydia).
+e8a01130 = This version has no signed package. Update with Cydia (source itovn.github.io/Glass6/cydia).
+
+# Tệp tải về bị sai. Thử tải lại.
+c22d2519 = The downloaded file is corrupted. Try again.
+
+# Không tải được chữ ký số của bản cập nhật. Thử lại sau.
+1b04e2c0 = Could not download the update's digital signature. Try again later.
+
+# Không ghi được tệp tải về. Kiểm tra dung lượng trống của máy.
+202fa933 = Could not save the download. Check the device's free space.
+
+# Đang dùng bản mới nhất.
+950ccf7e = Glass 6 is up to date.
+
+# Thiếu công cụ cập nhật (glass6ctl). Cài lại Glass 6 bằng Cydia.
+2af52fbf = The update tool (glass6ctl) is missing. Reinstall Glass 6 with Cydia.
+
+# Không đọc được thông tin bản mới. Thử lại sau.
+aede166d = Could not read the release information. Try again later.
+
+# Công cụ cài thiếu quyền root. Cài lại Glass 6 bằng Cydia.
+1e1be202 = The installer lacks root permission. Reinstall Glass 6 with Cydia.
+
+# Tệp tải về không phải gói của Glass 6.
+d4c436af = The downloaded file is not a Glass 6 package.
+
+# Chữ ký số của gói không đúng — không cài.
+6a909d6d = The package's digital signature is invalid — not installed.
+
+# Bản tải về không mới hơn bản đang dùng.
+f77b04cb = The downloaded version is not newer than the installed one.
+
+# Thiếu công cụ cài (g6update). Cài lại Glass 6 bằng Cydia.
+421c1ea7 = The installer (g6update) is missing. Reinstall Glass 6 with Cydia.
+
+# Không cài được bản cập nhật (mã %d).
+61cb7350 = Could not install the update (code %d).
+
+# Đồng ý
+f2d7bd4a = OK
+
+# Khởi động lại máy?
+bfb413df = Restart the device?
+
+# Tắt máy?
+ff170a2c = Power off?
+
+# Mở khoá xoay
+e2930227 = Unlock Rotation
+
+# Khoá xoay
+d42c8257 = Lock Rotation
+
+# Bật tiếng
+92bc2f8c = Unmute
+
+# Tắt tiếng
+c73f4761 = Mute
+
+# Chuyển sáng
+cbd12dde = Go Light
+
+# Chuyển tối
+0457f8de = Go Dark
+
+# Chưa có app nào mở gần đây
+04bd4c36 = No Recent Apps
+
+# Không phát
+b80539ef = Not Playing
+
+# Đã sạc %d%%
+c005e1d2 = %d%% Charged
+
+# Chạm «Cập nhật» để mở Cài đặt › Glass 6.
+8b641262 = Tap “Update” to open Settings › Glass 6.
+
+# Glass 6 có bản mới %@
+fcdfffd6 = Glass 6 %@ Available
+
+# Đĩa
+5526c5d9 = Disk
+
+# Tìm kiếm
+66719286 = Search
+
+# Twitter tích hợp của iOS 6
+5e45e1e3 = iOS 6 Twitter Integration
+
+# Nút đăng Twitter trong bảng chia sẻ. API cũ của Twitter đã đóng từ lâu.
+44e4d198 = The Twitter button in the share sheet. Twitter's old API was shut down long ago.
+
+# Sina Weibo tích hợp
+ca4b95a3 = Sina Weibo Integration
+
+# Nút đăng Weibo trong bảng chia sẻ.
+9c2587ee = The Weibo button in the share sheet.
+
+# Facebook tích hợp của iOS 6
+42c8db9b = iOS 6 Facebook Integration
+
+# Nút đăng Facebook trong bảng chia sẻ. Facebook đã ngừng hỗ trợ iOS 6.
+a02df647 = The Facebook button in the share sheet. Facebook no longer supports iOS 6.
+
+# Kho ảnh của tôi (Photo Stream)
+01505a55 = My Photo Stream
+
+# Apple đã ngừng dịch vụ này năm 2023.
+95b60c7b = Apple shut this service down in 2023.
+
+# iCloud Tài liệu & Dữ liệu kiểu cũ
+4c881299 = Legacy iCloud Documents & Data
+
+# Apple đã ngừng năm 2022. Có lúc bị hệ thống bật lại liên tục dù không còn máy chủ.
+fe728c8e = Apple shut it down in 2022. The system sometimes keeps relaunching it even though the servers are gone.
+
+# Thống kê sử dụng
+fae0c113 = Usage Statistics
+
+# Số liệu «Chẩn đoán & Sử dụng» gửi về Apple. Chạy thường trực.
+c3e8a83b = “Diagnostics & Usage” data sent to Apple. Runs all the time.
+
+# Chẩn đoán mạng không dây
+bfc48b5d = Wireless Diagnostics
+
+# Nhật ký chẩn đoán Wi-Fi / di động gửi về Apple.
+de241ca5 = Wi-Fi / cellular diagnostic logs sent to Apple.
+
+# Nhật ký pin
+7a696b6e = Battery Log
+
+# Nhật ký tiêu thụ pin cho kỹ thuật viên Apple.
+ee825fad = Power consumption logs for Apple technicians.
+
+# Nhận lệnh chẩn đoán từ xa
+51c9b0a2 = Remote Diagnostic Commands
+
+# Apple gửi lệnh gom nhật ký qua mạng. Báo cáo sập vẫn được ghi trên máy.
+a51c708e = Apple can send commands over the network to collect logs. Crash reports are still written on the device.
+
+# Game Center
+65b8ca6e = Game Center
+
+# Bảng xếp hạng, thành tích, lời mời chơi trong game.
+1240089d = Leaderboards, achievements and game invitations.
+
+# AirPrint
+fc49bf2b = AirPrint
+
+# In qua máy in AirPrint.
+554f77d3 = Printing to AirPrint printers.
+
+# Siri và Đọc chính tả
+0c841356 = Siri and Dictation
+
+# Trợ lý giọng nói và nút micro trên bàn phím.
+ebda3fea = The voice assistant and the microphone key on the keyboard.
+
+# iTunes Match / nhạc trên iCloud
+6bf45907 = iTunes Match / iCloud Music
+
+# Nghe nhạc đã mua lưu trên iCloud.
+1968fc8a = Listening to purchased music stored in iCloud.
+
+# Điểm truy cập cá nhân
+fcb36d06 = Personal Hotspot
+
+# Phát mạng di động cho máy khác (cần SIM).
+32fcbfa9 = Sharing the cellular connection with other devices (needs a SIM).
+
+# WAPI
+afc2658a = WAPI
+
+# Chuẩn bảo mật Wi-Fi riêng của Trung Quốc.
+a72520f9 = A Wi-Fi security standard used only in China.
+
+# Cập nhật iOS qua mạng (OTA)
+f086e76c = iOS Over-the-Air Updates (OTA)
+
+# Máy thôi kiểm tra và tải bản iOS mới; màn «Cập nhật phần mềm» trong Cài đặt đứng mãi ở «Kiểm tra cập nhật…». Nên tắt trên máy đã jailbreak: lỡ cập nhật là mất jailbreak.
+629b08d8 = The device stops checking for and downloading new iOS versions; the “Software Update” screen in Settings stays at “Checking for Update…”. Recommended off on a jailbroken device: an accidental update loses the jailbreak.
+
+# Không làm gì
+33e32da9 = Do Nothing
+
+# Mở bảng nút
+ffd4c528 = Open Button Panel
+
+# Đa nhiệm
+033ec2c3 = App Switcher
+
+# Trung tâm thông báo
+22d5e448 = Notification Center
+
+# Thông báo
+5d6af377 = Notifications
+
+# Khoá màn hình
+83cb556b = Lock Screen
+
+# Chụp màn hình
+e52b1a64 = Screenshot
+
+# Tăng âm lượng
+deb9c71b = Volume Up
+
+# Tăng âm
+cb714022 = Vol +
+
+# Giảm âm lượng
+036c4fda = Volume Down
+
+# Giảm âm
+9d322151 = Vol −
+
+# Bật / tắt tiếng
+ae066606 = Mute / Unmute
+
+# Khoá xoay màn hình
+303ff74b = Rotation Lock
+
+# Đổi sáng / tối
+ed12716a = Toggle Light / Dark
+
+# Sáng / Tối
+2d68c754 = Light / Dark
+
+# Tăng độ sáng
+a25a635b = Brightness Up
+
+# Tăng sáng
+c78dcc24 = Brighter
+
+# Giảm độ sáng
+e7b8f215 = Brightness Down
+
+# Giảm sáng
+ef1a7e10 = Dimmer
+
+# Respring (khởi động lại SpringBoard)
+389ae4be = Respring (restart SpringBoard)
+
+# Respring
+eafc0488 = Respring
+
+# Khởi động lại máy
+94c15630 = Restart Device
+
+# Khởi động lại
+a8f50537 = Restart
+
+# Tắt máy
+3fe7b699 = Power Off

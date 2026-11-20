@@ -1,0 +1,1083 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>title</key>
+	<string>Glass 6</string>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Giao diện kiểu iPadOS 26 cho iOS 6. Tắt là màn hình chính và các app đang mở về kiểu gốc ngay, không cần khởi động lại.</string>
+			<key>g6FooterPhone</key>
+			<string>Giao diện kiểu iOS 26 cho iOS 6. Tắt là màn hình chính và các app đang mở về kiểu gốc ngay, không cần khởi động lại.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Bật Glass 6</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>enabled</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Giao diện</string>
+			<key>footerText</key>
+			<string>Tự động: tối trong khoảng giờ chọn bên dưới, tự đổi đúng giờ.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSegmentCell</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>appearance</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>validValues</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>Sáng</string>
+				<string>Tối</string>
+				<string>Tự động</string>
+			</array>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>detail</key>
+			<string>PSListItemsController</string>
+			<key>label</key>
+			<string>Tự động: tối từ</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>darkFrom</string>
+			<key>default</key>
+			<integer>1140</integer>
+			<key>validValues</key>
+			<array>
+				<integer>960</integer>
+				<integer>1020</integer>
+				<integer>1080</integer>
+				<integer>1140</integer>
+				<integer>1200</integer>
+				<integer>1260</integer>
+				<integer>1320</integer>
+				<integer>1380</integer>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>16:00</string>
+				<string>17:00</string>
+				<string>18:00</string>
+				<string>19:00</string>
+				<string>20:00</string>
+				<string>21:00</string>
+				<string>22:00</string>
+				<string>23:00</string>
+			</array>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>detail</key>
+			<string>PSListItemsController</string>
+			<key>label</key>
+			<string>Tự động: sáng từ</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>darkTo</string>
+			<key>default</key>
+			<integer>360</integer>
+			<key>validValues</key>
+			<array>
+				<integer>240</integer>
+				<integer>300</integer>
+				<integer>360</integer>
+				<integer>420</integer>
+				<integer>480</integer>
+				<integer>540</integer>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>4:00</string>
+				<string>5:00</string>
+				<string>6:00</string>
+				<string>7:00</string>
+				<string>8:00</string>
+				<string>9:00</string>
+			</array>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Màn hình chính</string>
+			<key>footerText</key>
+			<string>Dock nổi bằng kính, biểu tượng dồn vào giữa, không nhãn. Biểu tượng bo góc kiểu mới, nhãn phông Inter. Thư mục mở ra là dải kính mờ thay nền vải. Biểu tượng Đồng hồ có kim giờ, phút, giây chạy theo giờ của máy. Thanh trạng thái ở màn hình chính và màn khoá bỏ dải nền đen, chữ phông Inter. Khay đa nhiệm (bấm đúp nút Home) là dải kính mờ thay nền vải. Ô tìm kiếm ở trang Tìm kiếm là viên kính, chữ theo sáng / tối. Tắt là về kiểu gốc ngay.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Biểu tượng kiểu mới</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featIcons</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Thư mục kính</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featFolders</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Đồng hồ chạy thật</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featClock</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Thanh trạng thái trong suốt</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featStatusBar</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Khay đa nhiệm kính</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featSwitcher</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Khay đa nhiệm dạng thẻ</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>switcherCards</string>
+			<key>g6Device</key>
+			<string>iphone</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Dock kính</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featDock</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Ô tìm kiếm kính</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featSearch</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Ẩn Quầy báo</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>hideNewsstand</string>
+			<key>default</key>
+			<false/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Thanh trạng thái</string>
+			<key>footerText</key>
+			<string>Áp cho thanh trạng thái của màn hình chính, màn khoá và các app của Apple; cần bật «Thanh trạng thái trong suốt». Việc ẩn «Không có SIM» có tác dụng trong mọi app; khi máy có SIM thì tên nhà mạng vẫn hiện.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Giờ nằm bên trái</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>statusTimeLeft</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Pin kiểu mới, tia sét xanh khi sạc</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>statusBattery</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Sóng và Wi-Fi nằm bên phải</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>statusSignalRight</string>
+			<key>default</key>
+			<true/>
+			<key>g6Device</key>
+			<string>iphone</string>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Ẩn tên nhà mạng</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>statusHideCarrier</string>
+			<key>default</key>
+			<true/>
+			<key>g6Device</key>
+			<string>iphone</string>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Ẩn chữ «Không có SIM»</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>statusHideNoSIM</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Hiệu suất hệ thống</string>
+			<key>g6FooterPhone</key>
+			<string>Một viên kính nhỏ trên thanh trạng thái của màn hình chính, nằm giữa giờ và cụm sóng – pin: CPU, RAM còn trống, tốc độ mạng nhận ↓ / gửi ↑. Chỉ đo khi màn hình chính đang hiện. Cần bật «Giờ nằm bên trái»; khi thanh trạng thái có thêm biểu tượng làm chật chỗ, dải tự bỏ bớt mục.</string>
+			<key>footerText</key>
+			<string>Một dải kính nhỏ trên màn hình chính: CPU, RAM, đĩa, mạng. RAM và đĩa: thanh là phần đã dùng, số là phần còn trống. Chỉ đo khi màn hình chính đang hiện. «Trên cùng» đặt dải vào giữa thanh trạng thái — cần bật «Giờ nằm bên trái»; chật quá thì dải bỏ bớt ba thanh mức, vẫn chật thì tự xuống dưới thanh trạng thái.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Dải hiệu suất</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featPerf</string>
+			<key>default</key>
+			<false/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>detail</key>
+			<string>PSListItemsController</string>
+			<key>label</key>
+			<string>Vị trí</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>perfPosition</string>
+			<key>g6Device</key>
+			<string>ipad</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>validValues</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>Trên cùng</string>
+				<string>Dưới thanh trạng thái</string>
+			</array>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>detail</key>
+			<string>PSListItemsController</string>
+			<key>label</key>
+			<string>Kiểu hiển thị</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>perfStyle</string>
+			<key>g6Device</key>
+			<string>iphone</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>validValues</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>Đầy đủ (hai hàng)</string>
+				<string>Gọn (một hàng)</string>
+			</array>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>detail</key>
+			<string>PSListItemsController</string>
+			<key>label</key>
+			<string>Nhịp đo</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>perfInterval</string>
+			<key>default</key>
+			<integer>2</integer>
+			<key>validValues</key>
+			<array>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>3</integer>
+				<integer>5</integer>
+				<integer>10</integer>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>Mỗi giây</string>
+				<string>Mỗi 2 giây</string>
+				<string>Mỗi 3 giây</string>
+				<string>Mỗi 5 giây</string>
+				<string>Mỗi 10 giây</string>
+			</array>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Kiểu biểu tượng</string>
+			<key>footerText</key>
+			<string>Tối: dịu bớt chỗ sáng của biểu tượng. Trong: biểu tượng thành kính trong một màu, hình nền lọt qua. Nhuộm: mọi biểu tượng cùng một màu trên nền than (chọn màu bên dưới). Cần bật «Biểu tượng kiểu mới».</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSegmentCell</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>iconStyle</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>validValues</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>3</integer>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>Mặc định</string>
+				<string>Tối</string>
+				<string>Trong</string>
+				<string>Nhuộm</string>
+			</array>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>detail</key>
+			<string>PSListItemsController</string>
+			<key>label</key>
+			<string>Màu nhuộm</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>iconTint</string>
+			<key>default</key>
+			<string>#0A84FF</string>
+			<key>validValues</key>
+			<array>
+				<string>#0A84FF</string>
+				<string>#64D2FF</string>
+				<string>#30D158</string>
+				<string>#FFD60A</string>
+				<string>#FF9F0A</string>
+				<string>#FF453A</string>
+				<string>#FF375F</string>
+				<string>#BF5AF2</string>
+				<string>#AEAEB2</string>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>Xanh dương</string>
+				<string>Xanh nhạt</string>
+				<string>Lục</string>
+				<string>Vàng</string>
+				<string>Cam</string>
+				<string>Đỏ</string>
+				<string>Hồng</string>
+				<string>Tím</string>
+				<string>Xám</string>
+			</array>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Màn khoá</string>
+			<key>footerText</key>
+			<string>Bỏ hai thanh bóng kính, giờ và ngày phông Inter, rãnh trượt mở khoá bằng kính. Vẫn trượt để mở khoá như cũ. «Ẩn nút khung ảnh» bỏ nút hình bông hoa ở góc phải; «Ẩn thông báo Chưa cài đặt Thẻ SIM» bỏ dòng đó khỏi màn khoá (cảnh báo SIM khác vẫn hiện). Hai tuỳ chọn này chỉ có tác dụng khi «Màn khoá kiểu mới» đang bật.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Màn khoá kiểu mới</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featLockScreen</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Ẩn nút khung ảnh</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>lockHidePictureFrame</string>
+			<key>default</key>
+			<true/>
+			<key>g6Device</key>
+			<string>ipad</string>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Ẩn thông báo «Chưa cài đặt Thẻ SIM»</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>lockHideNoSIM</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Ẩn hình pin lớn khi đang sạc</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>lockHideBattery</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Thông báo và bảng nổi</string>
+			<key>footerText</key>
+			<string>«Thông báo kính»: băng thông báo ở mép trên và Trung tâm thông báo (kéo từ mép trên xuống) thành tấm kính, chữ phông Inter. Bảng âm lượng và hộp thoại của hệ thống (cảnh báo pin yếu, hỏi xoá app…) cũng thành tấm kính. Nền của kính là ảnh chụp màn hình lúc vừa hiện; có tác dụng từ lần hiện kế tiếp.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Thông báo kính</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featNotifications</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Bảng âm lượng kính</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featHUD</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Hộp thoại kính</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featAlerts</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Trong app</string>
+			<key>footerText</key>
+			<string>Áp cho app của Apple: thanh, bảng, nút điều khiển chuẩn; riêng Đồng hồ, Ghi chú, Lời nhắc, Lịch, Danh bạ, Ảnh, Tin nhắn được vẽ lại thêm («Vẽ lại app của Apple»). Game Center, Nhạc và app bên thứ ba giữ nguyên. Tắt «Giao diện trong app» thì app mở sau đó không bị đổi gì.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Giao diện trong app</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featApps</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Thanh và nút trên thanh</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featBars</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Bảng kiểu nhóm</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featTables</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Công tắc, thanh trượt</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featControls</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Biểu tượng trong Cài đặt</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featSettingsIcons</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Vẽ lại app của Apple</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featAppSkins</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Bàn phím tối ở chế độ tối</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featKeyboard</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>AssistiveTouch</string>
+			<key>footerText</key>
+			<string>Nút nổi của Glass 6 thay cho AssistiveTouch của iOS: tự chọn các nút bên trong và thao tác chạm, chạm hai lần, nhấn giữ.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>label</key>
+			<string>Nút AssistiveTouch</string>
+			<key>detail</key>
+			<string>G6AssistController</string>
+			<key>id</key>
+			<string>assist</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Control Center</string>
+			<key>footerText</key>
+			<string>Kéo từ mép trên xuống ở một phần ba bên phải màn hình để mở: Máy bay, Wi-Fi, Bluetooth, Không làm phiền, khoá xoay, sáng / tối, độ sáng, âm lượng, nhạc. Kéo ở phần còn lại vẫn mở Trung tâm thông báo. Đóng bằng cách vuốt lên, chạm ra ngoài hoặc bấm nút Home; không đụng tới thì bảng tự ẩn sau thời gian chờ.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Control Center</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>featControlCenter</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>detail</key>
+			<string>PSListItemsController</string>
+			<key>label</key>
+			<string>Tự ẩn Control Center</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>ccTimeout</string>
+			<key>default</key>
+			<integer>8</integer>
+			<key>validValues</key>
+			<array>
+				<integer>0</integer>
+				<integer>5</integer>
+				<integer>8</integer>
+				<integer>15</integer>
+				<integer>30</integer>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>Không tự ẩn</string>
+				<string>Sau 5 giây</string>
+				<string>Sau 8 giây</string>
+				<string>Sau 15 giây</string>
+				<string>Sau 30 giây</string>
+			</array>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Độ mờ của kính</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>glassBlur</string>
+			<key>default</key>
+			<real>0.6</real>
+			<key>min</key>
+			<real>0</real>
+			<key>max</key>
+			<real>1</real>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Độ trong</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>glassClarity</string>
+			<key>default</key>
+			<real>0.55</real>
+			<key>min</key>
+			<real>0</real>
+			<key>max</key>
+			<real>1</real>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Viền sáng</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>glassRim</string>
+			<key>default</key>
+			<real>0.7</real>
+			<key>min</key>
+			<real>0</real>
+			<key>max</key>
+			<real>1</real>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Bỏ khúc xạ ở mép kính và vệt sáng — nhẹ máy hơn.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Giảm hiệu ứng</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>reduceEffects</string>
+			<key>default</key>
+			<false/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Hệ thống</string>
+			<key>footerText</key>
+			<string>Tắt các dịch vụ của iOS 6 đã ngừng từ lâu hoặc không cần tới. Cài Glass 6 không tự tắt dịch vụ nào — chọn trong mục này.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>label</key>
+			<string>Dịch vụ hệ thống</string>
+			<key>detail</key>
+			<string>G6ServicesController</string>
+			<key>id</key>
+			<string>services</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Ngôn ngữ</string>
+			<key>footerText</key>
+			<string>Tự động: theo ngôn ngữ của máy — tiếng Việt trên máy đặt tiếng Việt, tiếng Anh trên các máy khác.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>detail</key>
+			<string>PSListItemsController</string>
+			<key>label</key>
+			<string>Ngôn ngữ</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>language</string>
+			<key>default</key>
+			<string>auto</string>
+			<key>validValues</key>
+			<array>
+				<string>auto</string>
+				<string>vi</string>
+				<string>en</string>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>Tự động</string>
+				<string>Tiếng Việt</string>
+				<string>English</string>
+			</array>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Trạng thái</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSTitleValueCell</string>
+			<key>label</key>
+			<string>Glass 6</string>
+			<key>get</key>
+			<string>statusText:</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSTitleValueCell</string>
+			<key>label</key>
+			<string>Phiên bản</string>
+			<key>get</key>
+			<string>versionText:</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSTitleValueCell</string>
+			<key>label</key>
+			<string>Mẫu máy</string>
+			<key>get</key>
+			<string>deviceText:</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSTitleValueCell</string>
+			<key>label</key>
+			<string>Xung đột</string>
+			<key>get</key>
+			<string>conflictText:</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Cập nhật</string>
+			<key>footerText</key>
+			<string>Bản mới tải từ GitHub (github.com/itovn/Glass6) và chỉ được cài khi chữ ký số của gói đúng. Tự kiểm: hỏi GitHub nhiều nhất một lần mỗi ngày, không gửi thông tin gì về máy.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>label</key>
+			<string>Tự kiểm bản mới</string>
+			<key>defaults</key>
+			<string>vn.glass6</string>
+			<key>key</key>
+			<string>updateAutoCheck</string>
+			<key>default</key>
+			<true/>
+			<key>PostNotification</key>
+			<string>vn.glass6/prefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>Kiểm bản mới</string>
+			<key>action</key>
+			<string>checkUpdate:</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>An toàn</string>
+			<key>footerText</key>
+			<string>Nếu SpringBoard khởi động 3 lần liền mà Glass 6 chưa lần nào chạy ổn, Glass 6 tự tắt. «Đặt lại bộ gác» rồi khởi động lại SpringBoard để chạy lại.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>Đặt lại bộ gác</string>
+			<key>action</key>
+			<string>resetGuard:</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>Khởi động lại SpringBoard</string>
+			<key>action</key>
+			<string>respring:</string>
+		</dict>
+	</array>
+</dict>
+</plist>

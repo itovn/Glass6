@@ -1,0 +1,13 @@
+[package]
+name = "g6-ffi"
+description = "Mặt C của lõi Glass 6 → libg6_ffi.a (bọc thành /usr/lib/libglass6core.dylib)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+# Chỉ staticlib: thêm rlib thì cargo tắt LTO (bài học của GramMini). Phép thử vẫn chạy được trên PC.
+crate-type = ["staticlib"]
+
+[dependencies]
+g6-core = { path = "../g6-core" }

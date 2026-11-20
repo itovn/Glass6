@@ -1,0 +1,23 @@
+[package]
+name = "g6-ctl"
+description = "glass6ctl — kiểm và tải bản cập nhật của Glass 6 qua HTTPS (rustls, bộ chứng chỉ gốc Mozilla đóng kèm)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+# Chỉ staticlib (như g6-ffi): ctl/main.c gọi g6ctl_main → /usr/bin/glass6ctl. Phép thử vẫn chạy được trên PC.
+crate-type = ["staticlib"]
+
+[features]
+# Bản thử: cho đổi nguồn cập nhật (tệp update-source.txt / biến môi trường) và HTTP thường — để thử trọn chuỗi OTA với một máy
+# chủ trong mạng nội bộ trước khi có bản phát hành thật. Bản phát hành KHÔNG bật (tools/build.sh FINALPACKAGE=1).
+test-source = []
+
+[dependencies]
+# iOS 6 không tự vào được GitHub (TLS và chứng chỉ gốc quá cũ) → TLS riêng. ring ghim đúng bản đã vá cho ARM 32-bit của Apple
+# (tools/rust/vendor-ring.sh, tools/rust/cargo-ios6.sh).
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"] }
+webpki-roots = "1"
+ring = "=0.17.14"
+serde_json = { workspace = true }

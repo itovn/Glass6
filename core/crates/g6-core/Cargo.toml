@@ -1,0 +1,14 @@
+[package]
+name = "g6-core"
+description = "Lõi Glass 6: vật liệu kính, bảng màu, cấu hình, bộ gác — không phụ thuộc mạng, chạy thử được trên PC"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+
+[dev-dependencies]
+# Chỉ để xuất ảnh mẫu (examples/preview.rs) và đọc ảnh thử — không vào bản cho máy iOS
+png = "0.17"

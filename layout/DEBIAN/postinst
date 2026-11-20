@@ -1,0 +1,52 @@
+#!/bin/sh
+# Thư mục dữ liệu của Glass 6 (cấu hình tạm, nhật ký, cờ an toàn) — SpringBoard và Cài đặt chạy quyền mobile phải ghi được.
+D=/var/mobile/Library/Glass6
+# Thư mục cha thuộc quyền mobile. Script này chạy quyền root: nếu chỗ này (hay thư mục tải bên trong) đã bị thế bằng một liên
+# kết tượng trưng thì bỏ liên kết đi, và chown không đi theo liên kết — kẻo các lệnh dưới đây đổi chủ / xoá tệp ở chỗ khác.
+[ -L "$D" ] && rm -f "$D"
+mkdir -p "$D"
+chown -h mobile:mobile "$D" 2>/dev/null || chown mobile:mobile "$D"
+chmod 0755 "$D"
+# Cài / cập nhật xong là một khởi đầu mới: bỏ bộ đếm sập và cờ tự tắt của bản trước (công tắc tay «off» thì giữ)
+rm -f "$D"/boot.* "$D/off.auto"
+# Kết quả «có bản mới» của lượt kiểm trước không còn đúng với bản vừa cài
+rm -f "$D/update.json"
+# Bộ đếm / dấu «bỏ qua» của từng app, nhật ký của app trong hộp cát (xem G6_APP_DIR trong tweak/Common/G6Guard.h)
+rm -rf /var/tmp/vn.glass6
+# Ảnh đã dựng của bản trước (biểu tượng…) không dùng lại cho bản mới
+rm -rf /var/mobile/Library/Caches/Glass6
+# Công cụ tắt / bật dịch vụ hệ thống chạy quyền root dù được gọi từ Cài đặt / SpringBoard (quyền mobile): chủ root + setuid.
+# Tệp việc của bộ gác khởi động: launchd chỉ nhận tệp của root mà người khác không ghi được. Không nạp ngay — nó chỉ có việc
+# lúc máy khởi động.
+chown root:wheel /usr/libexec/glass6 /usr/libexec/glass6/g6svc /Library/LaunchDaemons/vn.glass6.svcguard.plist
+chmod 0755 /usr/libexec/glass6
+chmod 4755 /usr/libexec/glass6/g6svc
+chmod 0644 /Library/LaunchDaemons/vn.glass6.svcguard.plist
+# Công cụ cài bản cập nhật OTA (tự kiểm chữ ký của gói trước khi cài — helper/g6update.c): chủ root + setuid.
+# Khoá công khai của nguồn Cydia (apt kiểm chữ ký Release): tệp của root, ai cũng đọc được.
+if [ -f /usr/libexec/glass6/g6update ]; then
+    chown root:wheel /usr/libexec/glass6/g6update
+    chmod 4755 /usr/libexec/glass6/g6update
+fi
+if [ -f /etc/apt/trusted.gpg.d/vn.glass6.gpg ]; then
+    chown root:wheel /etc/apt/trusted.gpg.d/vn.glass6.gpg
+    chmod 0644 /etc/apt/trusted.gpg.d/vn.glass6.gpg
+fi
+# Thư mục tải bản cập nhật: glass6ctl (quyền mobile) ghi vào đây
+[ -L "$D/update" ] && rm -f "$D/update"
+mkdir -p "$D/update"
+chown -h mobile:mobile "$D/update" 2>/dev/null || chown mobile:mobile "$D/update"
+chmod 0755 "$D/update"
+# Tweak nạp vào SpringBoard → cần khởi động lại SpringBoard:
+# - Cydia: xin nút «Restart SpringBoard»;
+# - cập nhật OTA: g6update tự làm sau dpkg (đặt GLASS6_OTA=1) → bỏ qua ở đây;
+# - cài tay bằng dpkg qua SSH: không làm gì.
+if [ "$1" = configure ] && [ -z "$GLASS6_OTA" ] && [ -n "$CYDIA" ]; then
+    # $CYDIA = «<số tệp> <bản giao thức>»: chỉ ghi khi phần đầu đúng là một số
+    fd=${CYDIA%% *}
+    case "$fd" in
+        '' | *[!0-9]*) ;;
+        *) eval "echo 'finish:restart' >&$fd" ;;
+    esac
+fi
+exit 0

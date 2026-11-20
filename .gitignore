@@ -1,0 +1,15 @@
+/core/target/
+# Khoá ký OTA, khoá GPG của nguồn Cydia — chỉ ở máy phát hành, không bao giờ lên git
+/keys/
+# Công cụ / ghi chú riêng trên máy anh (địa chỉ máy dựng, máy thử) — không lên git
+/tools-local/
+# Tài liệu tham khảo riêng (đường dẫn máy thử…)
+/Tham_Khao/
+# Danh sách trắng của g6svc — sinh từ data/services.tsv lúc dựng (svc/Makefile)
+/svc/catalog.h
+# Thư mục dựng của Theos
+.theos/
+/packages/
+# Báo cáo quét bảo mật — có chi tiết lỗ hổng, không đưa lên repo công khai
+vbsec-reports/
+.vbsec-tmp/

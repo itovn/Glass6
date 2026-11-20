@@ -1,0 +1,10 @@
+#!/bin/sh
+# Gỡ Glass 6: bỏ ảnh đã dựng, trạng thái của bộ gác dịch vụ (prerm đã bật lại mọi dịch vụ), thư mục làm việc của g6update.
+# Cấu hình và thư mục dữ liệu chỉ xoá khi gỡ sạch (purge).
+if [ "$1" = remove ] || [ "$1" = purge ]; then
+    rm -rf /var/mobile/Library/Caches/Glass6 /var/db/glass6 /var/tmp/vn.glass6 /var/root/Glass6-update
+fi
+if [ "$1" = purge ]; then
+    rm -rf /var/mobile/Library/Glass6 /var/mobile/Library/Preferences/vn.glass6.plist
+fi
+exit 0

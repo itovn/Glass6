@@ -1,0 +1,152 @@
+// Hàm iOS 6 không có mà thư viện chuẩn Rust (rustc chỉ hỗ trợ từ iOS 10) gọi tới — chép từ GramMini (app/Core/GMShims.c, gốc là
+// CBShims.c của Côn Bằng TV Legacy). Định nghĩa ngay trong libglass6core.dylib: ld gắn lời gọi của Rust vào đây nên dyld của
+// iOS 6 không phải tìm. Các hàm này KHÔNG xuất ra ngoài thư viện (corelib/exports.txt chỉ xuất _g6_*), tiến trình chủ
+// (SpringBoard, Cài đặt…) không thấy chúng.
+#include <dirent.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <mach/mach_time.h>
+#include <math.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <sys/resource.h>
+#include <sys/time.h>
+#include <time.h>
+#include <unistd.h>
+
+// Mã đồng hồ của <time.h> iOS 10 (SDK 9.3 chưa có)
+enum {
+    G6_CLOCK_REALTIME = 0,
+    G6_CLOCK_MONOTONIC_RAW = 4,
+    G6_CLOCK_MONOTONIC_RAW_APPROX = 5,
+    G6_CLOCK_MONOTONIC = 6,
+    G6_CLOCK_UPTIME_RAW = 8,
+    G6_CLOCK_UPTIME_RAW_APPROX = 9,
+    G6_CLOCK_PROCESS_CPUTIME_ID = 12,
+    G6_CLOCK_THREAD_CPUTIME_ID = 16,
+};
+
+static uint64_t g6_mach_ns(void) {
+    static mach_timebase_info_data_t tb;
+    if (tb.denom == 0) mach_timebase_info(&tb);
+    uint64_t t = mach_absolute_time();
+    return t / tb.denom * tb.numer + (t % tb.denom) * tb.numer / tb.denom;
+}
+
+// std::time::Instant của Rust trên Apple dùng CLOCK_UPTIME_RAW (không tính lúc máy ngủ) = mach_absolute_time;
+// SystemTime dùng CLOCK_REALTIME.
+int clock_gettime(int clock_id, struct timespec *tp) {
+    if (!tp) {
+        errno = EINVAL;
+        return -1;
+    }
+    switch (clock_id) {
+        case G6_CLOCK_REALTIME: {
+            struct timeval tv;
+            if (gettimeofday(&tv, NULL) != 0) return -1;
+            tp->tv_sec = tv.tv_sec;
+            tp->tv_nsec = (long)tv.tv_usec * 1000;
+            return 0;
+        }
+        case G6_CLOCK_MONOTONIC_RAW:
+        case G6_CLOCK_MONOTONIC_RAW_APPROX:
+        case G6_CLOCK_MONOTONIC:
+        case G6_CLOCK_UPTIME_RAW:
+        case G6_CLOCK_UPTIME_RAW_APPROX: {
+            uint64_t ns = g6_mach_ns();
+            tp->tv_sec = (time_t)(ns / 1000000000ull);
+            tp->tv_nsec = (long)(ns % 1000000000ull);
+            return 0;
+        }
+        case G6_CLOCK_PROCESS_CPUTIME_ID:
+        case G6_CLOCK_THREAD_CPUTIME_ID: {
+            struct rusage ru;
+            if (getrusage(RUSAGE_SELF, &ru) != 0) return -1;
+            uint64_t us = (uint64_t)(ru.ru_utime.tv_sec + ru.ru_stime.tv_sec) * 1000000ull +
+                          (uint64_t)(ru.ru_utime.tv_usec + ru.ru_stime.tv_usec);
+            tp->tv_sec = (time_t)(us / 1000000ull);
+            tp->tv_nsec = (long)(us % 1000000ull) * 1000;
+            return 0;
+        }
+        default:
+            errno = EINVAL;
+            return -1;
+    }
+}
+
+// iOS 7+: LLVM đổi pow(10, x) trong mã Rust thành __exp10 (rustc tưởng máy ≥ iOS 10). Tệp này dựng với đích iOS 6 nên
+// LLVM không đổi ngược pow ở đây thành __exp10 (không đệ quy).
+double __exp10(double x) {
+    return pow(10.0, x);
+}
+
+float __exp10f(float x) {
+    return powf(10.0f, x);
+}
+
+// iOS 7+: LLVM gộp sin + cos cùng đối số trong mã Rust thành __sincosf_stret / __sincos_stret — iOS 6 không có: dyld
+// dừng tiến trình ở lần gọi đầu (GramMini gặp 16/11/2026 trên iPhone 5). Tệp này dựng với đích iOS 6 nên
+// LLVM không gộp ngược sinf / cosf ở đây.
+// (SDK 9.3 không khai báo struct __float2 / __double2 cho armv7 → kiểu riêng cùng bố cục; trả về qua con trỏ như ABI APCS
+// LLVM dùng khi gọi.)
+typedef struct {
+    float sinval, cosval;
+} g6_float2;
+typedef struct {
+    double sinval, cosval;
+} g6_double2;
+
+g6_float2 __sincosf_stret(float x) {
+    g6_float2 r = {sinf(x), cosf(x)};
+    return r;
+}
+
+g6_double2 __sincos_stret(double x) {
+    g6_double2 r = {sin(x), cos(x)};
+    return r;
+}
+
+// iOS 11+: std::fs::copy của Rust thử nhân bản tệp (APFS) trước — báo «không hỗ trợ» thì nó tự chép kiểu thường.
+int fclonefileat(int srcfd, int dst_dirfd, const char *dst, uint32_t flags) {
+    (void)srcfd;
+    (void)dst_dirfd;
+    (void)dst;
+    (void)flags;
+    errno = ENOTSUP;
+    return -1;
+}
+
+// CommonCrypto iOS 8+: số ngẫu nhiên cho HashMap của Rust, rustls… — đọc /dev/urandom (bộ sinh của nhân);
+// arc4random của iOS 5 / 6 là RC4 (thiên lệch đã biết — không nên dùng sinh khoá; kiểm bảo mật 17/11/2026). Không đọc được
+// (không xảy ra trên máy thật) thì mới dùng arc4random_buf.
+int32_t CCRandomGenerateBytes(void *bytes, size_t count) {
+    static int fd = -1;
+    if (fd < 0) {
+        int f = open("/dev/urandom", O_RDONLY);
+        if (f >= 0) fcntl(f, F_SETFD, FD_CLOEXEC);
+        if (f >= 0 && !__sync_bool_compare_and_swap(&fd, -1, f)) close(f);
+    }
+    unsigned char *p = bytes;
+    size_t left = count;
+    while (fd >= 0 && left > 0) {
+        ssize_t r = read(fd, p, left);
+        if (r < 0 && errno == EINTR) continue;
+        if (r <= 0) break;
+        p += r;
+        left -= (size_t)r;
+    }
+    if (left > 0) arc4random_buf(p, left);
+    return 0;  // kCCSuccess
+}
+
+// iOS 6+: dirfd là hàm của libSystem; iOS 5 chỉ có macro trong <dirent.h> (đọc thẳng trường __dd_fd của DIR — cấu trúc DIR
+// giống nhau trên iOS 5 / 6) → std::fs của Rust gọi hàm dirfd thì dyld iOS 5 không tìm thấy.
+#undef dirfd
+int dirfd(DIR *dirp) {
+    if (!dirp) {
+        errno = EINVAL;
+        return -1;
+    }
+    return dirp->__dd_fd;
+}

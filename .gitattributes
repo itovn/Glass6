@@ -1,0 +1,6 @@
+* text=auto eol=lf
+*.png binary
+*.deb binary
+*.ipa binary
+*.ps1 text eol=crlf
+*.ttf binary
