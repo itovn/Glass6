@@ -6,7 +6,8 @@
 // ra (backtrace chỉ có CoreTelephony → SpringBoard), nhưng các thông báo «khả năng di động đã đổi» đến dồn dập mỗi lần
 // CommCenter nạp lại gói nhà mạng — đúng việc «Bật 4G» (lte/g6lte.c) làm — nên Glass 6 phải chặn đường văng này.
 //
-// Cách làm: móc CTTelephonyCenterAddObserver (MSHookFunction của Substrate, tra bằng dlsym — không có thì bỏ qua). Callback
+// Cách làm: móc CTTelephonyCenterAddObserver (MSHookFunction của Substrate: dlopen CydiaSubstrate.framework rồi dlsym — không
+// có thì bỏ qua; đừng chỉ tra RTLD_DEFAULT, máy ít tweak chưa nạp framework này lúc Glass 6 khởi động). Callback
 // nằm trong chính tệp SpringBoard được thay bằng hàm đệm: đang ở luồng chính thì gọi thẳng như cũ; ở luồng khác thì giữ
 // name / userInfo rồi chuyển sang luồng chính, BẤT ĐỒNG BỘ (đồng bộ có thể kẹt khi luồng chính đang chờ chính luồng mạng đó).
 // Callback của thư viện / tweak khác giữ nguyên.

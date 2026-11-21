@@ -16,6 +16,7 @@
 #import "G6Device.h"
 #import "G6Clock.h"
 #import "G6CTGuard.h"
+#import "G6NotifGuard.h"
 #import "G6ControlCenter.h"
 #import "G6Dock.h"
 #import "G6Folders.h"
@@ -227,6 +228,8 @@ __attribute__((constructor)) static void G6Init(void) {
         // iPhone: giữ callback CoreTelephony của SpringBoard ở luồng chính (G6CTGuard.h) — phải trước khi SpringBoard tạo
         // SBTelephonyManager; không phụ thuộc lõi hay công tắc giao diện vì «Bật 4G» vẫn có thể khởi động lại CommCenter.
         if (g6_device_is_phone()) G6CTGuardInstall();
+        // Mọi máy: chữ thông báo có nửa emoji làm SpringBoard sập (G6NotifGuard.h) — cũng không phụ thuộc lõi hay công tắc giao diện
+        G6NotifGuardInstall();
         // Xác nhận «máy khởi động ổn» cho lần đổi dịch vụ hệ thống đang chờ — không phụ thuộc lõi hay công tắc giao diện:
         // dịch vụ đã tắt vẫn tắt dù giao diện Glass 6 đang tắt. (Có tệp «off» thì không xác nhận: hai lần khởi động máy
         // sau, bộ gác tự trả dịch vụ về như trước.)

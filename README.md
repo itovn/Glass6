@@ -47,6 +47,8 @@ Releases rồi `dpkg -i` qua SSH và khởi động lại SpringBoard. Tuỳ ch�
 ## An toàn
 
 - SpringBoard sập thì Substrate Safe Mode tắt mọi tweak như thường lệ.
+- Chặn sẵn hai lỗi của iOS 6 từng làm SpringBoard sập: thông báo CoreTelephony đến ngoài luồng chính (iPhone), và chữ
+  thông báo có nửa emoji (app cắt chữ giữa một emoji — SpringBoard đọc con trỏ rỗng).
 - Tắt hẳn Glass 6 qua SSH: `touch /var/mobile/Library/Glass6/off` rồi khởi động lại SpringBoard. Bật lại: xoá tệp đó.
 - SpringBoard khởi động 3 lần liền mà Glass 6 chưa lần nào chạy ổn thì Glass 6 tự tắt; bật lại trong Cài đặt › Glass 6 ›
   «Đặt lại bộ gác». Mỗi app cũng có bộ đếm riêng: app sập liên tiếp lúc mở thì Glass 6 bỏ qua app đó.

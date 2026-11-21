@@ -61,6 +61,8 @@
 //   apnprobe             (app Cài đặt, iPhone) APN từng dịch vụ / MMS / APN bám LTE mà trang «Mạng dữ liệu di động» đang dùng
 //                        (đọc qua EdgeSettingsController; mật khẩu ẩn) → glass6.log
 //   apnset <dv> <apn|->  đặt APN của dịch vụ số <dv> (như apnprobe in ra) qua EdgeSettingsController; «-» = để trống
+//   ngtest [raw|save <bundle>]  chốt nửa emoji (G6NotifGuard): gọi localizedStringFromKey: đã móc với chữ có nửa emoji; «raw» =
+//                        gọi hàm GỐC (SpringBoard SẼ SẬP — chỉ máy thử); «save» = lưu thông báo như vậy qua SBPushStore rồi xoá
 //   ctfire [phần tên]    (iPhone) không tham số: liệt kê thông báo CoreTelephony đã bọc (G6CTGuard); có: gọi thông báo đầu tiên
 //                        có tên chứa phần đó TỪ LUỒNG PHỤ — giả tình huống từng làm SpringBoard văng → glass6.log
 // Công cụ này cũng nằm trong Glass6UI (bản thử) nên chạy được trong app: dòng lệnh bắt đầu bằng «@<tên tiến trình> » thì chỉ
@@ -81,6 +83,7 @@
 #endif
 #import "G6CardSwitcher.h"
 #import "G6CTGuard.h"
+#import "G6NotifGuard.h"
 #import "G6ControlCenter.h"
 #import "G6Perf.h"
 #import "G6StatusBar.h"
@@ -1928,6 +1931,7 @@ static void G6RunCommand(void) {
         else if ([cmd isEqualToString:@"perf"]) G6Log(@"[thử] %@", G6PerfDebugState());
         else if ([cmd isEqualToString:@"statusbar"]) G6Log(@"[thử] %@", G6StatusBarDebugState());
         else if ([cmd isEqualToString:@"ctfire"]) G6Log(@"[thử] ctfire: %@", G6CTGuardDebugFire(arg));
+        else if ([cmd isEqualToString:@"ngtest"]) G6Log(@"[thử] ngtest: %@", G6NotifGuardDebug(arg));
 #endif
         else if ([cmd isEqualToString:@"sbitems"]) G6Log(@"[thử] thanh trạng thái (tiến trình này): %@", G6StatusItemsDescribe());
         else if ([cmd isEqualToString:@"pull"]) G6PullFromTop(arg);

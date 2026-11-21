@@ -1625,6 +1625,33 @@ Anh dặn: «update lại app Lịch của iOS 6 theo phong cách của iOS 26, 
 - **Chưa làm / chưa thử:** màn Danh sách (máy thử không có sự kiện — em không tạo dữ liệu trên máy); Tuần, Năm và lịch nhỏ của
   màn Ngày trên iPad (hôm nay vẫn chữ xanh); máy dựng đứng; iPad mini 1. iPad 1 (iOS 5) ngoài phạm vi của Glass 6.
 
+## D51. Chốt chặn thông báo có nửa emoji — SpringBoard iOS 6 sập (21/11/2026)
+
+Anh báo iPhone 5 trắng vào safe mode, nhờ điều tra; rồi dặn «làm cả 2»: sửa GramMini / Roza và thêm chốt trong Glass 6.
+
+- **Điều tra** (nhật ký sập 21/11 07:50:05 và một lần y hệt 19/11 20:24:57 — lần đó máy KHÔNG nạp Glass 6): SIGSEGV đọc địa
+  chỉ 0 ở luồng chính, SpringBoard + 868700. Dịch địa chỉ (`tools-local/crash/`: hàm ObjC gần nhất + otool của Theos + dịch
+  cặp movw/movt + pc ra selector): `-[SBPushStore saveLocalNotification:forBundleID:]` → `+[SBSystemLocalNotificationAlert
+  localizedStringFromKey:defaultValue:inBundle:arguments:]` → (bundle của app trả được chữ) hàm định dạng không tên làm
+  `[chữ UTF8String]` rồi `ldrb` byte đầu — không kiểm NULL. Chữ không rỗng mà `UTF8String` NULL = có **nửa cặp surrogate**.
+  Hai lần sập trùng tới mili-giây với hai lần GramMini đẩy thông báo; GramMini và Roza cắt xem trước bằng
+  `substringToIndex:180` → tin dài có emoji vắt qua mốc 180 → nửa emoji. Đã sửa ở GramMini 1.4.5 (D36) và Roza 1.2.1 (D23).
+- **Chốt trong Glass 6** (`tweak/SB/G6NotifGuard.m`, mọi máy, cài trong constructor ngay sau G6CTGuard — không phụ thuộc lõi
+  hay công tắc giao diện): móc `+localizedStringFromKey:defaultValue:inBundle:arguments:` (đúng chỗ sập, chung cho mọi đường:
+  thông báo cục bộ, hộp cảnh báo, «loc-key» của thông báo đẩy — lọc khoá, chữ mặc định, tham số, kết quả),
+  `-[SBPushStore saveLocalNotification:forBundleID:]` và `+presentWithLocalNotification:application:` (lọc alertBody /
+  alertAction). Lọc = thay nửa surrogate lẻ bằng U+FFFD; chữ hợp lệ đi qua nguyên vẹn (một lần `UTF8String`). Nhật ký ghi 10
+  lần lọc đầu.
+- **Đã thử** (iPhone 5 đen, bản thử, lệnh `ngtest`): chữ thử có nửa emoji (`UTF8String` NULL) → qua hàm đã móc không sập, kết
+  quả đổi được UTF-8; lưu thật qua `SBPushStore` rồi xoá lại → không sập; `ngtest raw` (gọi hàm GỐC) → SpringBoard sập đúng
+  SpringBoard + 868700, `KERN_INVALID_ADDRESS at 0x0` — trùng hai lần sập trên iPhone trắng, xác nhận nguyên nhân.
+- **Sửa kèm — G6CTGuard (D47) không chạy trên máy ít tweak:** iPhone 5 đen ghi «không móc được CTTelephonyCenterAddObserver
+  (thiếu MSHookFunction)» mỗi lần nạp. `MSHookFunction` nằm trong CydiaSubstrate.framework, MobileSubstrate chỉ nạp nó khi có
+  tweak liên kết tới; tweak nạp theo thứ tự chữ cái — iPhone trắng có AppSync / CheckmateStore (trước Glass6SB) nên luôn có, iPhone
+  đen chỉ có MobileSafety (chữ M, sau Glass6SB) → `dlsym(RTLD_DEFAULT)` NULL. Giờ `dlopen` framework rồi mới tra. Thử: «đã bọc
+  44 thông báo» (trước 0); `ctfire Capabilities` từ luồng phụ → chuyển sang luồng chính, không sập. Dòng nhật ký cũ in `%s`
+  tiếng Việt ra chữ lỗi → đổi sang `%@`.
+
 ## D8. Bộ dựng Theos (19/11/2026)
 
 - Dự án con không thừa hưởng `TARGET` / `ARCHS` của Makefile cha → Theos dựng thêm arm64 và hỏng lúc liên kết. Mọi Makefile

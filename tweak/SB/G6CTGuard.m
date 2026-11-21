@@ -131,10 +131,16 @@ void G6CTGuardInstall(void) {
     done = YES;
     void *ct = dlopen("/System/Library/Frameworks/CoreTelephony.framework/CoreTelephony", RTLD_NOW);
     void *add = ct ? dlsym(ct, "CTTelephonyCenterAddObserver") : NULL;
-    void (*hook)(void *, void *, void **) = (void (*)(void *, void *, void **))dlsym(RTLD_DEFAULT, "MSHookFunction");
+    // MSHookFunction nằm trong CydiaSubstrate.framework. MobileSubstrate chỉ nạp nó khi một tweak liên kết tới; tweak nạp theo thứ
+    // tự chữ cái nên trên máy ít tweak (chỉ có MobileSafety — chữ M, sau Glass6SB) lúc này nó CHƯA có → dlsym(RTLD_DEFAULT) trả
+    // NULL và chốt im lặng không chạy (gặp 21/11/2026 trên iPhone 5 đen). Tự mở framework (đã nằm sẵn trên máy có Substrate).
+    void *substrate = dlopen("/Library/Frameworks/CydiaSubstrate.framework/CydiaSubstrate", RTLD_LAZY);
+    void *hookSym = substrate ? dlsym(substrate, "MSHookFunction") : NULL;
+    if (!hookSym) hookSym = dlsym(RTLD_DEFAULT, "MSHookFunction");
+    void (*hook)(void *, void *, void **) = (void (*)(void *, void *, void **))hookSym;
     if (!add || !hook) {
-        G6Log(@"CoreTelephony: không móc được CTTelephonyCenterAddObserver (%s) — bỏ qua phần giữ luồng chính",
-              !add ? "thiếu hàm" : "thiếu MSHookFunction");
+        G6Log(@"CoreTelephony: không móc được CTTelephonyCenterAddObserver (%@) — bỏ qua phần giữ luồng chính",
+              !add ? @"thiếu hàm" : @"thiếu MSHookFunction");
         return;
     }
     hook(add, (void *)G6CTAddObserver, (void **)&gOrigAdd);

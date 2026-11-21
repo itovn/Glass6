@@ -22,7 +22,7 @@ PAIRS = [
     ('alt="Biểu tượng Glass 6"', 'alt="Glass 6 icon"'),
     ("<p>Giao diện <b>Liquid Glass</b> kiểu iOS 26 cho <b>iPhone 5</b>, <b>iPad mini 1</b> và <b>iPad 4</b> chạy iOS 6 đã jailbreak.</p>",
      "<p>The <b>Liquid Glass</b> look of iOS 26 for jailbroken <b>iPhone 5</b>, <b>iPad mini 1</b> and <b>iPad 4</b> on iOS 6.</p>"),
-    ('<span class="ver">Bản 1.0.3</span>', '<span class="ver">Version 1.0.3</span>'),
+    ('<span class="ver">Bản 1.0.4</span>', '<span class="ver">Version 1.0.4</span>'),
     (">Thêm nguồn vào Cydia</a>", ">Add Source to Cydia</a>"),
     (">Tải tệp .deb</a>", ">Download the .deb</a>"),
     ('<p class="note">Nguồn Cydia: ', '<p class="note">Cydia source: '),
