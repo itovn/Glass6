@@ -1,23 +1,4 @@
 Package: vn.glass6.tweak
-Version: 1.0.1
-Architecture: iphoneos-arm
-Maintainer: Glass 6
-Installed-Size: 4120
-Depends: firmware (>= 6.0), firmware (<< 7.0), mobilesubstrate, preferenceloader
-Filename: debs/vn.glass6.tweak_1.0.1_iphoneos-arm.deb
-Size: 1941836
-MD5sum: 41c4a9d269c552ef8281e102e518122e
-SHA1: 63c861e5a0839be3a57bc7b3fa817859e0a3b7c8
-SHA256: cddeb2f05f74fa9f799f81639f6bfb9f067ee56b4e3a31f9f4ee5fc36eae2588
-Section: Tweaks
-Description: Giao dien Liquid Glass (kieu iPadOS 26 / iOS 26) cho iOS 6: kinh trong, che do sang / toi, tinh chinh dich vu he thong. Chi chay tren iPad mini 1 va iPhone 5 (iOS 6); may khac khong bi thay doi gi. Can khoi dong lai SpringBoard sau khi cai.
-Author: Glass 6
-Icon: file:///Library/PreferenceLoader/Preferences/Glass6@2x.png
-Name: Glass 6
-Depiction: https://itovn.github.io/Glass6/cydia/depiction.html
-Homepage: https://itovn.github.io/Glass6/
-
-Package: vn.glass6.tweak
 Version: 1.0.2
 Architecture: iphoneos-arm
 Maintainer: Glass 6
@@ -47,6 +28,25 @@ Size: 1976692
 MD5sum: f3e4fbdd6f6f7d5e4796105271ed46f4
 SHA1: f98a5f31bdef7bd6e362b9371ce77ce5a22edea7
 SHA256: 50d9ce29b8cfeab9cf9861e6cb37ad2637b5c5c45d7b93e52d3c64a525ae3782
+Section: Tweaks
+Description: Giao dien Liquid Glass (kieu iPadOS 26 / iOS 26) cho iOS 6: kinh trong, che do sang / toi, tinh chinh dich vu he thong. Chi chay tren iPad mini 1, iPad 4 va iPhone 5 (iOS 6); may khac khong bi thay doi gi. Can khoi dong lai SpringBoard sau khi cai.
+Author: Glass 6
+Icon: file:///Library/PreferenceLoader/Preferences/Glass6@2x.png
+Name: Glass 6
+Depiction: https://itovn.github.io/Glass6/cydia/depiction.html
+Homepage: https://itovn.github.io/Glass6/
+
+Package: vn.glass6.tweak
+Version: 1.0.4
+Architecture: iphoneos-arm
+Maintainer: Glass 6
+Installed-Size: 4184
+Depends: firmware (>= 6.0), firmware (<< 7.0), mobilesubstrate, preferenceloader
+Filename: debs/vn.glass6.tweak_1.0.4_iphoneos-arm.deb
+Size: 1978374
+MD5sum: da3175e376a1b506424a8f4b9ecde373
+SHA1: 2d71a7f8f2a7a7cc61cf22fdb102b0eaeed179b4
+SHA256: cb738f6c6f806d30a84e40b00fc49a5661a9ca8feac88372a30c801f03029f2d
 Section: Tweaks
 Description: Giao dien Liquid Glass (kieu iPadOS 26 / iOS 26) cho iOS 6: kinh trong, che do sang / toi, tinh chinh dich vu he thong. Chi chay tren iPad mini 1, iPad 4 va iPhone 5 (iOS 6); may khac khong bi thay doi gi. Can khoi dong lai SpringBoard sau khi cai.
 Author: Glass 6
