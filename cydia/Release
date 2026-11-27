@@ -7,10 +7,10 @@ Architectures: iphoneos-arm
 Components: main
 Description: Glass 6 - Liquid Glass (iOS 26) cho iOS 6 da jailbreak - https://itovn.github.io/Glass6/
 MD5Sum:
- e6522be13d751940a97728c030677ccb 2691 Packages
- 4360171353fcd28328e764171d539e06 814 Packages.gz
- 79dad70f44851af6f20a05b8d49d31de 1012 Packages.bz2
+ aeba25e2df0d41d85fa1f8403933b456 2691 Packages
+ ca65776343a5ffe24171c0b7bc9e0b77 821 Packages.gz
+ db39e5e31011638e894f0fa67c4b8a39 1017 Packages.bz2
 SHA256:
- 65843693b92d8c0a2d598bb35c1a2ff3d3a1dc12111a944f260ca25e918c484d 2691 Packages
- 59422dab2d23e0214ded694e5ea56cb84c584a2b3b990f8991c218b90fa937a7 814 Packages.gz
- 2508aee85f8c749fec08ee1c645ca58fdd3db32b76d13c0353f034670d1255fe 1012 Packages.bz2
+ 1c17e47c444f665989040e12e5fa0a087b4897d8a9d7c542751cf5df7371a14e 2691 Packages
+ 9513f1748b0044bf50a76fb9c7ab4f152271087f2483efa3df32071a75d6fc42 821 Packages.gz
+ b6620c0005399db3603e717a4acfd2c14f015bdfabec596e3eac5f5102904062 1017 Packages.bz2
