@@ -2,162 +2,19 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Glass 6 — Liquid Glass cho iOS 6</title>
 <meta name="description" content="Glass 6: tweak đưa giao diện Liquid Glass (kiểu iOS 26 / iPadOS 26) lên iPhone 5, iPad mini 1 và iPad 4 chạy iOS 6 đã jailbreak. Kính trong, chế độ sáng / tối, Control Center, tự cập nhật.">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="icon" type="image/png" href="favicon.png">
-<!-- Viết cho Safari iOS 6: không biến CSS, flex, grid, gap, calc, backdrop-filter; dải màu có tiền tố -webkit- -->
-<style>
-html { -webkit-text-size-adjust: 100%; }
-body {
-  margin: 0; padding: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #fff;
-  background: #3b3f9c;
-  background-image: -webkit-linear-gradient(top, #1f6fd0 0%, #4a52c4 34%, #8a4fc0 68%, #c2569a 100%);
-  background-image: linear-gradient(to bottom, #1f6fd0 0%, #4a52c4 34%, #8a4fc0 68%, #c2569a 100%);
-}
-a { color: #fff; }
-.wrap { max-width: 640px; margin: 0 auto; padding: 0 12px 34px; }
-.lang { text-align: right; padding: 12px 4px 0; font-size: 14px; }
-.lang a { display: inline-block; padding: 4px 12px; border-radius: 14px; text-decoration: none;
-  background: rgba(255, 255, 255, 0.16); border: 1px solid rgba(255, 255, 255, 0.3); }
-/* Phần đầu */
-.hero { text-align: center; padding: 14px 0 6px; }
-.hero img { width: 120px; height: 120px; border-radius: 27px;
-  -webkit-box-shadow: 0 10px 26px rgba(10, 16, 60, 0.4); box-shadow: 0 10px 26px rgba(10, 16, 60, 0.4); }
-.hero h1 { margin: 14px 0 2px; font-size: 36px; font-weight: bold; letter-spacing: -0.5px; text-shadow: 0 1px 3px rgba(10, 16, 60, 0.35); }
-.hero p { margin: 6px 14px; font-size: 17px; line-height: 24px; color: rgba(255, 255, 255, 0.92); text-shadow: 0 1px 2px rgba(10, 16, 60, 0.3); }
-.hero .ver { display: inline-block; margin-top: 8px; padding: 3px 12px; border-radius: 13px; font-size: 13px; font-weight: bold;
-  background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); }
-/* Tấm kính */
-.glass { margin: 0 2px; border-radius: 22px; overflow: hidden;
-  background: rgba(255, 255, 255, 0.15);
-  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.11));
-  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.11));
-  border: 1px solid rgba(255, 255, 255, 0.34);
-  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 8px 22px rgba(10, 16, 60, 0.25);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 8px 22px rgba(10, 16, 60, 0.25); }
-/* Nút viên */
-.btn { display: block; margin: 12px 6px 0; height: 48px; line-height: 48px; border-radius: 24px; text-align: center;
-  font-size: 17px; font-weight: bold; text-decoration: none; color: #fff;
-  background: rgba(255, 255, 255, 0.18); border: 1px solid rgba(255, 255, 255, 0.42);
-  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 4px 12px rgba(10, 16, 60, 0.2);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 4px 12px rgba(10, 16, 60, 0.2); }
-.btn.main { color: #2b3aa0; background: #fff; border-color: #fff; }
-h2 { margin: 30px 14px 9px; font-size: 20px; text-shadow: 0 1px 2px rgba(10, 16, 60, 0.3); }
-.row { position: relative; padding: 12px 14px 12px 56px; border-top: 1px solid rgba(255, 255, 255, 0.2); font-size: 15px; line-height: 21px; }
-.row:first-child { border-top: 0; }
-.row > b { display: block; font-size: 16px; }
-.row span { color: rgba(255, 255, 255, 0.86); }
-.row .ic { position: absolute; left: 13px; top: 13px; width: 30px; height: 30px; border-radius: 9px; overflow: hidden;
-  background: rgba(255, 255, 255, 0.22); border: 1px solid rgba(255, 255, 255, 0.36); }
-.row .ic svg { display: block; }
-.row.plain { padding-left: 14px; }
-.row code, .mono { font-family: Menlo, Courier, monospace; font-size: 14px; background: rgba(10, 16, 60, 0.28); padding: 1px 5px; border-radius: 5px; word-wrap: break-word; }
-/* Ảnh màn hình: khối nội dòng (không flex) */
-.shots { text-align: center; font-size: 0; margin: 0 -4px; }
-.shot { display: inline-block; width: 30%; max-width: 180px; margin: 6px 1.5%; vertical-align: top; font-size: 12px; line-height: 16px;
-  color: rgba(255, 255, 255, 0.9); }
-.shot img { display: block; width: 100%; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.4);
-  -webkit-box-shadow: 0 6px 16px rgba(10, 16, 60, 0.35); box-shadow: 0 6px 16px rgba(10, 16, 60, 0.35); margin-bottom: 5px; }
-.note { margin: 9px 16px 0; font-size: 13px; line-height: 19px; color: rgba(255, 255, 255, 0.86); }
-.foot { margin: 32px 10px 0; text-align: center; font-size: 13px; line-height: 20px; color: rgba(255, 255, 255, 0.86); }
-</style>
+<meta property="og:title" content="Glass 6 — Liquid Glass cho iOS 6">
+<meta property="og:description" content="Glass 6: tweak đưa giao diện Liquid Glass (kiểu iOS 26 / iPadOS 26) lên iPhone 5, iPad mini 1 và iPad 4 chạy iOS 6 đã jailbreak. Kính trong, chế độ sáng / tối, Control Center, tự cập nhật.">
+<meta property="og:url" content="https://repo.caominh.net/glass6/">
+<link rel="canonical" href="https://repo.caominh.net/glass6/">
+<!-- Trang giới thiệu đã chuyển về máy chủ của dự án (D25 của repo.caominh.net). Nguồn Cydia ở thư mục con vẫn chạy như cũ. -->
+<script>location.replace("https://repo.caominh.net/glass6/" + location.hash);</script>
+<meta http-equiv="refresh" content="0; url=https://repo.caominh.net/glass6/">
+<style>body { font: 17px Helvetica, Arial, sans-serif; margin: 48px 20px; text-align: center; color: #222; } a { color: #0a62c9; }</style>
 </head>
 <body>
-<div class="wrap">
-  <div class="lang"><a href="en.html">English</a></div>
-
-  <div class="hero">
-    <img src="img/icon.png" alt="Biểu tượng Glass 6">
-    <h1>Glass 6</h1>
-    <p>Giao diện <b>Liquid Glass</b> kiểu iOS 26 cho <b>iPhone 5</b>, <b>iPad mini 1</b> và <b>iPad 4</b> chạy iOS 6 đã jailbreak.</p>
-    <span class="ver">Bản 1.0.5</span>
-  </div>
-
-  <a class="btn main" href="cydia://url/https://cydia.saurik.com/api/share#?source=https://itovn.github.io/Glass6/cydia/">Thêm nguồn vào Cydia</a>
-  <a class="btn" href="https://github.com/itovn/Glass6/releases/latest">Tải tệp .deb</a>
-  <p class="note">Nguồn Cydia: <span class="mono">https://itovn.github.io/Glass6/cydia/</span></p>
-
-  <a id="iphone"></a>
-  <h2>Trên iPhone 5</h2>
-  <div class="shots">
-    <div class="shot"><img src="img/phone-home.jpg" alt="Màn hình chính">Màn hình chính</div>
-    <div class="shot"><img src="img/phone-lock.jpg" alt="Màn khoá">Màn khoá</div>
-    <div class="shot"><img src="img/phone-cc.jpg" alt="Control Center">Control Center</div>
-    <div class="shot"><img src="img/phone-folder.jpg" alt="Thư mục">Thư mục kính</div>
-    <div class="shot"><img src="img/phone-assist.jpg" alt="Nút AssistiveTouch">Nút AssistiveTouch</div>
-    <div class="shot"><img src="img/phone-alert.jpg" alt="Hộp thoại">Hộp thoại kính</div>
-    <div class="shot"><img src="img/phone-settings.jpg" alt="Cài đặt">Cài đặt, chế độ tối</div>
-    <div class="shot"><img src="img/phone-keypad.jpg" alt="Điện thoại">Điện thoại</div>
-    <div class="shot"><img src="img/phone-calc.jpg" alt="Máy tính">Máy tính</div>
-  </div>
-
-  <a id="features"></a>
-  <h2>Có gì</h2>
-  <div class="glass">
-    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><rect x="6" y="6" width="7.5" height="7.5" rx="2.2" fill="#fff"/><rect x="16.5" y="6" width="7.5" height="7.5" rx="2.2" fill="#fff"/><rect x="6" y="16.5" width="7.5" height="7.5" rx="2.2" fill="#fff"/><rect x="16.5" y="16.5" width="7.5" height="7.5" rx="2.2" fill="#fff"/></svg></div><b>Màn hình chính</b><span>Dock kính, thư mục kính, ô tìm kiếm dạng viên; biểu tượng bốn kiểu (mặc định, tối, trong, nhuộm màu); kim của biểu tượng Đồng hồ chạy thật.</span></div>
-    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M10.5 14v-2.5a4.5 4.5 0 0 1 9 0V14" fill="none" stroke="#fff" stroke-width="2.2"/><rect x="8" y="13.5" width="14" height="10" rx="2.5" fill="#fff"/></svg></div><b>Màn khoá</b><span>Đồng hồ lớn, rãnh trượt mở khoá bằng kính, thông báo dạng thẻ, dòng «Đã sạc N%» thay cho hình viên pin.</span></div>
-    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><rect x="6" y="9" width="18" height="5" rx="2.5" fill="#fff"/><circle cx="19.5" cy="11.5" r="2" fill="#7a6fd0"/><rect x="6" y="17" width="18" height="5" rx="2.5" fill="#fff"/><circle cx="10.5" cy="19.5" r="2" fill="#7a6fd0"/></svg></div><b>Control Center</b><span>iOS 6 chưa có — Glass 6 thêm vào: Máy bay, dữ liệu di động, Wi-Fi, Bluetooth, Không làm phiền, khoá xoay, sáng / tối, đèn pin, độ sáng, âm lượng, nhạc đang phát. Mở bằng cách kéo từ mép trên xuống ở phía bên phải.</span></div>
-    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><rect x="5" y="8" width="20" height="9" rx="4" fill="#fff"/><rect x="8" y="20" width="14" height="3" rx="1.5" fill="#fff"/></svg></div><b>Thông báo, hộp thoại, bảng chọn</b><span>Băng thông báo dạng thẻ nổi, Trung tâm thông báo, hộp thoại, bảng chọn và bảng âm lượng đều là kính.</span></div>
-    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><rect x="6" y="7" width="9" height="16" rx="2.5" fill="#fff"/><rect x="17" y="9" width="7" height="12" rx="2" fill="#fff" opacity="0.7"/></svg></div><b>Khay đa nhiệm</b><span>iPhone: các thẻ ảnh chụp app, vuốt lên để đóng. iPad: dải biểu tượng trên nền kính.</span></div>
-    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><rect x="5" y="7" width="20" height="5" rx="2.5" fill="#fff"/><rect x="5" y="14.5" width="20" height="9" rx="3" fill="#fff" opacity="0.7"/></svg></div><b>Trong app</b><span>Thanh điều hướng, thanh thẻ nổi, bảng, công tắc, thanh trượt, bàn phím — kiểu mới, theo sáng / tối. Vẽ lại riêng: Cài đặt, Đồng hồ, Ghi chú, Lời nhắc, Lịch, Danh bạ, Ảnh, Tin nhắn; trên iPhone thêm Điện thoại, Máy tính, La bàn, Ghi âm. App không phải của Apple giữ nguyên.</span></div>
-    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><rect x="6" y="8" width="18" height="16" rx="3.5" fill="none" stroke="#fff" stroke-width="2"/><rect x="6" y="8" width="18" height="5" rx="2.5" fill="#fff"/><circle cx="19" cy="19.5" r="2.6" fill="#fff"/></svg></div><b>Âm lịch trong app Lịch</b><span>Ngày âm nhỏ dưới mỗi ngày dương, ngày hoàng đạo, mùng 1, rằm, lễ âm lịch; ngày đang chọn có can chi, thần trực ngày, giờ hoàng đạo, tiết khí. Lịch tháng và màn Ngày vẽ lại kiểu iOS 26 — iPhone và iPad.</span></div>
-    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M19 7a8.5 8.5 0 1 0 4.5 13.5A7 7 0 0 1 19 7z" fill="#fff"/></svg></div><b>Sáng / tối</b><span>Chế độ sáng, tối, hoặc tự đổi theo giờ — cả màn hình chính lẫn trong app.</span></div>
-    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><rect x="5" y="11" width="18" height="8" rx="2.5" fill="none" stroke="#fff" stroke-width="2"/><rect x="7.5" y="13.5" width="10" height="3" rx="1" fill="#fff"/><rect x="24" y="13.5" width="2" height="3" rx="1" fill="#fff"/></svg></div><b>Thanh trạng thái</b><span>Pin vẽ lại (tia sét xanh khi sạc), giờ nằm bên trái, ẩn tên nhà mạng; dải hiệu suất nhỏ: CPU, RAM, mạng.</span></div>
-    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="8.5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="15" cy="15" r="4.5" fill="#fff"/></svg></div><b>Nút AssistiveTouch riêng</b><span>Nút nổi và bảng chín ô bằng kính, tự chọn chức năng cho từng ô: màn hình chính, đa nhiệm, Control Center, khoá máy, chụp màn hình, âm lượng, respring…</span></div>
-    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M15 6l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V9z" fill="#fff"/></svg></div><b>Dịch vụ hệ thống</b><span>Tắt các dịch vụ nền của iOS 6 đã ngừng hoạt động từ lâu, chặn cập nhật iOS — từng mục có công tắc, bật lại được.</span></div>
-    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><rect x="6" y="18" width="3.5" height="6" rx="1" fill="#fff"/><rect x="11.5" y="14" width="3.5" height="10" rx="1" fill="#fff"/><rect x="17" y="10" width="3.5" height="14" rx="1" fill="#fff"/><rect x="22.5" y="6" width="3.5" height="18" rx="1" fill="#fff"/></svg></div><b>Bật 4G trên iPhone 5</b><span>LTE cho SIM MobiFone, Viettel, VinaPhone bằng phần LTE có sẵn trong iOS 6; APN và MMS giữ như trước khi bật; tắt công tắc là về đúng 3G gốc. Gọi điện vẫn qua 3G (iOS 6 không có VoLTE).</span></div>
-    <div class="row"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M22 12a7.5 7.5 0 1 0 .6 5.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M23.5 6.5v6.5h-6.5z" fill="#fff"/></svg></div><b>Tự cập nhật</b><span>Tự báo bản mới, tải và cài ngay trong Cài đặt › Glass 6. Gói chỉ được cài khi chữ ký số đúng.</span></div>
-  </div>
-  <p class="note">Mọi thành phần đều có công tắc riêng trong Cài đặt › Glass 6. Giao diện tiếng Việt và tiếng Anh.</p>
-
-  <a id="styles"></a>
-  <h2>Sáng / tối, kiểu biểu tượng</h2>
-  <div class="shots">
-    <div class="shot"><img src="img/phone-settings-light.jpg" alt="Cài đặt, chế độ sáng">Chế độ sáng</div>
-    <div class="shot"><img src="img/phone-keypad-light.jpg" alt="Điện thoại, chế độ sáng">Điện thoại, sáng</div>
-    <div class="shot"><img src="img/phone-voice.jpg" alt="Ghi âm">Ghi âm</div>
-    <div class="shot"><img src="img/phone-icons-clear.jpg" alt="Biểu tượng trong">Biểu tượng trong</div>
-    <div class="shot"><img src="img/phone-icons-dark.jpg" alt="Biểu tượng tối">Biểu tượng tối</div>
-    <div class="shot"><img src="img/phone-icons-tint.jpg" alt="Biểu tượng nhuộm màu">Biểu tượng nhuộm màu</div>
-  </div>
-  <p class="note">Ảnh chụp trên iPhone 5 (iOS 6.1.4). iPad mini 1 có cùng các thành phần, bố cục theo kiểu iPadOS 26.</p>
-
-  <a id="install"></a>
-  <h2>Cài đặt</h2>
-  <div class="glass">
-    <div class="row plain"><b>1. Thêm nguồn Cydia</b><span>Mở Cydia → Nguồn → Sửa → Thêm, nhập <code>https://itovn.github.io/Glass6/cydia/</code> (hoặc chạm nút «Thêm nguồn vào Cydia» ở trên).</span></div>
-    <div class="row plain"><b>2. Cài Glass 6</b><span>Tìm «Glass 6» → Cài đặt → Xác nhận, xong bấm «Restart SpringBoard».</span></div>
-    <div class="row plain"><b>3. Tuỳ chỉnh</b><span>Mở Cài đặt › Glass 6: chọn sáng / tối, kiểu biểu tượng, bật tắt từng thành phần.</span></div>
-  </div>
-  <p class="note">Lần đầu thêm nguồn, Cydia có thể báo «NO_PUBKEY» ở màn làm mới — bình thường: máy chưa có khoá của nguồn, khoá nằm trong gói Glass 6; cài xong là hết báo. Các bản sau tự cập nhật: Cài đặt › Glass 6 › Kiểm bản mới.</p>
-
-  <a id="devices"></a>
-  <h2>Máy chạy được</h2>
-  <div class="glass">
-    <div class="row plain"><span><b>iPhone 5</b>, <b>iPad mini 1</b> và <b>iPad 4</b>, iOS 6.0 – 6.1.x đã jailbreak (cần MobileSubstrate và PreferenceLoader). Đã thử trên iPhone 5 (iOS 6.1.4), iPad mini 1 và iPad 4 (iOS 6.1.3). Trên mẫu máy khác Glass 6 không thay đổi gì; các mẫu khác sẽ được bổ sung dần.</span></div>
-  </div>
-
-  <a id="safety"></a>
-  <h2>An toàn</h2>
-  <div class="glass">
-    <div class="row plain"><span>Glass 6 không sửa tệp nào của hệ thống — gỡ gói là sạch. Ngoại lệ duy nhất là «Bật 4G» (iPhone 5, phải tự bật): thêm gói nhà mạng và đổi ba liên kết mã nhà mạng; tắt công tắc hoặc gỡ gói thì trả lại nguyên như iOS 6 gốc. Nếu màn hình chính khởi động 3 lần liền mà Glass 6 chưa chạy ổn, Glass 6 tự tắt. Tắt tay qua SSH: <code>touch /var/mobile/Library/Glass6/off</code> rồi khởi động lại SpringBoard.</span></div>
-  </div>
-
-  <a id="source"></a>
-  <h2>Mã nguồn</h2>
-  <div class="glass">
-    <div class="row plain"><b>Mã nguồn mở — GPL-3.0</b><span><a href="https://github.com/itovn/Glass6">github.com/itovn/Glass6</a> · lõi Rust (dựng vật liệu kính), vỏ Objective-C nạp bằng MobileSubstrate.</span></div>
-  </div>
-
-  <div class="foot">
-    Glass 6 là dự án độc lập, không liên quan tới Apple. «Liquid Glass», iOS, iPadOS là nhãn hiệu của Apple Inc.<br>
-    Báo lỗi, góp ý: <a href="https://github.com/itovn/Glass6/issues">github.com/itovn/Glass6/issues</a>
-  </div>
-</div>
+<p>Trang đã chuyển sang <a href="https://repo.caominh.net/glass6/">https://repo.caominh.net/glass6/</a>.</p>
 </body>
 </html>
