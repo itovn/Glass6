@@ -10,25 +10,25 @@ Architectures: iphoneos-arm
 Components: main
 Description: Glass 6 - Liquid Glass (iOS 26) cho iOS 6 da jailbreak - https://itovn.github.io/Glass6/
 MD5Sum:
- 345cd26c99cac039c6d5469d350fba57 2691 Packages
- 796b2c68d60eb284a4d812a969fdbe84 829 Packages.gz
- 4e6036d2aec1ed6c103c06570ede5ef4 1006 Packages.bz2
+ 353d6e5957d8737c2b88a191e3149bd7 2691 Packages
+ f0e52575031fe1b759e778a2db36e4a4 827 Packages.gz
+ 3816a3b5bab5dadb9b46fcc6ca1bc073 1018 Packages.bz2
 SHA256:
- 48fa2c294b943aa6652dc6c53e756f4ebfe08fd810e7043aacd5a111f79b2133 2691 Packages
- 701e1b963ffd153e99ba02b959c7a8d1cd828c6a1474c1b213d1c963da453733 829 Packages.gz
- f3648ad11e47923a0b6e10eaedbdbdc3091b36d50387cd552f2b18e691ceefd3 1006 Packages.bz2
+ 348c7dd6906bd2a1e7462fd6046a38ac32ae9c7295efd344e4c12ce8ff8bb642 2691 Packages
+ 225070e935f3c8eb7f60dfa43b10920d73d1942fc1ab9c186bdec3f94f978aa2 827 Packages.gz
+ b690aa3d5feda2e7813ff60a3f3ac73d0ec08e2c0f12ac54537a00692745eb90 1018 Packages.bz2
 
 -----BEGIN PGP SIGNATURE-----
 
-iQGzBAEBCAAdFiEEW9PxF+4w01/HbjM6bdzKOAqwrzAFAmsJXA8ACgkQbdzKOAqw
-rzBw1gv9EH9r91w1sfXoNgIutFpuURBEScUBZQm0kf9N9r10/Mpu5SnbSVi59X2N
-NP2hs6zkgarRZCXkKJvJ4zGaz6jC8sycV+jSSqoOSDrEuttvpHeFI0Z1eQN/NsTf
-tSLNtkJGt4h9Iek13YuA1tTsrnfsp8wjT/fhODZzcKYpn7d80wWUAd+BLdebflIj
-LpPUNKLoVFshu5RomRxmntPfeh/tNDgwdsNGjUWfN8fWxUt/qfIDhqPgEuXFX/s3
-Z2VPbb72wS48ldfz0BJ2p4ZumaJubpp/phAcwmcsIRWXFX8qVUVzXwIaD25ncynA
-i1/R3zUYwx4ZXsPIK/tACcS5Wkpbky4rR+iuG8RPZIgvQl9hwqLSdmTCaIFxorwt
-s9hC5DX8iUlzfklcMpkLuzWLzNE7Xw4sRP6coxs2BjrWkJynwpFE6CIdxFY1y1Rl
-JZxREd7l4ChdtTj3g3syyiNs5LXAUokrJzz6hy1j1VMU76FtI5meHcFyNZwTtFEX
-kMxijv6x
-=7L4m
+iQGzBAEBCAAdFiEEW9PxF+4w01/HbjM6bdzKOAqwrzAFAmsKhnkACgkQbdzKOAqw
+rzAEXAv+PIqbbNEMqHXxCD0qeP/SJ+YEX0UVQ9tuH20JyGvvKxnoRgnQGtrQhg5l
+3W2/Gdw+w4s3Qw3MMXS/aSxCFRNBtDWG/WnIELFmhnf/hPwqQZ/jMozWb4JO7xdx
+o0qsvDJn2dbiTkeO14CEcwIRPjPTG6YtavmvA+odUXv5f4BuhiiASIcnZ4DiWNYo
+z4thbMprgIoLNWv7hc0EIztzCs2XhT4EYm4rL0S4Jzhuxl+T5ZmDGfGFxsyqIqge
+jcr+BSat+bL8Zt+Ph9B7Q0pemHxQRgrgBP0tNiR67UE34OdqrXU7PtuZ1yt9TH7a
+eIgUmcsJj4PNuEcut6/FvmL7aL5lty3HCrl2bXJD2fZ9l3xfVi/BR89LudjQc3p2
+bgXjl7ChLztYx3DXtUWXfROxvklNENL/AC0GDrHW/HvqddDEOzgFJ+fS/Sb4PRWf
+w+cGpD0r1D2bKVh3ZCV26AJ42QrIgEkx+9nMyad5NLdxJbPmj1hoBDvPWRlQf+H/
+zIcfVCcc
+=qJMS
 -----END PGP SIGNATURE-----
